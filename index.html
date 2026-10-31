@@ -322,6 +322,7 @@ button:active{transform:scale(.95)}
 .sh-body .lead{color:var(--muted);margin:0}
 .ctl label,.seglbl{display:flex;align-items:center;gap:8px;font:600 15px var(--f-b)}
 .seglbl{color:var(--muted);font-size:13.5px;margin-bottom:6px}
+.seghint{margin:8px 4px 0;font:400 13.5px/1.4 var(--f-b);color:var(--muted)}.seghint:empty{display:none}.result .seghint,.panel>.seghint{margin:-4px 4px 0;text-align:center}
 .ctl label>span:not(.sym):not(.tg){margin-right:auto}
 .ctl.focus{background:color-mix(in srgb,var(--yellow) 10%,transparent);border-radius:18px;padding:8px 10px;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--yellow) 45%,transparent)}
 .sym{flex:none;display:inline-grid;place-items:center;min-width:26px;height:26px;padding:0 7px;border-radius:9px;background:color-mix(in srgb,var(--c) 22%,transparent);color:var(--c);font:600 italic 16px var(--f-s)}
@@ -760,14 +761,14 @@ function sceneAmazon(st){const bays=Math.max(2,Math.round(Math.min(60,Math.max(4
  rb(g,0.25,3.3,0.25,P.yellow,x0-1.3,0,-1.7,0.06);rb(g,0.25,3.3,0.25,P.yellow,x0-1.3,0,1.7,0.06);rb(g,0.3,0.5,3.7,P.yellow,x0-1.3,3.3,0,0.1);flat(g,1.6,2.6,P.coral,x0-2.4,0.02,0);
  for(let i=0;i<4;i++){tree(g,-W/2+1.6+i*0.4,-D/2+1.4+i*3.3,0.75);tree(g,W/2-1.6,-D/2+1.6+i*3.2,0.75)}
  for(let m=0;m<=st.L;m+=st.L>150?50:st.L>60?25:10){const mx=x0+m/st.L*AL;rb(g,0.08,0.02,0.6,P.white,mx,0.02,1.15,0.02,{noCast:true})}sign(g,st.L+" m",x0+AL+1.6,-3.8,0.4,"#F4EBD9","#0F1729",0.7);
- const copies=inst(g,rboxG(0.62,0.6,0.86,0.12),mat(P.yellow,{basic:true}),20,false);const STAR=new Icons(g,"star",20,0.9);
+ const copies=inst(g,rboxG(0.95,0.8,1.12,0.14),mat(P.yellow,{basic:true}),20,false);const STAR=new Icons(g,"star",20,1.5);const rings=inst(g,new THREE.RingGeometry(0.42,0.6,24),mat(P.yellow,{basic:true}),20,false);/* a bright box, a big star and a ring on the floor: the copies must be seen at a glance */
  const dots=inst(g,new THREE.CircleGeometry(0.11,10),mat(P.mint,{basic:true}),60,false);
  const op=person(g,P.yellow,x0-0.5,0,Math.PI/2);const cartM=new THREE.Group();rb(cartM,0.9,0.5,0.6,P.sky,0,0.3,0,0.08);rb(cartM,0.08,0.7,0.6,P.dark,-0.5,0.3,0,0.03);[[-0.3,-0.25],[0.3,-0.25],[-0.3,0.25],[0.3,0.25]].forEach(p=>put(cartM,GEO().wheelS,mat(P.dark),p[0],0.12,p[1]).scale.set(0.6,0.3,0.6));g.add(cartM);
  const S=mkS(scene,new THREE.Box3(new THREE.Vector3(-W/2+1,0,-D/2),new THREE.Vector3(W/2-1,3.4,D/2)),{root:g,az:0.42,azP:0.25,el:0.7,anchor:{x:x0+AL*0.62,y:4.4,z:0}});
  let cur=Object.assign({},st),ord=null,ms=0,dur=1,seed=5,n=0,sum=0,clk=0;
  const effK=()=>cur.ord==="orden"?1:cur.k;
  function newOrder(){seed++;const r=EC.rngFrom(seed*65537);const z=cur.z/100;const list=[];for(let j=0;j<effK();j++)list.push({x:r()*z*cur.L,side:r()<0.5?-1:1,lvl:Math.floor(r()*3)});ord={copies:list,near:Math.min(...list.map(c=>c.x))};ms=0;dur=600+1500*ord.near/cur.L;zone.scale.x=Math.max(0.01,z*AL);zone.position.x=x0+z*AL/2;zline.position.x=x0+z*AL;zone.visible=zline.visible=z<0.999}
- function at(dt){clk+=dt;const u=Math.min(1,ms/dur);for(let i=0;i<20;i++){if(i<ord.copies.length){const c=ord.copies[i];const x=x0+c.x/cur.L*AL,y=0.18+c.lvl*1.0,z=c.side*2.35;setI(copies,i,x,y+0.3+Math.sin(clk*4+i)*0.04,z,1,1,1);STAR.set(i,x,y+1.15,z,c.x===ord.near)}else{copies.setMatrixAt(i,_m4.makeScale(0,0,0));STAR.set(i,0,0,0,false)}}copies.instanceMatrix.needsUpdate=true;
+ function at(dt){clk+=dt;const u=Math.min(1,ms/dur);for(let i=0;i<20;i++){if(i<ord.copies.length){const c=ord.copies[i];const x=x0+c.x/cur.L*AL,y=0.18+c.lvl*1.0,z=c.side*2.35;setI(copies,i,x,y+0.4+Math.sin(clk*4+i)*0.08,z,1,1,1);STAR.set(i,x,y+1.45,z,true);setI(rings,i,x,0.04,c.side*1.45,1+(c.x===ord.near?Math.sin(clk*6)*0.12:0),1+(c.x===ord.near?Math.sin(clk*6)*0.12:0),1,0,-Math.PI/2)}else{copies.setMatrixAt(i,_m4.makeScale(0,0,0));STAR.set(i,0,0,0,false);rings.setMatrixAt(i,_m4.makeScale(0,0,0))}}copies.instanceMatrix.needsUpdate=true;rings.instanceMatrix.needsUpdate=true;
   const d=ord.near/cur.L*AL;let x,walked,dir=1;if(u<0.44){x=d*ease(u/0.44);walked=ord.near*ease(u/0.44)}else if(u<0.56){x=d;walked=ord.near}else{x=d*(1-ease((u-0.56)/0.44));walked=ord.near*(1+ease((u-0.56)/0.44));dir=-1}
   op.position.x=x0-0.4+x;op.rotation.y=dir>0?Math.PI/2:-Math.PI/2;cartM.position.set(op.position.x+dir*0.9,0,0);op.position.y=Math.abs(Math.sin(clk*9))*0.06;
   const nd=Math.min(60,Math.floor(Math.min(d,AL)/Math.max(0.45,AL/60)));for(let i=0;i<60;i++){const gap=Math.max(0.45,AL/60);if(i<nd&&i*gap<=(u<0.56?x:d))setI(dots,i,x0+0.2+i*gap,0.04,(i%2?0.18:-0.18),1,1,1,0,-Math.PI/2);else dots.setMatrixAt(i,_m4.makeScale(0,0,0))}dots.instanceMatrix.needsUpdate=true;
@@ -1084,7 +1085,7 @@ const LABS=[
  def:{n:12,pi:3,X:0},
  levers:[{k:"n",type:"step",sym:"n",es:"Cajas por pedido",en:"Boxes per order",min:1,max:40},{k:"pi",type:"range",sym:"q",es:"Cada caja falla 1 de cada…",en:"Each box fails 1 in…",min:0,max:8,step:1,fmt:v=>nf(EC.IP[v])}],
  reto:{intro:{es:"Escanear cada caja en cada traspaso (bodega, camión, reparto) atrapa la que falta o viene dañada antes de que llegue a la casa, y se repone. Elige qué parte de los problemas se atrapa.",en:"Scanning every box at every handoff (warehouse, truck, delivery) catches the missing or damaged one before it reaches the home, and it gets replaced. Choose what share of problems gets caught."},
-  ctl:[{k:"X",type:"range",sym:"X",es:"Problemas que atrapa el escaneo",en:"Problems caught by scanning",min:0,max:90,step:5,fmt:v=>v+" %"}],
+  ctl:[{k:"X",type:"range",sym:"X",es:"De las cajas dañadas, el escaneo atrapa",en:"Problems caught by scanning",min:0,max:90,step:5,fmt:v=>v+" %"}],
   cost:{es:"Escanear cuesta: lectores, segundos en cada traspaso y stock de repuesto listo para reponer.",en:"Scanning costs: readers, seconds at every handoff and spare stock ready to replace."}},
  compute(st,seed){const o={n:st.n,pi:st.pi,X:st.X/100};const r=EC.ikea(o);r.batch=EC.iBatch(o,seed);r.fails=r.batch.filter(b=>b.bad>0).length;r.rep=r.batch.reduce((a,b)=>a+b.boxes.filter(s=>s===2).length,0);return r},
  story(r,st){return{h:T(`${HL(nf(r.you*100,1)+" de cada 100")} pedidos llegan con algo malo, aunque cada caja falle solo 1 vez en ${nf(EC.IP[st.pi])}.`,`${HL(nf(r.you*100,1)+" in every 100")} orders arrive with a problem, even though each box fails only 1 time in ${nf(EC.IP[st.pi])}.`),
@@ -1169,7 +1170,7 @@ const filaRho=st=>st.lam/(st.c*60/st.S);
 const GAME={
  bailey:{
   def:{c:6,N:30,s:20,d:0,rule:"juntos",g:12,I:20},
-  rule:SEGF("rule","Cómo citas","How you book",[["juntos","Todos a las 7:00","All at 7:00"],["libre","Sin cita","No booking"],["bailey","Regla de Bailey","Bailey's rule"]]),
+  rule:SEGF("rule","Cómo citas","How you book",[["juntos","Todos a las 7:00","All at 7:00",{es:"Todos citados a la apertura: el patio se llena de golpe.",en:"Everyone booked at opening: the yard floods at once."}],["libre","Sin cita","No booking",{es:"Cada camión llega cuando quiere, sin hora.",en:"Each truck arrives whenever, no slot."}],["bailey","Regla de Bailey","Bailey's rule",{es:"2 × andenes a la apertura y luego una tanda por franja: el colchón cubre a los atrasados.",en:"2 × docks at opening, then one batch per slot: the cushion covers latecomers."}]]),
   sliders:[RANGE("c","c","Andenes de carga","Loading docks",2,12,1,v=>v),RANGE("d","d","Desorden en las llegadas","Arrival disorder",0,30,1,v=>v===0?T("puntuales","on time"):"± "+v+" min")],
   ajustes:[STEP("N","N","Camiones del día","Trucks in the day",2,80),RANGE("s","s","Minutos de carga","Loading minutes",5,60,1,v=>v+" min")],
   chips:[["g","Todos puntuales","All on time",{d:0}],["y","Atrasos normales ±10","Normal delays ±10",{d:10}],["r","Día caótico ±30","Chaotic day ±30",{d:30}]],
@@ -1183,7 +1184,7 @@ const GAME={
   url:[["andenes","c",Number,v=>v],["desorden","d",Number,v=>v],["regla","rule",v=>({todos:"juntos",juntos:"juntos",libre:"libre",bailey:"bailey",turno:"seis",propia:"custom"})[v],v=>({juntos:"todos",libre:"libre",bailey:"bailey",seis:"turno",custom:"propia"})[v]],["camiones","N",Number,v=>v],["carga","s",Number,v=>v],["g","g",Number,v=>v],["i","I",Number,v=>v]]},
  fila:{
   def:{c:3,lam:10,S:15,pol:"asig",jq:false,cv:10},
-  rule:SEGF("pol","Cómo se elige la puerta","How the door is chosen",[["asig","Filas separadas","Separate lines"],["pool","1 fila única","1 single queue"]]),
+  rule:SEGF("pol","Cómo se elige la puerta","How the door is chosen",[["asig","Filas separadas","Separate lines",{es:"Cada camión tiene su puerta asignada: si está ocupada, espera aunque otra esté libre.",en:"Each truck has its own door: if it is busy, it waits even if another is free."}],["pool","1 fila única","1 single queue",{es:"Una sola fila: el primero que llega toma la primera puerta que se libera.",en:"One line: the first to arrive takes the first door that frees up."}]]),
   sliders:[RANGE("c","c","Puertas abiertas","Open doors",1,5,1,v=>v),RANGE("lam","λ","Camiones por hora","Trucks per hour",1,20,1,(v,st)=>`${v} /h · ${nf(Math.min(999,filaRho(st)*100))} %`,{zone:st=>{const z=0.85*st.c*60/st.S;return Math.max(0,Math.min(100,(z-1)/19*100))},hot:st=>filaRho(st)>=0.85})],
   ajustes:[CHECK("jq","Mandar a la fila más corta (jefe de patio)","Send to the shortest line (yard boss)"),RANGE("S","S","Minutos de descarga","Unloading minutes",3,60,1,v=>v+" min")],
   chips:[["g","Martes 11:00","Tuesday 11:00",{c:3,lam:6}],["y","Viernes 18:00 · el reel","Friday 18:00 · the reel",{c:3,lam:10}],["r","Quincena con 1 puerta menos","Payday with 1 door fewer",{c:2,lam:7}]],
@@ -1200,9 +1201,9 @@ const GAME={
   url:[["puertas","c",Number,v=>v],["camiones","lam",Number,v=>v],["regla","pol",v=>({separadas:"asig",unica:"pool"})[v],v=>({asig:"separadas",pool:"unica"})[v]],["jefe","jq",v=>v==="1",v=>v?1:0],["cv","cv",v=>Math.round(+v*10),v=>v/10],["minutos","S",Number,v=>v]]},
  nivel:{
   def:{p:980,n:85,meta:98,round:true,pen:5,days:24,period:"dia",x:0},
-  rule:SEGF("period","El contrato te mide","The contract measures you",[["dia","Cada día","Every day"],["semana","Cada semana","Every week"],["mes","Cada mes","Every month"]]),
-  sliders:[RANGE("p","p","Tu éxito real por parada","Your real success per stop",950,999,1,v=>nf(v/10,1)+" %"),RANGE("meta","m","Meta del contrato","Contract target",90,100,1,v=>v+" %")],
-  ajustes:[RANGE("n","n","Paradas por día","Stops per day",10,200,1,v=>v),RANGE("days","D","Días que trabajas al mes","Working days per month",10,31,1,v=>v),CHECK("round","El contrato redondea al entero","The contract rounds to whole %"),STEP("pen","$","Descuento por día penalizado (US$)","Deduction per penalized day (US$)",0,50)],
+  rule:SEGF("period","El contrato saca la nota","The contract grades you",[["dia","Cada día","Every day",{es:"Una nota por jornada: un día malo se paga solo.",en:"One grade per day: a bad day pays on its own."}],["semana","Cada semana","Every week",{es:"Una nota con los 6 días juntos: los buenos compensan a los malos.",en:"One grade for the 6 days together: good days make up for bad ones."}],["mes","Cada mes","Every month",{es:"Una nota con los 24 días: si el mes no cumple, se penaliza entero.",en:"One grade for the 24 days: if the month fails, it is penalized whole."}]]),
+  sliders:[RANGE("p","p","Tu éxito real por parada","Your real success per stop",950,999,1,v=>nf(v/10,1)+" %"),RANGE("meta","m","Meta del contrato","Contract target",90,100,1,v=>v+" %"),RANGE("n","n","Paradas (paquetes) por día","Stops (parcels) per day",10,200,1,v=>v)],
+  ajustes:[RANGE("days","D","Días que trabajas al mes","Working days per month",10,31,1,v=>v),CHECK("round","El contrato redondea al entero","The contract rounds to whole %"),STEP("pen","$","Descuento por día penalizado (US$)","Deduction per penalized day (US$)",0,50)],
   chips:[["g","Conductor estrella 99,5 %","Star driver 99.5 %",{p:995}],["y","El reel: 98 %","The reel: 98 %",{p:980}],["r","Mes de lluvia: 96 %","Rainy month: 96 %",{p:960}]],
   cta:{es:"Medir el mes completo",en:"Measure the whole month",set:{period:"mes"}},
   aha:{es:"¡Ajá! Mismo conductor, mismas fallas: los días buenos ahora compensan a los malos.",en:"Aha! Same driver, same failures: good days now make up for bad ones."},
@@ -1214,7 +1215,7 @@ const GAME={
   url:[["exito","p",v=>Math.round(+v*10),v=>v/10],["meta","meta",Number,v=>v],["eval","period",v=>v,v=>v],["paradas","n",Number,v=>v],["dias","days",Number,v=>v],["redondeo","round",v=>v!=="0",v=>v?1:0],["descuento","pen",Number,v=>v],["excluye","x",Number,v=>v]]},
  amazon:{
   def:{k:9,L:100,z:100,ord:"orden"},
-  rule:SEGF("ord","Tu bodega","Your warehouse",[["orden","Ordenada · 1 lugar","Tidy · 1 spot"],["caos","Con copias","With copies"]]),
+  rule:SEGF("ord","Tu bodega","Your warehouse",[["orden","Ordenada · 1 lugar","Tidy · 1 spot",{es:"El producto vive en un solo lugar del pasillo.",en:"The product lives in one spot of the aisle."}],["caos","Con copias","With copies",{es:"El mismo producto repartido en varios lugares: el operario va al más cercano.",en:"The same product spread over several spots: the picker goes to the nearest."}]]),
   sliders:[RANGE("k","k","Copias del producto","Copies of the product",2,20,1,v=>v,{off:st=>st.ord==="orden"}),RANGE("L","L","Largo del pasillo","Aisle length",10,300,5,v=>v+" m")],
   ajustes:[],
   chips:[["g","Bodega chica · 40 m","Small warehouse · 40 m",{L:40}],["y","El reel · 100 m","The reel · 100 m",{L:100}],["r","Centro gigante · 300 m","Giant center · 300 m",{L:300}]],
@@ -1229,8 +1230,8 @@ const GAME={
   url:[["copias","k",Number,v=>v],["pasillo","L",Number,v=>v],["orden","ord",v=>v==="desordenada"?"caos":"orden",v=>v==="caos"?"desordenada":"ordenada"],["zona","z",Number,v=>v]]},
  ikea:{
   def:{n:12,pi:3,X:50,pack:"cajas"},
-  rule:SEGF("pack","Cómo viaja el clóset","How the wardrobe travels",[["armado","Armado","Assembled"],["cajas","En cajas","In boxes"],["scan","Cajas + escaneo","Boxes + scanning"]]),
-  sliders:[RANGE("n","n","Cajas por pedido","Boxes per order",2,40,1,v=>v,{off:st=>st.pack==="armado"}),RANGE("pi","q","Cada pieza falla 1 de cada…","Each piece fails 1 in…",0,8,1,v=>nf(EC.IP[v]))],
+  rule:SEGF("pack","Cómo viaja el clóset","How the wardrobe travels",[["armado","Armado","Assembled",{es:"Un solo bulto: casi no falla, pero caben 3 por viaje.",en:"A single piece: almost never fails, but only 3 fit per trip."}],["cajas","En cajas","In boxes",{es:"Varias cajas: si una llega dañada, el clóset no se arma.",en:"Several boxes: if one arrives damaged, the wardrobe can't be built."}],["scan","Cajas + escaneo","Boxes + scanning",{es:"Cada caja se escanea al cargar: la dañada se cambia antes de salir.",en:"Each box is scanned when loading: a damaged one is swapped before leaving."}]]),
+  sliders:[RANGE("n","n","Cajas por pedido","Boxes per order",2,40,1,v=>v,{off:st=>st.pack==="armado"}),RANGE("pi","q","Una caja llega dañada 1 de cada…","One box arrives damaged, 1 in…",0,8,1,v=>nf(EC.IP[v]))],
   ajustes:[],
   chips:[["g","Velador · 3 cajas","Nightstand · 3 boxes",{n:3}],["y","Clóset PAX · 12 cajas","PAX wardrobe · 12 boxes",{n:12}],["r","Cocina · 40 cajas","Kitchen · 40 boxes",{n:40}]],
   cta:{es:"Escanear en cada entrega",en:"Scan at every delivery",set:{pack:"scan"}},next:{armado:"cajas",cajas:"scan"},
@@ -1244,7 +1245,7 @@ const GAME={
   url:[["cajas","n",Number,v=>v],["falla","pi",v=>Math.max(0,EC.IP.indexOf(+v)),v=>EC.IP[v]],["empaque","pack",v=>({armado:"armado",cajas:"cajas",escaneo:"scan"})[v]||"cajas",v=>({armado:"armado",cajas:"cajas",scan:"escaneo"})[v]],["atrapa","X",Number,v=>v]]},
  ups:{
   def:{W:60,X:150,v:25,G:20,pol:"dobla",r:0},
-  rule:SEGF("pol","Tu regla","Your rule",[["dobla","Siempre doblar","Always turn"],["evita","Siempre evitar","Always avoid"],["conviene","Solo si conviene","Only if it pays"]]),
+  rule:SEGF("pol","Tu regla","Your rule",[["dobla","Siempre doblar","Always turn",{es:"Espera el hueco en el cruce con el motor andando.",en:"Waits for a gap at the crossing with the engine running."}],["evita","Siempre evitar","Always avoid",{es:"Da la vuelta a la manzana: más metros, sin esperar.",en:"Goes around the block: more meters, no waiting."}],["conviene","Solo si conviene","Only if it pays",{es:"Mira el tráfico en cada cruce y evita el giro solo si la espera es larga.",en:"Checks traffic at each crossing and avoids the turn only when the wait is long."}]]),
   sliders:[RANGE("W","W","Espera para doblar","Wait to turn left",0,150,1,v=>v+" s"),RANGE("X","X","Metros extra para evitarlo","Extra meters to avoid it",0,600,10,v=>v+" m")],
   ajustes:[RANGE("v","v","Velocidad en ciudad","City speed",10,50,1,v=>v+" km/h"),RANGE("G","G","Giros a la izquierda al día","Left turns per day",0,80,1,v=>v)],
   chips:[["g","Madrugada · 10 s","Early morning · 10 s",{W:10}],["y","Hora normal · 60 s","Normal hour · 60 s",{W:60}],["r","Hora punta · 120 s","Rush hour · 120 s",{W:120}]],
@@ -1347,12 +1348,12 @@ function symChip(lab,c){return c.sym?`<span class="sym" data-k="${c.k}" style="-
 function ctlHTML(lab,w,c,focus){const i=cid(lab.id,w,c.k),lb=`${symChip(lab,c)}<span>${L(c.es,c.en)}</span>`,f=focus?" focus":"";
  if(c.type==="range")return `<div class="ctl${f}" data-k="${c.k}"><label for="${i}">${lb}<output id="${i}-o"></output></label><input type="range" id="${i}" min="${c.min}" max="${c.max}" step="${c.step}" style="--c:${lab.sym[c.k]||"#FFC726"}"></div>`;
  if(c.type==="step")return `<div class="ctl step${f}" data-k="${c.k}"><label>${lb}</label><div class="stepper"><button type="button" data-d="-1" aria-label="−">−</button><output id="${i}-o"></output><button type="button" data-d="1" aria-label="+">+</button></div></div>`;
- if(c.type==="seg")return `<div class="ctl segc${f}" data-k="${c.k}"><div class="seglbl">${L(c.es,c.en)}</div><div class="seg" id="${i}" role="group">${c.opts.map(o=>`<button type="button" data-v="${o[0]}">${L(o[1],o[2])}</button>`).join("")}</div></div>`;
+ if(c.type==="seg")return `<div class="ctl segc${f}" data-k="${c.k}"><div class="seglbl">${L(c.es,c.en)}</div><div class="seg" id="${i}" role="group">${c.opts.map(o=>`<button type="button" data-v="${o[0]}">${L(o[1],o[2])}</button>`).join("")}</div><p class="seghint" id="${i}-h"></p></div>`;
  if(c.type==="check")return `<div class="ctl check${f}" data-k="${c.k}"><label><input type="checkbox" id="${i}"><span class="tg"></span> ${L(c.es,c.en)}</label></div>`;
  return ""}
 function syncCtls(id){const st=STATE[id],lab=LAB[id];qsa(`[id^="c-${id}-"]`).forEach(el=>{const m=el.id.match(/^c-[a-z]+-([a-z])-(.+?)(-o)?$/);if(!m||m[3])return;const c=allDefs(id).find(x=>x.k===m[2]);if(!c)return;const o=$(el.id+"-o");
   if(c.type==="range"){if(c.range){const[lo,hi]=c.range(st);el.min=lo;el.max=hi}el.value=st[c.k];el.style.setProperty("--p",((st[c.k]-el.min)/((el.max-el.min)||1)*100)+"%");if(c.zone){el.classList.add("zoned");el.style.setProperty("--z",c.zone(st)+"%");el.style.setProperty("--c",c.hot(st)?"#FF4040":(lab.sym[c.k]||"#FFC726"))}const off=c.off&&c.off(st);el.disabled=!!off;el.closest(".ctl").classList.toggle("off",!!off);if(o)o.textContent=c.fmt(+st[c.k],st)}
-  else if(c.type==="seg")qsa("button",el).forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===String(st[c.k]))));
+  else if(c.type==="seg"){qsa("button",el).forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===String(st[c.k]))));const hh=$(el.id+"-h"),oo=c.opts.find(x=>x[0]===st[c.k]);if(hh)hh.textContent=oo&&oo[3]?tx(oo[3]):""}
   else if(c.type==="check")el.checked=!!st[c.k]});
  qsa(`.stepper output[id^="c-${id}-"]`).forEach(o=>{const k=o.id.replace(/^c-[a-z]+-[a-z]-/,"").replace(/-o$/,"");o.textContent=st[k]});
  qsa("#chips .chip").forEach((b,i)=>{const set=lab.game.chips[i][3];b.setAttribute("aria-pressed",String(Object.keys(set).every(k=>st[k]===set[k])))})}
@@ -1408,7 +1409,7 @@ function renderPanel(id){requestAnimationFrame(()=>{sizeStage();V.dirty=3});setT
   const t=$("trysol");if(t)t.addEventListener("click",()=>{V.mode="ready";onCtl(id,{[G.rule.k]:nextV},{force:true,noScene:true});play(id)});
   const a=$("again");if(a)a.addEventListener("click",()=>{V.mode="ready";renderPanel(id);mountLabScene(id)});
   $("edit").addEventListener("click",()=>openSheet(id,"ajustar"));qsa("[data-sheet]",pan).forEach(b=>b.addEventListener("click",()=>openSheet(id,b.dataset.sheet)));return}
- pan.innerHTML=`<p class="sit">${SIT[id](eff(id))}</p><div class="seg big" id="rulepick" role="group" aria-label="${tx({es:G.rule.es,en:G.rule.en})}">${G.rule.opts.map(o=>`<button type="button" data-v="${o[0]}" aria-pressed="${String(st[G.rule.k]===o[0])}">${L(o[1],o[2])}</button>`).join("")}</div><button class="play" id="play" type="button">▶ ${T("Simular","Simulate")} ${tx(RUNWORD[id])}</button><div class="links"><button type="button" data-sheet="ajustar">${T("Cambiar los números","Change the numbers")}</button><button type="button" data-sheet="ciencia">${T("Por qué pasa","Why it happens")}</button></div>`;
+ pan.innerHTML=`<p class="sit">${SIT[id](eff(id))}</p><div class="seg big" id="rulepick" role="group" aria-label="${tx({es:G.rule.es,en:G.rule.en})}">${G.rule.opts.map(o=>`<button type="button" data-v="${o[0]}" aria-pressed="${String(st[G.rule.k]===o[0])}">${L(o[1],o[2])}</button>`).join("")}</div>${(()=>{const o=G.rule.opts.find(x=>x[0]===st[G.rule.k]);return o&&o[3]?`<p class="seghint" id="rulehint">${tx(o[3])}</p>`:""})()}<button class="play" id="play" type="button">▶ ${T("Simular","Simulate")} ${tx(RUNWORD[id])}</button><div class="links"><button type="button" data-sheet="ajustar">${T("Cambiar los números","Change the numbers")}</button><button type="button" data-sheet="ciencia">${T("Por qué pasa","Why it happens")}</button></div>`;
  qsa("#rulepick button",pan).forEach(b=>b.addEventListener("click",()=>onCtl(id,{[G.rule.k]:b.dataset.v})));
  $("play").addEventListener("click",()=>play(id));qsa("[data-sheet]",pan).forEach(b=>b.addEventListener("click",()=>openSheet(id,b.dataset.sheet)))}
 function play(id){if(V.running)return;hideCoach();if(SHEET.kind)closeSheet();clearTimeout(sceneT);mountLabScene(id);if(!V.S||!V.S.startRun){V.mode="done";finishRun(true);return}V.S.startRun();V.running=true;V.skip=reduce;V.runSp=RUNSP[id]||1;V.mode="run";renderPanel(id);buzz(8)}

@@ -220,7 +220,7 @@ const LABS=[
  def:{n:12,pi:3,X:0},
  levers:[{k:"n",type:"step",sym:"n",es:"Cajas por pedido",en:"Boxes per order",min:1,max:40},{k:"pi",type:"range",sym:"q",es:"Cada caja falla 1 de cada…",en:"Each box fails 1 in…",min:0,max:8,step:1,fmt:v=>nf(EC.IP[v])}],
  reto:{intro:{es:"Escanear cada caja en cada traspaso (bodega, camión, reparto) atrapa la que falta o viene dañada antes de que llegue a la casa, y se repone. Elige qué parte de los problemas se atrapa.",en:"Scanning every box at every handoff (warehouse, truck, delivery) catches the missing or damaged one before it reaches the home, and it gets replaced. Choose what share of problems gets caught."},
-  ctl:[{k:"X",type:"range",sym:"X",es:"Problemas que atrapa el escaneo",en:"Problems caught by scanning",min:0,max:90,step:5,fmt:v=>v+" %"}],
+  ctl:[{k:"X",type:"range",sym:"X",es:"De las cajas dañadas, el escaneo atrapa",en:"Problems caught by scanning",min:0,max:90,step:5,fmt:v=>v+" %"}],
   cost:{es:"Escanear cuesta: lectores, segundos en cada traspaso y stock de repuesto listo para reponer.",en:"Scanning costs: readers, seconds at every handoff and spare stock ready to replace."}},
  compute(st,seed){const o={n:st.n,pi:st.pi,X:st.X/100};const r=EC.ikea(o);r.batch=EC.iBatch(o,seed);r.fails=r.batch.filter(b=>b.bad>0).length;r.rep=r.batch.reduce((a,b)=>a+b.boxes.filter(s=>s===2).length,0);return r},
  story(r,st){return{h:T(`${HL(nf(r.you*100,1)+" de cada 100")} pedidos llegan con algo malo, aunque cada caja falle solo 1 vez en ${nf(EC.IP[st.pi])}.`,`${HL(nf(r.you*100,1)+" in every 100")} orders arrive with a problem, even though each box fails only 1 time in ${nf(EC.IP[st.pi])}.`),

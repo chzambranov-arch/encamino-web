@@ -16,7 +16,7 @@ const filaRho=st=>st.lam/(st.c*60/st.S);
 const GAME={
  bailey:{
   def:{c:6,N:30,s:20,d:0,rule:"juntos",g:12,I:20},
-  rule:SEGF("rule","Cómo citas","How you book",[["juntos","Todos a las 7:00","All at 7:00"],["libre","Sin cita","No booking"],["bailey","Regla de Bailey","Bailey's rule"]]),
+  rule:SEGF("rule","Cómo citas","How you book",[["juntos","Todos a las 7:00","All at 7:00",{es:"Todos citados a la apertura: el patio se llena de golpe.",en:"Everyone booked at opening: the yard floods at once."}],["libre","Sin cita","No booking",{es:"Cada camión llega cuando quiere, sin hora.",en:"Each truck arrives whenever, no slot."}],["bailey","Regla de Bailey","Bailey's rule",{es:"2 × andenes a la apertura y luego una tanda por franja: el colchón cubre a los atrasados.",en:"2 × docks at opening, then one batch per slot: the cushion covers latecomers."}]]),
   sliders:[RANGE("c","c","Andenes de carga","Loading docks",2,12,1,v=>v),RANGE("d","d","Desorden en las llegadas","Arrival disorder",0,30,1,v=>v===0?T("puntuales","on time"):"± "+v+" min")],
   ajustes:[STEP("N","N","Camiones del día","Trucks in the day",2,80),RANGE("s","s","Minutos de carga","Loading minutes",5,60,1,v=>v+" min")],
   chips:[["g","Todos puntuales","All on time",{d:0}],["y","Atrasos normales ±10","Normal delays ±10",{d:10}],["r","Día caótico ±30","Chaotic day ±30",{d:30}]],
@@ -30,7 +30,7 @@ const GAME={
   url:[["andenes","c",Number,v=>v],["desorden","d",Number,v=>v],["regla","rule",v=>({todos:"juntos",juntos:"juntos",libre:"libre",bailey:"bailey",turno:"seis",propia:"custom"})[v],v=>({juntos:"todos",libre:"libre",bailey:"bailey",seis:"turno",custom:"propia"})[v]],["camiones","N",Number,v=>v],["carga","s",Number,v=>v],["g","g",Number,v=>v],["i","I",Number,v=>v]]},
  fila:{
   def:{c:3,lam:10,S:15,pol:"asig",jq:false,cv:10},
-  rule:SEGF("pol","Cómo se elige la puerta","How the door is chosen",[["asig","Filas separadas","Separate lines"],["pool","1 fila única","1 single queue"]]),
+  rule:SEGF("pol","Cómo se elige la puerta","How the door is chosen",[["asig","Filas separadas","Separate lines",{es:"Cada camión tiene su puerta asignada: si está ocupada, espera aunque otra esté libre.",en:"Each truck has its own door: if it is busy, it waits even if another is free."}],["pool","1 fila única","1 single queue",{es:"Una sola fila: el primero que llega toma la primera puerta que se libera.",en:"One line: the first to arrive takes the first door that frees up."}]]),
   sliders:[RANGE("c","c","Puertas abiertas","Open doors",1,5,1,v=>v),RANGE("lam","λ","Camiones por hora","Trucks per hour",1,20,1,(v,st)=>`${v} /h · ${nf(Math.min(999,filaRho(st)*100))} %`,{zone:st=>{const z=0.85*st.c*60/st.S;return Math.max(0,Math.min(100,(z-1)/19*100))},hot:st=>filaRho(st)>=0.85})],
   ajustes:[CHECK("jq","Mandar a la fila más corta (jefe de patio)","Send to the shortest line (yard boss)"),RANGE("S","S","Minutos de descarga","Unloading minutes",3,60,1,v=>v+" min")],
   chips:[["g","Martes 11:00","Tuesday 11:00",{c:3,lam:6}],["y","Viernes 18:00 · el reel","Friday 18:00 · the reel",{c:3,lam:10}],["r","Quincena con 1 puerta menos","Payday with 1 door fewer",{c:2,lam:7}]],
@@ -47,9 +47,9 @@ const GAME={
   url:[["puertas","c",Number,v=>v],["camiones","lam",Number,v=>v],["regla","pol",v=>({separadas:"asig",unica:"pool"})[v],v=>({asig:"separadas",pool:"unica"})[v]],["jefe","jq",v=>v==="1",v=>v?1:0],["cv","cv",v=>Math.round(+v*10),v=>v/10],["minutos","S",Number,v=>v]]},
  nivel:{
   def:{p:980,n:85,meta:98,round:true,pen:5,days:24,period:"dia",x:0},
-  rule:SEGF("period","El contrato te mide","The contract measures you",[["dia","Cada día","Every day"],["semana","Cada semana","Every week"],["mes","Cada mes","Every month"]]),
-  sliders:[RANGE("p","p","Tu éxito real por parada","Your real success per stop",950,999,1,v=>nf(v/10,1)+" %"),RANGE("meta","m","Meta del contrato","Contract target",90,100,1,v=>v+" %")],
-  ajustes:[RANGE("n","n","Paradas por día","Stops per day",10,200,1,v=>v),RANGE("days","D","Días que trabajas al mes","Working days per month",10,31,1,v=>v),CHECK("round","El contrato redondea al entero","The contract rounds to whole %"),STEP("pen","$","Descuento por día penalizado (US$)","Deduction per penalized day (US$)",0,50)],
+  rule:SEGF("period","El contrato saca la nota","The contract grades you",[["dia","Cada día","Every day",{es:"Una nota por jornada: un día malo se paga solo.",en:"One grade per day: a bad day pays on its own."}],["semana","Cada semana","Every week",{es:"Una nota con los 6 días juntos: los buenos compensan a los malos.",en:"One grade for the 6 days together: good days make up for bad ones."}],["mes","Cada mes","Every month",{es:"Una nota con los 24 días: si el mes no cumple, se penaliza entero.",en:"One grade for the 24 days: if the month fails, it is penalized whole."}]]),
+  sliders:[RANGE("p","p","Tu éxito real por parada","Your real success per stop",950,999,1,v=>nf(v/10,1)+" %"),RANGE("meta","m","Meta del contrato","Contract target",90,100,1,v=>v+" %"),RANGE("n","n","Paradas (paquetes) por día","Stops (parcels) per day",10,200,1,v=>v)],
+  ajustes:[RANGE("days","D","Días que trabajas al mes","Working days per month",10,31,1,v=>v),CHECK("round","El contrato redondea al entero","The contract rounds to whole %"),STEP("pen","$","Descuento por día penalizado (US$)","Deduction per penalized day (US$)",0,50)],
   chips:[["g","Conductor estrella 99,5 %","Star driver 99.5 %",{p:995}],["y","El reel: 98 %","The reel: 98 %",{p:980}],["r","Mes de lluvia: 96 %","Rainy month: 96 %",{p:960}]],
   cta:{es:"Medir el mes completo",en:"Measure the whole month",set:{period:"mes"}},
   aha:{es:"¡Ajá! Mismo conductor, mismas fallas: los días buenos ahora compensan a los malos.",en:"Aha! Same driver, same failures: good days now make up for bad ones."},
@@ -61,7 +61,7 @@ const GAME={
   url:[["exito","p",v=>Math.round(+v*10),v=>v/10],["meta","meta",Number,v=>v],["eval","period",v=>v,v=>v],["paradas","n",Number,v=>v],["dias","days",Number,v=>v],["redondeo","round",v=>v!=="0",v=>v?1:0],["descuento","pen",Number,v=>v],["excluye","x",Number,v=>v]]},
  amazon:{
   def:{k:9,L:100,z:100,ord:"orden"},
-  rule:SEGF("ord","Tu bodega","Your warehouse",[["orden","Ordenada · 1 lugar","Tidy · 1 spot"],["caos","Con copias","With copies"]]),
+  rule:SEGF("ord","Tu bodega","Your warehouse",[["orden","Ordenada · 1 lugar","Tidy · 1 spot",{es:"El producto vive en un solo lugar del pasillo.",en:"The product lives in one spot of the aisle."}],["caos","Con copias","With copies",{es:"El mismo producto repartido en varios lugares: el operario va al más cercano.",en:"The same product spread over several spots: the picker goes to the nearest."}]]),
   sliders:[RANGE("k","k","Copias del producto","Copies of the product",2,20,1,v=>v,{off:st=>st.ord==="orden"}),RANGE("L","L","Largo del pasillo","Aisle length",10,300,5,v=>v+" m")],
   ajustes:[],
   chips:[["g","Bodega chica · 40 m","Small warehouse · 40 m",{L:40}],["y","El reel · 100 m","The reel · 100 m",{L:100}],["r","Centro gigante · 300 m","Giant center · 300 m",{L:300}]],
@@ -76,8 +76,8 @@ const GAME={
   url:[["copias","k",Number,v=>v],["pasillo","L",Number,v=>v],["orden","ord",v=>v==="desordenada"?"caos":"orden",v=>v==="caos"?"desordenada":"ordenada"],["zona","z",Number,v=>v]]},
  ikea:{
   def:{n:12,pi:3,X:50,pack:"cajas"},
-  rule:SEGF("pack","Cómo viaja el clóset","How the wardrobe travels",[["armado","Armado","Assembled"],["cajas","En cajas","In boxes"],["scan","Cajas + escaneo","Boxes + scanning"]]),
-  sliders:[RANGE("n","n","Cajas por pedido","Boxes per order",2,40,1,v=>v,{off:st=>st.pack==="armado"}),RANGE("pi","q","Cada pieza falla 1 de cada…","Each piece fails 1 in…",0,8,1,v=>nf(EC.IP[v]))],
+  rule:SEGF("pack","Cómo viaja el clóset","How the wardrobe travels",[["armado","Armado","Assembled",{es:"Un solo bulto: casi no falla, pero caben 3 por viaje.",en:"A single piece: almost never fails, but only 3 fit per trip."}],["cajas","En cajas","In boxes",{es:"Varias cajas: si una llega dañada, el clóset no se arma.",en:"Several boxes: if one arrives damaged, the wardrobe can't be built."}],["scan","Cajas + escaneo","Boxes + scanning",{es:"Cada caja se escanea al cargar: la dañada se cambia antes de salir.",en:"Each box is scanned when loading: a damaged one is swapped before leaving."}]]),
+  sliders:[RANGE("n","n","Cajas por pedido","Boxes per order",2,40,1,v=>v,{off:st=>st.pack==="armado"}),RANGE("pi","q","Una caja llega dañada 1 de cada…","One box arrives damaged, 1 in…",0,8,1,v=>nf(EC.IP[v]))],
   ajustes:[],
   chips:[["g","Velador · 3 cajas","Nightstand · 3 boxes",{n:3}],["y","Clóset PAX · 12 cajas","PAX wardrobe · 12 boxes",{n:12}],["r","Cocina · 40 cajas","Kitchen · 40 boxes",{n:40}]],
   cta:{es:"Escanear en cada entrega",en:"Scan at every delivery",set:{pack:"scan"}},next:{armado:"cajas",cajas:"scan"},
@@ -91,7 +91,7 @@ const GAME={
   url:[["cajas","n",Number,v=>v],["falla","pi",v=>Math.max(0,EC.IP.indexOf(+v)),v=>EC.IP[v]],["empaque","pack",v=>({armado:"armado",cajas:"cajas",escaneo:"scan"})[v]||"cajas",v=>({armado:"armado",cajas:"cajas",scan:"escaneo"})[v]],["atrapa","X",Number,v=>v]]},
  ups:{
   def:{W:60,X:150,v:25,G:20,pol:"dobla",r:0},
-  rule:SEGF("pol","Tu regla","Your rule",[["dobla","Siempre doblar","Always turn"],["evita","Siempre evitar","Always avoid"],["conviene","Solo si conviene","Only if it pays"]]),
+  rule:SEGF("pol","Tu regla","Your rule",[["dobla","Siempre doblar","Always turn",{es:"Espera el hueco en el cruce con el motor andando.",en:"Waits for a gap at the crossing with the engine running."}],["evita","Siempre evitar","Always avoid",{es:"Da la vuelta a la manzana: más metros, sin esperar.",en:"Goes around the block: more meters, no waiting."}],["conviene","Solo si conviene","Only if it pays",{es:"Mira el tráfico en cada cruce y evita el giro solo si la espera es larga.",en:"Checks traffic at each crossing and avoids the turn only when the wait is long."}]]),
   sliders:[RANGE("W","W","Espera para doblar","Wait to turn left",0,150,1,v=>v+" s"),RANGE("X","X","Metros extra para evitarlo","Extra meters to avoid it",0,600,10,v=>v+" m")],
   ajustes:[RANGE("v","v","Velocidad en ciudad","City speed",10,50,1,v=>v+" km/h"),RANGE("G","G","Giros a la izquierda al día","Left turns per day",0,80,1,v=>v)],
   chips:[["g","Madrugada · 10 s","Early morning · 10 s",{W:10}],["y","Hora normal · 60 s","Normal hour · 60 s",{W:60}],["r","Hora punta · 120 s","Rush hour · 120 s",{W:120}]],
