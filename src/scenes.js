@@ -94,7 +94,8 @@ function sceneFila(st){const c=st.c,MAXQ=5,LW=3.5,TL=0.92,SP=3.5;const W=Math.ma
   if(p==="pool"){pool.forEach((tr,j)=>{const w=t-tr.a;maxw=Math.max(maxw,w);if(j<MAXQ)place(tr,0,queueZ(j),-Math.PI/2,false,waitCol(w),w>45)})}
   else q.forEach((ar,k)=>ar.forEach((tr,j)=>{const w=t-tr.a;maxw=Math.max(maxw,w);if(j<MAXQ)place(tr,lane(k),queueZ(j),-Math.PI/2,false,waitCol(w),w>45)}));
   busy.forEach((tr,k)=>{if(tr!==-1)place(tr,lane(k),zD-0.6,Math.PI/2,true,P.mint,false)});
-  trucks.forEach(tr=>{if(tr.out&&tr.slot>=0){const side=tr.door<c/2?-1:1;F.go(tr.slot,side*(W/2-1),zD-1.6,0);F.col[tr.slot]=P.mint;shown.add(tr.slot);if(Math.abs(F.cx[tr.slot])>W/2-2.2||t-tr.leftAt>6){F.leave(tr.slot);if(!F.on[tr.slot]){free.push(tr.slot);tr.slot=-2}}}});
+  /* trucks that finished: drive to the side, fade out, and only then give the slot back (go() would revive a fading truck, so never call it once it is leaving) */
+  trucks.forEach(tr=>{if(tr.out&&tr.slot>=0){const i=tr.slot;if(!F.on[i]){free.push(i);tr.slot=-2;return}if(F.ts[i]===0)return;const side=tr.door<c/2?-1:1;F.go(i,side*(W/2-1),zD-1.6,0);F.col[i]=P.mint;shown.add(i);if(Math.abs(F.cx[i])>W/2-2.2||t-tr.leftAt>6)F.leave(i)}});
   trucks.forEach(tr=>{if(tr.slot>=0&&!shown.has(tr.slot)&&!tr.out){F.leave(tr.slot);if(!F.on[tr.slot]){free.push(tr.slot);tr.slot=-1}}});
   trucks=trucks.filter(tr=>!(tr.out&&tr.slot===-2)&&!(tr.out&&tr.slot===-1));
   const anyQ=p==="pool"?pool.length>0:q.some(a=>a.length>0);const a=1-Math.exp(-8*dt);

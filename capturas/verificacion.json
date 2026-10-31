@@ -1,6 +1,6 @@
 {
- "fecha": "2026-10-31T17:50:00.825Z",
- "total": 88,
+ "fecha": "2026-10-31T18:08:41.140Z",
+ "total": 89,
  "fallas": 0,
  "checks": [
   {
@@ -428,7 +428,7 @@
   {
    "name": "IKEA · distingue esta partida del promedio",
    "pass": true,
-   "got": "Esta partida: 1 de 100 entregas · el grande es el promedio"
+   "got": "Esta partida: 2 de 100 entregas · el grande es el promedio"
   },
   {
    "name": "IKEA · armado → cajas: explica el trade-off (5 viajes en vez de 34) y no celebra",
@@ -488,6 +488,15 @@
    "name": "Amazon · el ¡Ajá! usa tus copias (4 lugares, 20,0 m), no «9 lugares» fijo",
    "pass": true,
    "got": "¡Ajá! El mismo producto en 4 lugares: casi siempre hay uno cerca, y en promedio se camina 20,0 m en vez de 50,0."
+  },
+  {
+   "name": "Fila · con 4 puertas y 17/h el patio se ve lleno al final (≥ 15 camiones) y el ∞ viene explicado",
+   "pass": true,
+   "got": {
+    "vis": 20,
+    "rv": "∞",
+    "note": "Llegan 17 camiones por hora y 4 puertas atienden 16,0: la fila crece sin fin y ninguna regla la salva. Abre una puerta o baja los camiones por hora."
+   }
   },
   {
    "name": "Portada · Bailey compara promedio con promedio (40 → 16 min)",

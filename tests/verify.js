@@ -155,6 +155,11 @@ const es1=x=>x.toLocaleString("es-CL",{minimumFractionDigits:1,maximumFractionDi
  await q.goto(BASE+"?reel=2&copias=4");await q.waitForSelector("#play");await q.waitForTimeout(1200);await runOnce();
  await q.tap("#trysol");await q.waitForTimeout(500);await q.tap("#skip").catch(()=>{});await q.waitForFunction(()=>ECAPP.mode==="done",null,{timeout:40000});await q.waitForTimeout(900);
  const amA=await q.evaluate(()=>(document.querySelector(".raha")||{}).textContent||"");ok("Amazon · el ¡Ajá! usa tus copias (4 lugares, 20,0 m), no «9 lugares» fijo",/4 lugares/.test(amA)&&/20,0 m/.test(amA),amA);
+ /* the yard must stay full of trucks for the whole run (slots are given back when a truck leaves) */
+ await q.goto(BASE+"?caso=fila&puertas=4&camiones=17&regla=separadas");await q.waitForSelector("#play");await q.waitForTimeout(1200);
+ await q.tap("#play");await q.waitForFunction(()=>ECAPP.mode==="done",null,{timeout:60000});await q.waitForTimeout(800);
+ const yard=await q.evaluate(()=>{const F=ECAPP.S.fleet;let vis=0;for(let i=0;i<F.n;i++)if(F.on[i]&&F.s[i]>0.5)vis++;return{vis,rv:document.querySelector("#rv").textContent,note:(document.querySelector(".rnote")||{}).textContent||""}});
+ ok("Fila · con 4 puertas y 17/h el patio se ve lleno al final (≥ 15 camiones) y el ∞ viene explicado",yard.vis>=15&&yard.rv==="∞"&&/crece sin fin/.test(yard.note),yard);await shot(q,"celular_ig_fila_colapso");
  ok("Portada · Bailey compara promedio con promedio (40 → 16 min)",/40 → 16 min/.test(html)&&!/80 → 16 min/.test(html));
 ok("Sin preserveDrawingBuffer (ahorra GPU en el WebView) y con recuperación del contexto WebGL",!/preserveDrawingBuffer:true/.test(html)&&/webglcontextrestored/.test(html));
  ok("Sin control flotante sobre la maqueta (una cosa a la vez)",!/id="anchor"/.test(html)&&!/renderAnchor/.test(html));
