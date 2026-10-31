@@ -52,7 +52,7 @@ function sceneBailey(st){const c=st.c,N=st.N;const BW=Math.max(c*3.2+3,14);const
   F.step(dt,9);S.clock=clock(tm);
   if(tm<0.5)S.cap=T(`7:00: abren ${B_(c+" andenes")} y llegan ${B_(N+" camiones")}.`,`7:00: ${B_(c+" docks")} open and ${B_(N+" trucks")} arrive.`);
   else if(tm>day.fin)S.cap=T(`Listo: la última carga terminó a las ${B_(clock(day.fin))}.`,`Done: the last load finished at ${B_(clock(day.fin))}.`);
-  if(tm>=day.fin){const ws=day.tr.map(q=>q.st-q.arr);S.obs={v:nf(ws.reduce((a,b)=>a+b,0)/ws.length,1)+" min",l:T("este día","this day")}}
+  if(tm>=day.fin){const ws=day.tr.map(q=>q.st-q.arr);S.obs=()=>({v:nf(ws.reduce((a,b)=>a+b,0)/ws.length,1)+" min",l:T("este día","this day")})}
   else if(wait.length)S.cap=T(`${B_(wait.length+(wait.length===1?" camión esperando":" camiones esperando"))} · el que más lleva ${B_(nf(maxW)+" min")}`,`${B_(wait.length+(wait.length===1?" truck waiting":" trucks waiting"))} · the longest has waited ${B_(nf(maxW)+" min")}`);
   else S.cap=T("Nadie espera: cada camión entra directo a un andén.","Nobody waits: every truck goes straight to a dock.");return true}
  S.fleet=F;S.info=i=>{const q=day&&day.tr[i];if(!q)return null;const tm=S.tm;if(tm<q.st)return T(`Esperando hace <b>${nf(tm-q.arr)} min</b>`,`Waiting for <b>${nf(tm-q.arr)} min</b>`);if(tm<q.end)return T(`Cargando en el andén ${q.d+1} · esperó ${nf(q.st-q.arr)} min`,`Loading at dock ${q.d+1} · waited ${nf(q.st-q.arr)} min`);return T(`Listo · esperó ${nf(q.st-q.arr)} min`,`Done · waited ${nf(q.st-q.arr)} min`)};
@@ -83,7 +83,7 @@ function sceneFila(st){const c=st.c,MAXQ=5,LW=3.5,TL=0.92,SP=3.5;const W=Math.ma
  const pol=()=>cur.pol==="pool"?"pool":(cur.jq?"jsq":"asig");
  const expo=m=>-Math.log(1-rng())*m;
  function svc(){const cv=cur.cv/10;if(cv>=0.999)return expo(cur.S);const k=1/(cv*cv);let s=0;for(let i=0;i<3;i++)s+=expo(1);return Math.max(0.2*cur.S,cur.S*(1+(s/3-1)*cv*1.7))}
- function assign(tr){const p=pol();if(p==="pool")pool.push(tr);else if(p==="asig"){tr.lane=Math.floor(rng()*c);q[tr.lane].push(tr)}else{let b=0,bn=1e9;for(let k=0;k<c;k++){const n=q[k].length+(busy[k]>=0?1:0);if(n<bn){bn=n;b=k}}tr.lane=b;q[b].push(tr)}}
+ function assign(tr){const p=pol();if(p==="pool")pool.push(tr);else if(p==="asig"){tr.lane=Math.floor(rng()*c);q[tr.lane].push(tr)}else{let b=0,bn=1e9;for(let k=0;k<c;k++){const n=q[k].length+(busy[k]!==-1?1:0);if(n<bn){bn=n;b=k}}tr.lane=b;q[b].push(tr)}}
  function step(h){t+=h;const lam=cur.lam;while(nextA<=t){const tr={a:nextA,s:svc(),st:-1,slot:-1,lane:-1,out:false};trucks.push(tr);assign(tr);nextA+=expo(60/Math.max(0.2,lam))}
   for(let k=0;k<c;k++){const b=busy[k];if(b&&b.e<=t){b.out=true;b.leftAt=t;busy[k]=-1}if(busy[k]===-1){const nx=pol()==="pool"?pool.shift():q[k].shift();if(nx){nx.st=t;nx.e=t+nx.s;nx.door=k;busy[k]=nx;if(S.simT>0){OBS.n++;OBS.w+=t-nx.a}}}}
   if(pool.length+q.reduce((a,b)=>a+b.length,0)>500){pool.length=Math.min(pool.length,500)}}
@@ -143,8 +143,8 @@ function sceneNivel(st){const days=st.days,cols=6,rows=Math.ceil(days/cols);cons
   const a=dt*7;tiles.forEach(t=>{if(t.ang>0){t.ang=Math.min(Math.PI,t.ang+a);if(t.ang>Math.PI/2)t.col=t.tc;t.m.rotation.y=t.ang;if(t.ang>=Math.PI){t.ang=0;t.m.rotation.y=0}}t.m.material=mat(t.col)});
   const qq=S.cam.quaternion;BANG.step(dt,qq,ms/1000);CHK.step(dt,qq,ms/1000);Q.step(dt,qq,ms/1000);
   const red=month.slice(0,evalUpto).filter(x=>!x.ok).length;S.clock=T(`Día ${d+1} de ${days}`,`Day ${d+1} of ${days}`);
-  if(fin){S.cap=T(`Mes terminado: ${B_(red+(red===1?" día penalizado":" días penalizados"))} de ${days}.`,`Month over: ${B_(red+(red===1?" penalized day":" penalized days"))} out of ${days}.`);S.obs={v:nf(red/days*100,1)+" %",l:T(`este mes: ${red} de ${days} días`,`this month: ${red} of ${days} days`)}}
-  else{const fm=EC.fmaxOf(month.n,month.meta,month.round);const ok=D0.f<=fm;
+  if(fin){S.cap=T(`Mes terminado: ${B_(red+(red===1?" día penalizado":" días penalizados"))} de ${days}.`,`Month over: ${B_(red+(red===1?" penalized day":" penalized days"))} out of ${days}.`);S.obs=()=>({v:nf(red/days*100,1)+" %",l:T(`este mes: ${red} de ${days} días`,`this month: ${red} of ${days} days`)})}
+  else{const fm=EC.fmaxOf(month.n-D0.e,month.meta,month.round);const ok=EC.okDay(D0.f,month.n-D0.e,month.meta,month.round);
    S.cap=L===1?T(`Día ${d+1}: ${B_(D0.f+(D0.f===1?" falla":" fallas"))}. Puedes fallar ${fm}: ${ok?"día pagado":B_("día penalizado")}.`,`Day ${d+1}: ${B_(D0.f+(D0.f===1?" failure":" failures"))}. You may fail ${fm}: ${ok?"day paid":B_("day penalized")}.`)
     :T(`Día ${d+1}: ${B_(D0.f+" fallas")}. Se juzga al cerrar ${L===6?"la semana":"el mes"}: los días buenos compensan.`,`Day ${d+1}: ${B_(D0.f+" failures")}. Judged when the ${L===6?"week":"month"} closes: good days make up.`)}
   return true}
@@ -184,7 +184,7 @@ function sceneAmazon(st){const bays=Math.max(2,Math.round(Math.min(60,Math.max(4
  S.apply=(st2)=>{cur=Object.assign({},st2);newOrder()};
  S.prewarm=()=>{newOrder();ms=dur*0.3;at(0.016)};
  S.startRun=()=>{n=0;sum=0;newOrder();S.done=false;S.obs=null};S.progress=()=>Math.min(1,(n+Math.min(1,ms/dur))/4);
- S.tick=(dt,sp)=>{if(!ord)newOrder();ms+=dt*1000*sp;if(ms>=dur){n++;sum+=ord.near;if(n>=4){ms=dur;S.done=true;S.obs={v:nf(sum/4,1)+" m",l:T("en estos 4 pedidos","in these 4 orders")};return at(dt)}newOrder()}return at(dt)};
+ S.tick=(dt,sp)=>{if(!ord)newOrder();ms+=dt*1000*sp;if(ms>=dur){n++;sum+=ord.near;if(n>=4){ms=dur;S.done=true;S.obs=()=>({v:nf(sum/4,1)+" m",l:T("en estos 4 pedidos","in these 4 orders")});return at(dt)}newOrder()}return at(dt)};
  S.ff=st2=>S.apply(st2);
  return S}
 
@@ -227,7 +227,7 @@ function sceneIkea(st){const n=st.pack==="armado"?1:st.n,big=st.pack==="armado",
  S.apply=(st2)=>{cur=Object.assign({},st2);reset()};
  S.prewarm=()=>{reset()};
  S.startRun=()=>{reset();S.done=false;S.obs=null};S.progress=()=>ms/dur;
- S.tick=(dt,sp)=>{if(!batch)reset();ms+=dt*1000*sp;if(ms>=dur){ms=dur;S.done=true;const bad=batch.filter(o=>o.bad).length;S.obs={v:bad+" "+T("de 100","of 100"),l:T("entregas","deliveries")}}return at(dt)};
+ S.tick=(dt,sp)=>{if(!batch)reset();ms+=dt*1000*sp;if(ms>=dur){ms=dur;S.done=true;const bad=batch.filter(o=>o.bad).length;S.obs=()=>({v:bad+" "+T("de 100","of 100"),l:T("entregas","deliveries")})}return at(dt)};
  return S}
 
 /* ---------------- UPS · the race repeats ---------------- */

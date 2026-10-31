@@ -160,6 +160,19 @@ const es1=x=>x.toLocaleString("es-CL",{minimumFractionDigits:1,maximumFractionDi
  await q.tap("#play");await q.waitForFunction(()=>ECAPP.mode==="done",null,{timeout:60000});await q.waitForTimeout(800);
  const yard=await q.evaluate(()=>{const F=ECAPP.S.fleet;let vis=0;for(let i=0;i<F.n;i++)if(F.on[i]&&F.s[i]>0.5)vis++;return{vis,rv:document.querySelector("#rv").textContent,note:(document.querySelector(".rnote")||{}).textContent||""}});
  ok("Fila · con 4 puertas y 17/h el patio se ve lleno al final (≥ 15 camiones) y el ∞ viene explicado",yard.vis>=15&&yard.rv==="∞"&&/crece sin fin/.test(yard.note),yard);await shot(q,"celular_ig_fila_colapso");
+ /* review round 3: run state, English numbers, invalid links, reset */
+ await q.goto(BASE+"?reel=6");await q.waitForSelector("#play");await q.waitForTimeout(1000);await q.tap("#play");await q.waitForTimeout(600);
+ await q.evaluate(()=>{location.hash="#bailey"});await q.waitForSelector("#play");await q.waitForTimeout(900);
+ const rs=await q.evaluate(()=>({running:ECAPP.running,mode:ECAPP.mode}));ok("Cambiar de página a mitad de corrida no deja la simulación corriendo",rs.running===false&&rs.mode==="ready",rs);
+ await q.evaluate(()=>document.getElementById("lang-en").click());await q.goto(BASE+"?caso=fila&puertas=2&camiones=7&regla=separadas");await q.waitForSelector("#play");await q.waitForTimeout(1000);
+ const v0=await runOnce();await q.tap("#trysol");await q.waitForTimeout(400);await q.tap("#skip").catch(()=>{});await q.waitForFunction(()=>ECAPP.mode==="done",null,{timeout:40000});await q.waitForTimeout(900);
+ const en=await q.evaluate(()=>({v:document.querySelector("#rv").textContent,cmp:(document.querySelector(".rcmp")||{}).textContent||"",aha:!!document.querySelector(".raha"),ouch:!!document.querySelector(".rouch")}));
+ ok("En inglés (105.0 → 49.0) la comparación y la lección siguen siendo correctas",v0==="105"&&en.v==="49.0"&&/−53 %/.test(en.cmp)&&en.aha&&!en.ouch,{v0,en});await q.evaluate(()=>document.getElementById("lang-es").click());
+ await q.goto(BASE+"?caso=fila&puertas=0&camiones=abc&regla=loquesea");await q.waitForSelector("#play");await q.waitForTimeout(900);
+ const inv=await q.evaluate(()=>({st:ECAPP.STATE.fila,rv:document.querySelector(".sit").textContent}));ok("Link con valores inválidos (0 puertas, texto) cae en los valores del reel sin romperse",inv.st.c===3&&inv.st.lam===10&&inv.st.pol==="asig"&&/3 puertas/.test(inv.rv),inv);
+ await q.goto(BASE+"?caso=nivel&eval=foo&dias=0&excluye=150");await q.waitForSelector("#play");await q.waitForTimeout(900);const nvI=await runOnce();ok("Nivel · link con período inválido y 0 días: resultado válido (24,2)",nvI==="24,2",nvI);
+ await q.goto(BASE+"?reel=4&g=15");await q.waitForSelector("#play");await q.waitForTimeout(900);await q.evaluate(()=>ECAPP.set("bailey",Object.assign({},ECAPP.LAB.bailey.def),{force:true}));await q.waitForTimeout(400);
+ const rst=await q.evaluate(()=>ECAPP.STATE.bailey.rule);ok("Bailey · «Volver al ejemplo del reel» tras mover la perilla extra deja la regla del reel, no «propia»",rst==="juntos",rst);
  ok("Portada · Bailey compara promedio con promedio (40 → 16 min)",/40 → 16 min/.test(html)&&!/80 → 16 min/.test(html));
 ok("Sin preserveDrawingBuffer (ahorra GPU en el WebView) y con recuperación del contexto WebGL",!/preserveDrawingBuffer:true/.test(html)&&/webglcontextrestored/.test(html));
  ok("Sin control flotante sobre la maqueta (una cosa a la vez)",!/id="anchor"/.test(html)&&!/renderAnchor/.test(html));
