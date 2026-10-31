@@ -119,7 +119,8 @@ body.in-app .top,body.in-app footer{display:none}
 .case-grid{display:grid;grid-template-columns:repeat(auto-fill,var(--sw));column-gap:var(--sg);grid-auto-rows:var(--row);align-items:end;justify-content:center;background:repeating-linear-gradient(to bottom,transparent 0 calc(var(--row) - 18px),#DDA86C calc(var(--row) - 18px) calc(var(--row) - 16px),#B07F4D calc(var(--row) - 16px) calc(var(--row) - 4px),#6F4A28 calc(var(--row) - 4px) var(--row));margin:0 -8px;padding:0 8px}
 .case-grid .book{width:var(--sw);margin-bottom:18px;box-shadow:inset 6px 0 10px -6px #0006,inset -4px 0 8px -4px #0005,0 16px 24px -14px #000}
 .case-grid .book .bt{margin-top:22px}
-.bookend{width:var(--sw);height:150px;margin-bottom:18px;border-radius:4px 4px 2px 2px;background:linear-gradient(90deg,#8C6A3C,#D9B06C 45%,#B4884A);box-shadow:inset 0 0 0 1px #ffffff33,0 14px 20px -12px #000;display:grid;place-items:center}.bookend span{writing-mode:vertical-rl;transform:rotate(180deg);font:700 10.5px var(--f-m);letter-spacing:.14em;text-transform:uppercase;color:#2A1C0A;white-space:nowrap}
+.bookend{width:var(--sw);height:150px;margin-bottom:18px;border-radius:4px 4px 2px 2px;background:linear-gradient(90deg,#8C6A3C,#D9B06C 45%,#B4884A);box-shadow:inset 0 0 0 1px #ffffff33,0 14px 20px -12px #000;display:grid;place-items:center}.book.filler{pointer-events:none;box-shadow:inset 6px 0 10px -6px #0008,inset -4px 0 8px -4px #0006;opacity:.9}.book.filler::before{background:#ffffff33}.book.filler::after{background:#ffffff22}
+.bookend span{writing-mode:vertical-rl;transform:rotate(180deg);font:700 10.5px var(--f-m);letter-spacing:.14em;text-transform:uppercase;color:#2A1C0A;white-space:nowrap}
 @media (max-width:700px){.case{--row:214px;--sw:50px;--sg:6px;padding:22px 12px 8px;border-radius:22px}.case-grid .book .bt b{font-size:11px}.case-grid .book .bt i{font-size:10px}.bookend{height:130px}.bookend span{font-size:9.5px}}
 .shelf{border-radius:30px;padding:22px 18px 22px;margin-bottom:22px;background:linear-gradient(160deg,color-mix(in srgb,var(--wall) 92%,#fff),var(--wall));box-shadow:inset 0 0 0 1px #ffffff14}
 .shelf .shelfrow{margin-top:14px}
@@ -395,7 +396,7 @@ footer .wrap{padding-block:28px 60px;display:flex;flex-wrap:wrap;gap:10px 22px;a
   <div class="cover"><div class="hero-stage" id="hero-stage"></div>
    <div class="txt wrap"><div class="eyebrow"><span class="es">Laboratorio de logística</span><span class="en">Logistics lab</span></div>
     <h1><span class="es">La matemática detrás de <em>cómo llegan</em> tus cosas</span><span class="en">The math behind <em>how your stuff</em> arrives</span></h1>
-    <p><span class="es">Seis maquetas vivas, una por reel. Toca, cambia una regla y mira cómo baja la fila.</span><span class="en">Six living models, one per reel. Tap, change a rule and watch the line drop.</span></p>
+    <p><span class="es">Seis maquetas vivas, una por reel: andenes, filas, entregas, bodegas y rutas. Elige una regla, simula y mira cuánto cambia.</span><span class="en">Six living models, one per reel: docks, queues, deliveries, warehouses and routes. Pick a rule, simulate and see how much changes.</span></p>
     <div class="cta-row"><button class="btn y" type="button" id="cta-play"><span class="es">Empezar a jugar</span><span class="en">Start playing</span></button><a class="btn o" href="#biblioteca"><span class="es">La biblioteca</span><span class="en">The library</span></a></div></div></div>
   <div class="wrap">
    <section class="sec" id="labs"><div class="sec-h"><h2><span class="es">Elige un <em>reel</em></span><span class="en">Pick a <em>reel</em></span></h2><div class="filters" id="filters" role="group" aria-label="Filtrar"></div></div><div class="cards" id="cards"></div></section>
