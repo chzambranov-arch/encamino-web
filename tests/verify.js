@@ -45,7 +45,7 @@ const es1=x=>x.toLocaleString("es-CL",{minimumFractionDigits:1,maximumFractionDi
  ok("Biblioteca · 20 libros de colores en 4 estantes",(await d.$$("#shelves .book")).length===20&&(await d.$$("#shelves .shelf")).length===4);
  await shot(d,"escritorio_biblioteca",true);
  await d.click('#shelves [data-book="erlang1917"]');await d.waitForTimeout(1500);
- ok("Libro abierto · idea, ecuación y «Con tus números» (21,1 min)",(await d.textContent(".pidea")).includes("Erlang")&&(await d.$$(".bk-page .beq")).length===1&&(await d.textContent(".blive")).includes("21,1 min"));
+ ok("Libro abierto · gancho, historia, ecuación con símbolos, frase y «Con tus números» (21,1 min)",(await d.textContent(".pstory")).includes("Erlang")&&(await d.$$(".phook")).length===1&&(await d.$$(".syms dt")).length>=4&&(await d.$$(".pfrase")).length===1&&(await d.$$(".bk-page .beq")).length===1&&(await d.textContent(".blive")).includes("21,1 min"));
  await shot(d,"escritorio_libro_erlang");await d.keyboard.press("Escape");
  const allb=await d.evaluate(async()=>{const out=[];for(const s of ECAPP.SOURCES){ECAPP.openBook(s.id);const pg=document.querySelector(".bk-page");out.push(!!(pg.querySelector(".beq")||pg.querySelector(".bigstat"))&&!!pg.querySelector(".blive")&&pg.querySelector(".blive").textContent.length>20)}document.querySelector(".bk-x").click();return out});
  ok("Los 20 libros traen su ecuación o dato y un cálculo con tus números",allb.every(Boolean),allb);

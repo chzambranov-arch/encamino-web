@@ -1,5 +1,5 @@
 {
- "fecha": "2026-10-31T19:24:48.331Z",
+ "fecha": "2026-10-31T20:24:27.575Z",
  "total": 94,
  "fallas": 0,
  "checks": [
@@ -70,7 +70,7 @@
    "pass": true
   },
   {
-   "name": "Libro abierto · idea, ecuación y «Con tus números» (21,1 min)",
+   "name": "Libro abierto · gancho, historia, ecuación con símbolos, frase y «Con tus números» (21,1 min)",
    "pass": true
   },
   {
@@ -428,7 +428,7 @@
   {
    "name": "IKEA · distingue esta partida del promedio",
    "pass": true,
-   "got": "Esta partida: 1 de 100 entregas · el grande es el promedio"
+   "got": "Esta partida: 0 de 100 entregas · el grande es el promedio"
   },
   {
    "name": "IKEA · armado → cajas: explica el trade-off (5 viajes en vez de 34) y no celebra",
