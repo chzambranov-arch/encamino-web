@@ -1,0 +1,107 @@
+/* =====================================================================
+   MOBILE GAME LAYER · per lab: 1 rule switch, 2 sliders, 3 scenarios,
+   2 giant metrics, an "aha" call to action, share phrase, URL params
+   ===================================================================== */
+/* Reel numbers we know. Add the rest here when they are defined. */
+const REELNUM={bailey:4,fila:6,amazon:2};
+const REEL2LAB={};for(const k in REELNUM)REEL2LAB[REELNUM[k]]=k;
+const fmin=x=>!isFinite(x)?"∞":x>=100?nf(x):nf(x,1);
+const tone=(v,good,bad)=>!isFinite(v)?"bad":v<=good?"good":v>=bad?"bad":"mid";
+const pct1=x=>nf(x*100,1);
+const SEGF=(k,es,en,opts)=>({k,type:"seg",es,en,opts});
+const RANGE=(k,sym,es,en,min,max,step,fmt,x)=>Object.assign({k,type:"range",sym,es,en,min,max,step,fmt},x||{});
+const STEP=(k,sym,es,en,min,max,x)=>Object.assign({k,type:"step",sym,es,en,min,max},x||{});
+const CHECK=(k,es,en)=>({k,type:"check",es,en});
+const filaRho=st=>st.lam/(st.c*60/st.S);
+const GAME={
+ bailey:{
+  def:{c:6,N:30,s:20,d:0,rule:"juntos",g:12,I:20},
+  rule:SEGF("rule","Cómo citas","How you book",[["juntos","Todos a las 7:00","All at 7:00"],["libre","Sin cita","No booking"],["bailey","Regla de Bailey","Bailey's rule"]]),
+  sliders:[RANGE("c","c","Andenes de carga","Loading docks",2,12,1,v=>v),RANGE("d","d","Desorden en las llegadas","Arrival disorder",0,30,1,v=>v===0?T("puntuales","on time"):"± "+v+" min")],
+  ajustes:[STEP("N","N","Camiones del día","Trucks in the day",2,80),RANGE("s","s","Minutos de carga","Loading minutes",5,60,1,v=>v+" min")],
+  chips:[["g","Todos puntuales","All on time",{d:0}],["y","Atrasos normales ±10","Normal delays ±10",{d:10}],["r","Día caótico ±30","Chaotic day ±30",{d:30}]],
+  cta:{es:"Aplicar la regla de Bailey",en:"Apply Bailey's rule",set:{rule:"bailey"}},
+  aha:{es:"¡Ajá! Mismos andenes, mismos camiones: solo cambió la hora de cita.",en:"Aha! Same docks, same trucks: only the booking time changed."},
+  ouch:(st,prev)=>T("Esta vez la regla de Bailey no mejoró: con tus números otra cita funciona mejor.","This time Bailey's rule didn't help: with your numbers another booking works better."),
+  structural:["c","N"],ff:3,
+  metrics(st){const y=EC.bStats(st.rule,st.N,st.c,st.s,st.d,st.g,st.I);const dd=st.d||st.rule==="libre"?1:0;return[{v:fmin(y.avg),u:"min",l:T("de espera promedio por camión","average wait per truck"),t:tone(y.avg,17,30)},{v:nf(y.max,dd?0:0),u:"min",l:T("espera el último camión","the last truck waits"),t:tone(y.max,22,45)}]},
+  share(st){const y=EC.bStats(st.rule,st.N,st.c,st.s,st.d,st.g,st.I),j=EC.bStats("juntos",st.N,st.c,st.s,st.d);return st.rule==="juntos"?T(`Con ${st.c} andenes y todos los camiones citados a las 7:00, esperan ${fmin(y.avg)} min en promedio y el último ${nf(y.max)} min. ¿Lo arreglas?`,`With ${st.c} docks and every truck booked at 7:00, they wait ${fmin(y.avg)} min on average and the last one ${nf(y.max)} min. Can you fix it?`):T(`Mira cómo baja la espera en el andén de ${fmin(j.avg)} a ${fmin(y.avg)} min con los mismos ${st.c} andenes, solo cambiando la hora de cita.`,`See dock waiting drop from ${fmin(j.avg)} to ${fmin(y.avg)} min with the same ${st.c} docks, just by changing booking times.`)},
+  score(st){const r=EC.bailey(st);return{score:r.score,valid:r.valid,ref:T(`Bailey: ${nf(r.ref.avg,1)} min, termina ${clock(r.ref.fin)}`,`Bailey: ${nf(r.ref.avg,1)} min, done ${clock(r.ref.fin)}`),you:T(`Tú: ${nf(r.you.avg,1)} min, terminas ${clock(r.you.fin)}`,`You: ${nf(r.you.avg,1)} min, done ${clock(r.you.fin)}`),why:r.valid?"":T(`Terminas ${nf(r.you.fin-r.ref.fin,1)} min después que Bailey: no cuenta.`,`You finish ${nf(r.you.fin-r.ref.fin,1)} min after Bailey: doesn't count.`)}},
+  url:[["andenes","c",Number,v=>v],["desorden","d",Number,v=>v],["regla","rule",v=>({todos:"juntos",juntos:"juntos",libre:"libre",bailey:"bailey",turno:"seis",propia:"custom"})[v],v=>({juntos:"todos",libre:"libre",bailey:"bailey",seis:"turno",custom:"propia"})[v]],["camiones","N",Number,v=>v],["carga","s",Number,v=>v],["g","g",Number,v=>v],["i","I",Number,v=>v]]},
+ fila:{
+  def:{c:3,lam:10,S:15,pol:"asig",jq:false,cv:10},
+  rule:SEGF("pol","Cómo se elige la puerta","How the door is chosen",[["asig","Filas separadas","Separate lines"],["pool","1 fila única","1 single queue"]]),
+  sliders:[RANGE("c","c","Puertas abiertas","Open doors",1,5,1,v=>v),RANGE("lam","λ","Camiones por hora","Trucks per hour",1,20,1,(v,st)=>`${v} /h · ${nf(Math.min(999,filaRho(st)*100))} %`,{zone:st=>{const z=0.85*st.c*60/st.S;return Math.max(0,Math.min(100,(z-1)/19*100))},hot:st=>filaRho(st)>=0.85})],
+  ajustes:[CHECK("jq","Mandar a la fila más corta (jefe de patio)","Send to the shortest line (yard boss)"),RANGE("S","S","Minutos de descarga","Unloading minutes",3,60,1,v=>v+" min")],
+  chips:[["g","Martes 11:00","Tuesday 11:00",{c:3,lam:6}],["y","Viernes 18:00 · el reel","Friday 18:00 · the reel",{c:3,lam:10}],["r","Quincena con 1 puerta menos","Payday with 1 door fewer",{c:2,lam:7}]],
+  cta:{es:"Unificar en 1 sola fila",en:"Merge into 1 single queue",set:{pol:"pool"}},
+  aha:{es:"¡Ajá! Mismas puertas, mismos camiones: ninguna puerta queda vacía si alguien espera.",en:"Aha! Same doors, same trucks: no door sits empty while someone waits."},
+  structural:["c"],ff:8,
+  metrics(st){const th=EC.fTheory(st.c,st.lam,st.S,st.cv/10);const sep=st.jq?EC.fJsq(st.c,st.lam,st.S,st.cv/10):th.asig;const cur=st.pol==="pool"?1:0;
+   return[{v:fmin(sep),u:"min",l:st.jq?T("de espera con jefe de patio","wait with a yard boss"):T(`de espera con ${st.c} filas separadas`,`wait with ${st.c} separate lines`),t:tone(sep,20,45),cur:cur===0,dim:cur!==0},{v:fmin(th.pool),u:"min",l:T("de espera con 1 fila única","wait with 1 single queue"),t:tone(th.pool,20,45),cur:cur===1,dim:cur!==1}]},
+  ouch:(st,prev)=>T("Con tus números la fila única no ayuda: casi nadie espera de todos modos.","With your numbers the single queue doesn't help: hardly anyone waits anyway."),
+  share(st){const th=EC.fTheory(st.c,st.lam,st.S,st.cv/10);const a=st.jq?EC.fJsq(st.c,st.lam,st.S,st.cv/10):th.asig,p=th.pool;if(!isFinite(a))return T(`Con ${st.c} puertas y ${st.lam} camiones por hora el patio colapsa: la fila no para de crecer. ¿Cuántas puertas faltan?`,`With ${st.c} doors and ${st.lam} trucks per hour the yard collapses: the line keeps growing. How many doors are missing?`);
+   const from=st.jq?T("con jefe de patio","with a yard boss"):T(`con ${st.c} filas separadas`,`with ${st.c} separate lines`);return T(`Con ${st.c} puertas y ${st.lam} camiones por hora, la espera baja de ${fmin(a)} min ${from} a ${fmin(p)} min con 1 fila única (−${nf((1-p/a)*100)} %), sin abrir una puerta más.`,`With ${st.c} doors and ${st.lam} trucks per hour, waiting drops from ${fmin(a)} min ${from} to ${fmin(p)} min with 1 single queue (−${nf((1-p/a)*100)} %), without opening one more door.`)},
+  score(st){const ref=EC.fTheory(st.c,st.lam,st.S,1).erl;const th=EC.fTheory(st.c,st.lam,st.S,st.cv/10);const you=st.pol==="pool"?th.pool:st.jq?EC.fJsq(st.c,st.lam,st.S,st.cv/10):th.asig;if(!isFinite(ref))return{score:0,valid:false,why:T("El patio colapsa: no hay referencia.","The yard collapses: no reference."),ref:"",you:""};return{score:EC.score(ref,you,0.05),valid:true,ref:T(`Fila única de Erlang: ${nf(ref,1)} min`,`Erlang single queue: ${nf(ref,1)} min`),you:T(`Tú: ${fmin(you)} min`,`You: ${fmin(you)} min`)}},
+  url:[["puertas","c",Number,v=>v],["camiones","lam",Number,v=>v],["regla","pol",v=>({separadas:"asig",unica:"pool"})[v],v=>({asig:"separadas",pool:"unica"})[v]],["jefe","jq",v=>v==="1",v=>v?1:0],["cv","cv",v=>Math.round(+v*10),v=>v/10],["minutos","S",Number,v=>v]]},
+ nivel:{
+  def:{p:980,n:85,meta:98,round:true,pen:5,days:24,period:"dia",x:0},
+  rule:SEGF("period","El contrato te mide","The contract measures you",[["dia","Cada día","Every day"],["semana","Cada semana","Every week"],["mes","Cada mes","Every month"]]),
+  sliders:[RANGE("p","p","Tu éxito real por parada","Your real success per stop",950,999,1,v=>nf(v/10,1)+" %"),RANGE("meta","m","Meta del contrato","Contract target",90,100,1,v=>v+" %")],
+  ajustes:[RANGE("n","n","Paradas por día","Stops per day",10,200,1,v=>v),RANGE("days","D","Días que trabajas al mes","Working days per month",10,31,1,v=>v),CHECK("round","El contrato redondea al entero","The contract rounds to whole %"),STEP("pen","$","Descuento por día penalizado (US$)","Deduction per penalized day (US$)",0,50)],
+  chips:[["g","Conductor estrella 99,5 %","Star driver 99.5 %",{p:995}],["y","El reel: 98 %","The reel: 98 %",{p:980}],["r","Mes de lluvia: 96 %","Rainy month: 96 %",{p:960}]],
+  cta:{es:"Medir el mes completo",en:"Measure the whole month",set:{period:"mes"}},
+  aha:{es:"¡Ajá! Mismo conductor, mismas fallas: los días buenos ahora compensan a los malos.",en:"Aha! Same driver, same failures: good days now make up for bad ones."},
+  structural:["days"],ff:3,
+  ouch:(st,prev)=>T("Con tus números medir por período largo no ayuda: las fallas son tantas que ningún promedio las tapa.","With your numbers a longer period doesn't help: failures are too many for any average to hide."),
+  metrics(st){const r=EC.nivel(nArgs(st));const fm=EC.fmaxOf(st.n,st.meta,st.round);return[{v:pct1(r.you),u:"%",l:T("de los días te penalizan","of days penalized"),t:tone(r.you*100,5,15),note:T(`Puedes fallar hasta ${fm} de ${st.n} paradas al día${st.round?` (${nf((st.n-fm)/st.n*100,1)} % cuenta como ${st.meta} %: el contrato redondea)`:" (sin redondeo)"}.`,`You may fail up to ${fm} of ${st.n} stops a day${st.round?` (${nf((st.n-fm)/st.n*100,1)} % counts as ${st.meta} %: the contract rounds)`:" (no rounding)"}.`)},{v:"US$ "+nf(r.year),u:"",l:T("pierdes al año","lost per year"),t:tone(r.year,80,250)}]},
+  share(st){const r=EC.nivel(nArgs(st)),m=EC.nivel(Object.assign(nArgs(st),{period:"mes"}));return T(`Cumplo ${nf(st.p/10,1)} % por parada y me penalizan ${pct1(r.you)} % de los días (US$ ${nf(r.year)} al año). Midiendo por mes serían ${pct1(m.you)} %.`,`I hit ${nf(st.p/10,1)} % per stop and ${pct1(r.you)} % of my days get penalized (US$ ${nf(r.year)} a year). Measured monthly it would be ${pct1(m.you)} %.`)},
+  score(st){const r=EC.nivel(nArgs(st));return{score:r.score,valid:true,ref:T(`Contrato del reel: ${pct1(r.ref)} %`,`Reel contract: ${pct1(r.ref)} %`),you:T(`Tú: ${pct1(r.you)} %`,`You: ${pct1(r.you)} %`)}},
+  url:[["exito","p",v=>Math.round(+v*10),v=>v/10],["meta","meta",Number,v=>v],["eval","period",v=>v,v=>v],["paradas","n",Number,v=>v],["dias","days",Number,v=>v],["redondeo","round",v=>v!=="0",v=>v?1:0],["descuento","pen",Number,v=>v],["excluye","x",Number,v=>v]]},
+ amazon:{
+  def:{k:9,L:100,z:100,ord:"orden"},
+  rule:SEGF("ord","Tu bodega","Your warehouse",[["orden","Ordenada · 1 lugar","Tidy · 1 spot"],["caos","Con copias","With copies"]]),
+  sliders:[RANGE("k","k","Copias del producto","Copies of the product",2,20,1,v=>v,{off:st=>st.ord==="orden"}),RANGE("L","L","Largo del pasillo","Aisle length",10,300,5,v=>v+" m")],
+  ajustes:[],
+  chips:[["g","Bodega chica · 40 m","Small warehouse · 40 m",{L:40}],["y","El reel · 100 m","The reel · 100 m",{L:100}],["r","Centro gigante · 300 m","Giant center · 300 m",{L:300}]],
+  cta:{es:"Repartir copias",en:"Spread copies",set:{ord:"caos"}},
+  aha:{es:"¡Ajá! El mismo producto en 9 lugares: siempre hay uno cerca.",en:"Aha! The same product in 9 places: there's always one nearby."},
+  structural:["L"],ff:3,
+  eff:st=>Object.assign({},st,{k:st.ord==="orden"?1:st.k}),
+  metrics(st){const k=st.ord==="orden"?1:st.k;const E=st.z/100*st.L/(k+1);return[{v:nf(E,1),u:"m",l:T("de ida hasta el producto, en promedio","one way to the product, on average"),t:tone(E/st.L,0.12,0.35)},{v:"−"+nf((1-E/(st.L/2))*100),u:"%",l:T("frente a 1 sola copia","versus 1 single copy"),t:k>1?"good":"bad"}]},
+  share(st){const k=st.ord==="orden"?1:st.k;const E=st.z/100*st.L/(k+1);const E9=st.z/100*st.L/10;return k===1?T(`En un pasillo de ${st.L} m con el producto en un solo lugar se caminan ${nf(E,1)} m de ida por pedido. Con 9 copias repartidas, el modelo lo baja a ${nf(E9,1)} m. ¿Cómo?`,`In a ${st.L} m aisle with the product in one spot you walk ${nf(E,1)} m one way per order. With 9 spread copies the model cuts it to ${nf(E9,1)} m. How?`):T(`Con ${k} copias del producto se camina ${nf(E,1)} m por pedido en vez de ${nf(st.L/2,1)} m (−${nf((1-E/(st.L/2))*100)} %). Desordenar a propósito.`,`With ${k} copies of the product you walk ${nf(E,1)} m per order instead of ${nf(st.L/2,1)} m (−${nf((1-E/(st.L/2))*100)} %). Scattering on purpose.`)},
+  score(st){const k=st.ord==="orden"?1:st.k;const r=EC.amazon({k,L:st.L,z:st.z/100});return{score:r.score,valid:r.valid,ref:T(`Reel: 9 copias = ${nf(r.ref,1)} m`,`Reel: 9 copies = ${nf(r.ref,1)} m`),you:T(`Tú: ${nf(r.E,1)} m`,`You: ${nf(r.E,1)} m`),why:r.valid?"":T(`Usas ${k} copias; el reel usa 9. Con más copias cualquiera camina menos.`,`You use ${k} copies; the reel uses 9. With more copies anyone walks less.`)}},
+  url:[["copias","k",Number,v=>v],["pasillo","L",Number,v=>v],["orden","ord",v=>v==="desordenada"?"caos":"orden",v=>v==="caos"?"desordenada":"ordenada"],["zona","z",Number,v=>v]]},
+ ikea:{
+  def:{n:12,pi:3,X:50,pack:"cajas"},
+  rule:SEGF("pack","Cómo viaja el clóset","How the wardrobe travels",[["armado","Armado","Assembled"],["cajas","En cajas","In boxes"],["scan","Cajas + escaneo","Boxes + scanning"]]),
+  sliders:[RANGE("n","n","Cajas por pedido","Boxes per order",2,40,1,v=>v,{off:st=>st.pack==="armado"}),RANGE("pi","q","Cada pieza falla 1 de cada…","Each piece fails 1 in…",0,8,1,v=>nf(EC.IP[v]))],
+  ajustes:[],
+  chips:[["g","Velador · 3 cajas","Nightstand · 3 boxes",{n:3}],["y","Clóset PAX · 12 cajas","PAX wardrobe · 12 boxes",{n:12}],["r","Cocina · 40 cajas","Kitchen · 40 boxes",{n:40}]],
+  cta:{es:"Escanear en cada entrega",en:"Scan at every delivery",set:{pack:"scan"}},next:{armado:"cajas",cajas:"scan"},
+  ouch:(st,prev)=>prev.rule==="armado"?T(`En cajas llegan más incompletos que armado, pero el furgón hace ${Math.ceil(100/ikeaCap(st.n,false))} viajes en vez de ${Math.ceil(100/3)}: ese es el trade-off.`,`In boxes more arrive incomplete than assembled, but the van makes ${Math.ceil(100/ikeaCap(st.n,false))} trips instead of ${Math.ceil(100/3)}: that's the trade-off.`):null,
+  aha:{es:"¡Ajá! El escaneo no evita la caja dañada: la atrapa antes de que llegue a la casa.",en:"Aha! Scanning doesn't prevent the damaged box: it catches it before it reaches the home."},
+  structural:["n","pack"],ff:3,
+  eff:st=>Object.assign({},st,{n:st.pack==="armado"?1:st.n,X:st.pack==="scan"?st.X:0}),
+  metrics(st){const r=EC.ikea({n:st.n,pi:st.pi,X:st.X/100});const trips=Math.ceil(100/ikeaCap(st.n,st.pack==="armado"));return[{v:nf(r.you*100,1),u:T("de 100","in 100"),l:T("pedidos llegan incompletos a la casa, en promedio","orders arrive incomplete at the home, on average"),t:tone(r.you*100,4,10)},{v:String(trips),u:T("viajes","trips"),l:T("del furgón para 100 entregas","by the van for 100 deliveries"),t:trips>10?"bad":"good"}]},
+  share(st){const e=GAME.ikea.eff(st);const a=EC.ikea({n:e.n,pi:st.pi,X:0}),b=EC.ikea({n:e.n,pi:st.pi,X:st.X/100});return T(`Si cada caja falla 1 de cada ${nf(EC.IP[st.pi])}, ${nf(a.you*100,1)} de cada 100 clósets de ${e.n} cajas llegan incompletos a la casa. Escaneando en cada entrega: ${nf(b.you*100,1)}.`,`If each box fails 1 in ${nf(EC.IP[st.pi])}, ${nf(a.you*100,1)} in every 100 wardrobes of ${e.n} boxes arrive incomplete. Scanning at every delivery: ${nf(b.you*100,1)}.`)},
+  score(st){const ref=EC.ikea({n:12,pi:st.pi,X:0}).ref,you=EC.ikea({n:st.n,pi:st.pi,X:st.X/100}).you;const arm=st.pack==="armado";return{score:EC.score(ref*100,you*100,0.01),valid:!arm,ref:T(`Reel, 12 cajas sin escaneo: ${nf(ref*100,1)} de 100`,`Reel, 12 boxes without scanning: ${nf(ref*100,1)} in 100`),you:T(`Tú: ${nf(you*100,1)}`,`You: ${nf(you*100,1)}`),why:arm?T("Armado llega casi perfecto, pero con 34 viajes: no compara con el reel.","Assembled arrives almost perfect, but with 34 trips: it doesn't compare with the reel."):""}},
+  url:[["cajas","n",Number,v=>v],["falla","pi",v=>Math.max(0,EC.IP.indexOf(+v)),v=>EC.IP[v]],["empaque","pack",v=>({armado:"armado",cajas:"cajas",escaneo:"scan"})[v]||"cajas",v=>({armado:"armado",cajas:"cajas",scan:"escaneo"})[v]],["atrapa","X",Number,v=>v]]},
+ ups:{
+  def:{W:60,X:150,v:25,G:20,pol:"dobla",r:0},
+  rule:SEGF("pol","Tu regla","Your rule",[["dobla","Siempre doblar","Always turn"],["evita","Siempre evitar","Always avoid"],["conviene","Solo si conviene","Only if it pays"]]),
+  sliders:[RANGE("W","W","Espera para doblar","Wait to turn left",0,150,1,v=>v+" s"),RANGE("X","X","Metros extra para evitarlo","Extra meters to avoid it",0,600,10,v=>v+" m")],
+  ajustes:[RANGE("v","v","Velocidad en ciudad","City speed",10,50,1,v=>v+" km/h"),RANGE("G","G","Giros a la izquierda al día","Left turns per day",0,80,1,v=>v)],
+  chips:[["g","Madrugada · 10 s","Early morning · 10 s",{W:10}],["y","Hora normal · 60 s","Normal hour · 60 s",{W:60}],["r","Hora punta · 120 s","Rush hour · 120 s",{W:120}]],
+  cta:{es:"Evitar el giro a la izquierda",en:"Avoid the left turn",set:{pol:"evita"}},
+  aha:{es:"¡Ajá! Dar la vuelta a la manzana es más rápido que esperar con el motor andando.",en:"Aha! Going around the block is faster than waiting with the engine running."},
+  ouch:(st,prev)=>{const tx_=st.X/(st.v/3.6);return T(`Aquí no conviene: dar la vuelta (${st.X} m) tarda ${nf(tx_,1)} s y esperar solo ${st.W} s. Con poco tráfico, se dobla.`,`Here it doesn't pay: going around (${st.X} m) takes ${nf(tx_,1)} s and waiting only ${st.W} s. With little traffic, you turn.`)},
+  structural:["X"],ff:3,
+  metrics(st){const r=EC.ups({W:st.W,X:st.X,v:st.v,G:st.G,pol:st.pol,r:st.r/100});const yr=r.dayYou*288/60;return[{v:nf(r.dayYou,1),u:"min",l:T("pierde cada camión al día en giros","each truck loses per day on turns"),t:tone(r.dayYou,8,15)},{v:nf(yr),u:"h",l:T("al año por camión","per year per truck"),t:tone(r.dayYou,8,15)}]},
+  share(st){const r=EC.ups({W:st.W,X:st.X,v:st.v,G:st.G,pol:"dobla",r:0});return r.diff>0?T(`Doblar a la izquierda le cuesta a cada camión ${nf(r.dayYou,1)} min al día. Evitándolo con ${st.X} m de desvío se ahorran ${nf(r.year)} h al año por camión.`,`Turning left costs each truck ${nf(r.dayYou,1)} min a day. Avoiding it with a ${st.X} m detour saves ${nf(r.year)} h a year per truck.`):T(`Con ${st.W} s de espera y ${st.X} m de desvío, conviene doblar: evitar el giro pierde ${nf(-r.diff,1)} s por maniobra.`,`With a ${st.W} s wait and a ${st.X} m detour, turning pays: avoiding loses ${nf(-r.diff,1)} s per maneuver.`)},
+  score(st){const r=EC.ups({W:st.W,X:st.X,v:st.v,G:st.G,pol:st.pol,r:st.r/100});return{score:r.score,valid:true,ref:T(`Reel, siempre evitar: ${nf(r.dayRef,1)} min al día`,`Reel, always avoid: ${nf(r.dayRef,1)} min a day`),you:T(`Tú: ${nf(r.dayYou,1)} min al día`,`You: ${nf(r.dayYou,1)} min a day`)}},
+  url:[["espera","W",Number,v=>v],["metros","X",Number,v=>v],["regla","pol",v=>v,v=>v],["vel","v",Number,v=>v],["giros","G",Number,v=>v],["reorden","r",Number,v=>v]]}
+};
+/* the reto controls of each lab (from the content file), minus duplicates of the console */
+GAME.bailey.reto=LAB.bailey.reto.ctl;GAME.fila.reto=LAB.fila.reto.ctl;GAME.nivel.reto=[LAB.nivel.reto.ctl[1]];GAME.amazon.reto=LAB.amazon.reto.ctl;GAME.ikea.reto=LAB.ikea.reto.ctl;GAME.ups.reto=[LAB.ups.reto.ctl[1]];
+LABS.forEach(l=>{const G=GAME[l.id];l.def=G.def;l.game=G});
