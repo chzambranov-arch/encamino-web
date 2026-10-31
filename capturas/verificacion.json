@@ -1,5 +1,5 @@
 {
- "fecha": "2026-10-31T23:10:51.891Z",
+ "fecha": "2026-10-31T23:28:44.824Z",
  "total": 94,
  "fallas": 0,
  "checks": [
@@ -62,7 +62,7 @@
    ]
   },
   {
-   "name": "Inicio · 6 portadas con miniatura 3D y 3 con número de reel, sin estrellas",
+   "name": "Inicio · 6 portadas con miniatura 3D, las 6 con número de reel, sin estrellas",
    "pass": true
   },
   {
@@ -210,8 +210,8 @@
    "pass": true,
    "got": {
     "mode": "run",
-    "prog": 51.3,
-    "clock": "11:03",
+    "prog": 51.7,
+    "clock": "11:04",
     "skip": true
    }
   },
