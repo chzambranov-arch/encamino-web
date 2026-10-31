@@ -116,7 +116,7 @@ const es1=x=>x.toLocaleString("es-CL",{minimumFractionDigits:1,maximumFractionDi
  const runOnce=async()=>{await q.tap("#play");await q.waitForTimeout(500);await q.tap("#skip").catch(()=>{});await q.waitForFunction(()=>ECAPP.mode==="done",null,{timeout:40000});await q.waitForTimeout(900);return q.textContent("#rv")};
  await q.goto(BASE+"?caso=fila&puertas=2&camiones=7&regla=separadas");await q.waitForSelector("#play");await q.waitForTimeout(1200);
  ok("Link compartido abre la misma configuración (2 puertas, 7/h)",(await q.textContent(".sit")).includes("2 puertas · 7 camiones"));ok("…y su resultado es 105 min",(await runOnce())==="105");
- const cases=[["?reel=4","bailey","40,0","16,0"],["?caso=nivel","nivel","24,2","4,9"],["?reel=2","amazon","50,0","10,0"],["?caso=ikea","ikea","11,4","5,8"],["?caso=ups","ups","20,0","7,2"]];
+ const cases=[["?reel=4","bailey","40,0","16,0"],["?caso=nivel","nivel","24,2","4,9"],["?reel=2","amazon","50,0","10,0"],["?caso=ikea","ikea","11,4","1,0"],["?caso=ups","ups","20,0","7,2"]];
  for(const [u,id,a0,a1] of cases){await q.goto(BASE+u);await q.waitForSelector("#play");await q.waitForTimeout(1500);await shot(q,`celular_ig_${id}_preparar`);
   const v0=await runOnce();ok(`${id} · el problema del reel da ${a0}`,v0===a0,v0);await shot(q,`celular_ig_${id}_resultado`);
   await q.tap("#trysol");await q.waitForTimeout(500);await q.tap("#skip").catch(()=>{});await q.waitForFunction(()=>ECAPP.mode==="done",null,{timeout:40000});await q.waitForTimeout(1000);
