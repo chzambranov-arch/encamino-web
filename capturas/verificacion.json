@@ -1,6 +1,6 @@
 {
- "fecha": "2026-10-31T16:58:48.031Z",
- "total": 82,
+ "fecha": "2026-10-31T17:50:00.825Z",
+ "total": 88,
  "fallas": 0,
  "checks": [
   {
@@ -450,12 +450,48 @@
   {
    "name": "Nivel · el redondeo del contrato se ve junto al resultado (97,6 % cuenta como 98 %)",
    "pass": true,
-   "got": "Puedes fallar hasta 2 de 85 paradas al día (97,6 % cuenta como 98 %: el contrato redondea)."
+   "got": "Puedes fallar hasta 2 de las 85 paradas del día (97,6 % cuenta como 98 %: el contrato redondea)."
   },
   {
    "name": "Libro de Odoni · la fórmula divide λ entre las c puertas",
    "pass": true,
    "got": "Wq=ρμ−λ/c"
+  },
+  {
+   "name": "Fila · volver a filas separadas explica la puerta vacía (no el texto de la fila única)",
+   "pass": true,
+   "got": {
+    "ouch": "Al separar las filas, una puerta puede quedar vacía mientras en la de al lado esperan camiones.",
+    "aha": false
+   }
+  },
+  {
+   "name": "Fila · si cambian los números junto con la regla, no dice «mismas puertas»",
+   "pass": true,
+   "got": {
+    "cmp": "Antes · Filas separadas (otros números)75,0 min−96 %",
+    "aha": false,
+    "ouch": false
+   }
+  },
+  {
+   "name": "Link compartido · abre con 3 puertas aunque el teléfono tenía 5 guardadas",
+   "pass": true,
+   "got": "3 puertas · 10 camiones por hora · 15 min de descarga en promedio"
+  },
+  {
+   "name": "Nivel · medido por mes, la nota habla del mes (2.040 paradas, 24 días), no del día",
+   "pass": true,
+   "got": "Puedes fallar hasta 51 de las 2.040 paradas del mes (97,5 % cuenta como 98 %: el contrato redondea). Si el período falla, se penalizan sus 24 días."
+  },
+  {
+   "name": "Amazon · el ¡Ajá! usa tus copias (4 lugares, 20,0 m), no «9 lugares» fijo",
+   "pass": true,
+   "got": "¡Ajá! El mismo producto en 4 lugares: casi siempre hay uno cerca, y en promedio se camina 20,0 m en vez de 50,0."
+  },
+  {
+   "name": "Portada · Bailey compara promedio con promedio (40 → 16 min)",
+   "pass": true
   },
   {
    "name": "Sin preserveDrawingBuffer (ahorra GPU en el WebView) y con recuperación del contexto WebGL",

@@ -67,7 +67,7 @@ const INK="#1B2238",INK2="#6B6E80";
 const CATS=[["todos","Todos","All"],["anden","El Andén","The Dock"],["bodega","Bodega","Warehouse"],["ultima","Última milla","Last mile"],["rutas","Rutas","Routes"]];
 const LABS=[
 /* ======================= BAILEY ======================= */
-{id:"bailey",cat:"anden",kicker:{es:"El Andén · 1",en:"The Dock · 1"},chip:"80 → 16 min",
+{id:"bailey",cat:"anden",kicker:{es:"El Andén · 1",en:"The Dock · 1"},chip:"40 → 16 min",
  q:{es:"¿A qué hora citas los camiones?",en:"When do you book the trucks?"},
  short:{es:"Citas de camiones",en:"Truck appointments"},
  lede:{es:"Mismos camiones, mismos andenes. Si los citas a todos a las 7:00, el último espera 80 minutos. Con la regla de Bailey, el promedio baja a 16. Elige cómo citar y mira el día completo.",en:"Same trucks, same docks. Book them all at 7:00 and the last one waits 80 minutes. With Bailey's rule the average drops to 16. Choose how to book and watch the whole day."},

@@ -189,7 +189,7 @@ function sceneAmazon(st){const bays=Math.max(2,Math.round(Math.min(60,Math.max(4
 
 /* ---------------- IKEA · 100 deliveries in a neighborhood ---------------- */
 /* van of 5,6 m³: a PAX in boxes is 0,276 m³ (20 per trip), assembled 1,81 m³ (3 per trip); other products scale by box count */
-const ikeaCap=(n,big)=>big?3:Math.max(1,Math.min(60,Math.floor(5.6/(n*0.023))));
+const ikeaCap=(n,big)=>big?3:Math.max(1,Math.floor(5.6/(n*0.023)));
 function sceneIkea(st){const n=st.pack==="armado"?1:st.n,big=st.pack==="armado",CAP=ikeaCap(st.n,big);const PX=3.4,PZ=3.7,X0=1.6;const W=10*PX+10,D=10*PZ+5;
  const{scene,g}=diorama(W,D,P.grass);const hx=c=>(c-4.5)*PX+X0,hz=r=>(r-4.5)*PZ,sz=k=>(hz(2*k)+hz(2*k+1))/2,xd=hx(0)-2.6;
  for(let k=0;k<5;k++)roadX(g,xd-1,hx(9)+1.6,sz(k),1.7);roadZ(g,hz(0)-1.4,hz(9)+1.4,xd,1.8);

@@ -139,7 +139,24 @@ const es1=x=>x.toLocaleString("es-CL",{minimumFractionDigits:1,maximumFractionDi
  const nvN=await q.evaluate(()=>(document.querySelector(".rnote")||{}).textContent||"");ok("Nivel · el redondeo del contrato se ve junto al resultado (97,6 % cuenta como 98 %)",/97,6/.test(nvN)&&/redondea/.test(nvN),nvN);
  await q.evaluate(()=>ECAPP.openSheet("fila","ciencia"));await q.waitForTimeout(400);await q.evaluate(()=>ECAPP.openBook("odoni"));await q.waitForTimeout(600);
  const od=await q.evaluate(()=>document.querySelector(".bk-page .beq").textContent.replace(/\s+/g,""));ok("Libro de Odoni · la fórmula divide λ entre las c puertas",/λ−?\/c|λ\/c/.test(od)&&!/μ−λ$/.test(od),od);await q.evaluate(()=>ECAPP.closeSheet());
- const html=require("fs").readFileSync(__dirname+"/../index.html","utf8");ok("Sin preserveDrawingBuffer (ahorra GPU en el WebView) y con recuperación del contexto WebGL",!/preserveDrawingBuffer:true/.test(html)&&/webglcontextrestored/.test(html));
+ const html=require("fs").readFileSync(__dirname+"/../index.html","utf8");
+ /* round 2: lessons follow direction and numbers; links reproduce the case */
+ await q.goto(BASE+"?reel=6");await q.waitForSelector("#play");await q.waitForTimeout(1200);await runOnce();
+ await q.tap("#trysol");await q.waitForTimeout(500);await q.tap("#skip").catch(()=>{});await q.waitForFunction(()=>ECAPP.mode==="done",null,{timeout:40000});await q.waitForTimeout(900);
+ await q.evaluate(()=>ECAPP.set("fila",{pol:"asig"}));await q.waitForTimeout(600);await runOnce();
+ const fiO=await q.evaluate(()=>({ouch:(document.querySelector(".rouch")||{}).textContent||"",aha:!!document.querySelector(".raha")}));ok("Fila · volver a filas separadas explica la puerta vacía (no el texto de la fila única)",/puerta puede quedar vacía/.test(fiO.ouch)&&!fiO.aha,fiO);
+ await q.evaluate(()=>ECAPP.set("fila",{pol:"pool",c:4}));await q.waitForTimeout(600);await runOnce();
+ const fiC=await q.evaluate(()=>({cmp:(document.querySelector(".rcmp")||{}).textContent||"",aha:!!document.querySelector(".raha"),ouch:!!document.querySelector(".rouch")}));ok("Fila · si cambian los números junto con la regla, no dice «mismas puertas»",/otros números/.test(fiC.cmp)&&!fiC.aha&&!fiC.ouch,fiC);
+ await q.evaluate(()=>{try{localStorage.setItem("ec5-state",JSON.stringify({fila:{c:5,lam:10,S:15,pol:"asig",jq:false,cv:10}}))}catch(e){}});
+ await q.goto(BASE+"?caso=fila&regla=unica");await q.waitForSelector("#play");await q.waitForTimeout(1200);
+ const lk=await q.textContent(".sit");ok("Link compartido · abre con 3 puertas aunque el teléfono tenía 5 guardadas",/^3 puertas/.test(lk),lk);
+ await q.goto(BASE+"?caso=nivel&eval=mes");await q.waitForSelector("#play");await q.waitForTimeout(1200);await runOnce();
+ const nvM=await q.evaluate(()=>(document.querySelector(".rnote")||{}).textContent||"");ok("Nivel · medido por mes, la nota habla del mes (2.040 paradas, 24 días), no del día",/2\.040 paradas del mes/.test(nvM)&&/24 días/.test(nvM),nvM);
+ await q.goto(BASE+"?reel=2&copias=4");await q.waitForSelector("#play");await q.waitForTimeout(1200);await runOnce();
+ await q.tap("#trysol");await q.waitForTimeout(500);await q.tap("#skip").catch(()=>{});await q.waitForFunction(()=>ECAPP.mode==="done",null,{timeout:40000});await q.waitForTimeout(900);
+ const amA=await q.evaluate(()=>(document.querySelector(".raha")||{}).textContent||"");ok("Amazon · el ¡Ajá! usa tus copias (4 lugares, 20,0 m), no «9 lugares» fijo",/4 lugares/.test(amA)&&/20,0 m/.test(amA),amA);
+ ok("Portada · Bailey compara promedio con promedio (40 → 16 min)",/40 → 16 min/.test(html)&&!/80 → 16 min/.test(html));
+ok("Sin preserveDrawingBuffer (ahorra GPU en el WebView) y con recuperación del contexto WebGL",!/preserveDrawingBuffer:true/.test(html)&&/webglcontextrestored/.test(html));
  ok("Sin control flotante sobre la maqueta (una cosa a la vez)",!/id="anchor"/.test(html)&&!/renderAnchor/.test(html));
  const box=async(id,set)=>{await q.evaluate(([i,s])=>ECAPP.set(i,s),[id,set]);await q.waitForTimeout(800);return q.evaluate(()=>{const b=ECAPP.S.box;return Math.round(Math.max(b.max.x-b.min.x,b.max.z-b.min.z))})};
  await q.goto(BASE+"?caso=amazon&orden=desordenada");await q.waitForSelector("#play");await q.waitForTimeout(1200);
