@@ -1,5 +1,5 @@
 {
- "fecha": "2026-10-31T20:24:27.575Z",
+ "fecha": "2026-10-31T21:14:26.148Z",
  "total": 94,
  "fallas": 0,
  "checks": [
@@ -66,7 +66,7 @@
    "pass": true
   },
   {
-   "name": "Biblioteca · 20 libros de colores en 4 estantes",
+   "name": "Biblioteca · 20 libros en un solo librero, con 4 etiquetas de sección",
    "pass": true
   },
   {
@@ -210,8 +210,8 @@
    "pass": true,
    "got": {
     "mode": "run",
-    "prog": 52.3,
-    "clock": "11:06",
+    "prog": 53,
+    "clock": "11:07",
     "skip": true
    }
   },
@@ -428,7 +428,7 @@
   {
    "name": "IKEA · distingue esta partida del promedio",
    "pass": true,
-   "got": "Esta partida: 0 de 100 entregas · el grande es el promedio"
+   "got": "Esta partida: 3 de 100 entregas · el grande es el promedio"
   },
   {
    "name": "IKEA · armado → cajas: explica el trade-off (5 viajes en vez de 34) y no celebra",
