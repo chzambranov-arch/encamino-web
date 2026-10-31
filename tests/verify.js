@@ -116,7 +116,7 @@ const es1=x=>x.toLocaleString("es-CL",{minimumFractionDigits:1,maximumFractionDi
  const runOnce=async()=>{await q.tap("#play");await q.waitForTimeout(500);await q.tap("#skip").catch(()=>{});await q.waitForFunction(()=>ECAPP.mode==="done",null,{timeout:40000});await q.waitForTimeout(900);return q.textContent("#rv")};
  await q.goto(BASE+"?caso=fila&puertas=2&camiones=7&regla=separadas");await q.waitForSelector("#play");await q.waitForTimeout(1200);
  ok("Link compartido abre la misma configuración (2 puertas, 7/h)",(await q.textContent(".sit")).includes("2 puertas · 7 camiones"));ok("…y su resultado es 105 min",(await runOnce())==="105");
- const cases=[["?reel=4","bailey","40,0","16,0"],["?caso=nivel","nivel","24,2","4,9"],["?reel=2","amazon","50,0","10,0"],["?caso=ikea","ikea","11,4","1,0"],["?caso=ups","ups","20,0","7,2"]];
+ const cases=[["?reel=4","bailey","40,0","16,0"],["?reel=5","nivel","24,2","4,9"],["?reel=3","amazon","50,0","10,0"],["?reel=2","ikea","11,4","1,0"],["?reel=1","ups","20,0","7,2"]];
  for(const [u,id,a0,a1] of cases){await q.goto(BASE+u);await q.waitForSelector("#play");await q.waitForTimeout(1500);await shot(q,`celular_ig_${id}_preparar`);
   const v0=await runOnce();ok(`${id} · el problema del reel da ${a0}`,v0===a0,v0);await shot(q,`celular_ig_${id}_resultado`);
   await q.tap("#trysol");await q.waitForTimeout(500);await q.tap("#skip").catch(()=>{});await q.waitForFunction(()=>ECAPP.mode==="done",null,{timeout:40000});await q.waitForTimeout(1000);
@@ -152,7 +152,7 @@ const es1=x=>x.toLocaleString("es-CL",{minimumFractionDigits:1,maximumFractionDi
  const lk=await q.textContent(".sit");ok("Link compartido · abre con 3 puertas aunque el teléfono tenía 5 guardadas",/^3 puertas/.test(lk),lk);
  await q.goto(BASE+"?caso=nivel&eval=mes");await q.waitForSelector("#play");await q.waitForTimeout(1200);await runOnce();
  const nvM=await q.evaluate(()=>(document.querySelector(".rnote")||{}).textContent||"");ok("Nivel · medido por mes, la nota habla del mes (2.040 paradas, 24 días), no del día",/2\.040 paradas del mes/.test(nvM)&&/24 días/.test(nvM),nvM);
- await q.goto(BASE+"?reel=2&copias=4");await q.waitForSelector("#play");await q.waitForTimeout(1200);await runOnce();
+ await q.goto(BASE+"?reel=3&copias=4");await q.waitForSelector("#play");await q.waitForTimeout(1200);await runOnce();
  await q.tap("#trysol");await q.waitForTimeout(500);await q.tap("#skip").catch(()=>{});await q.waitForFunction(()=>ECAPP.mode==="done",null,{timeout:40000});await q.waitForTimeout(900);
  const amA=await q.evaluate(()=>(document.querySelector(".raha")||{}).textContent||"");ok("Amazon · el ¡Ajá! usa tus copias (4 lugares, 20,0 m), no «9 lugares» fijo",/4 lugares/.test(amA)&&/20,0 m/.test(amA),amA);
  /* the yard must stay full of trucks for the whole run (slots are given back when a truck leaves) */
