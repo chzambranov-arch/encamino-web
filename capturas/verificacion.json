@@ -1,5 +1,5 @@
 {
- "fecha": "2026-10-31T21:14:26.148Z",
+ "fecha": "2026-10-31T22:08:22.885Z",
  "total": 94,
  "fallas": 0,
  "checks": [
@@ -210,8 +210,8 @@
    "pass": true,
    "got": {
     "mode": "run",
-    "prog": 53,
-    "clock": "11:07",
+    "prog": 52,
+    "clock": "11:05",
     "skip": true
    }
   },
@@ -428,7 +428,7 @@
   {
    "name": "IKEA · distingue esta partida del promedio",
    "pass": true,
-   "got": "Esta partida: 3 de 100 entregas · el grande es el promedio"
+   "got": "Esta partida: 2 de 100 entregas · el grande es el promedio"
   },
   {
    "name": "IKEA · armado → cajas: explica el trade-off (5 viajes en vez de 34) y no celebra",
