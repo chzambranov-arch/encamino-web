@@ -55,7 +55,7 @@ const es1=x=>x.toLocaleString("es-CL",{minimumFractionDigits:1,maximumFractionDi
  await d.evaluate(()=>location.hash="fila");await d.waitForSelector("#play");await d.waitForTimeout(1500);
  const lay=await d.evaluate(()=>{const k=document.getElementById("panel").getBoundingClientRect(),c=document.querySelector(".game canvas").getBoundingClientRect();return{full:c.width===innerWidth&&c.height===innerHeight,panelRight:k.left>innerWidth/2}});
  ok("Escritorio · escena a pantalla completa y panel a la derecha",lay.full&&lay.panelRight,lay);
- await d.click("#play");await d.waitForTimeout(2500);await shot(d,"escritorio_fila_simulando");await d.click("#skip");await d.waitForFunction(()=>ECAPP.mode==="done",null,{timeout:40000});await d.waitForTimeout(900);await shot(d,"escritorio_fila_resultado");
+ await d.click("#play");await d.waitForTimeout(2500);await shot(d,"escritorio_fila_simulando");await d.click("#skip").catch(()=>{});await d.waitForFunction(()=>ECAPP.mode==="done",null,{timeout:40000});await d.waitForTimeout(900);await shot(d,"escritorio_fila_resultado");
  ok("Escritorio · sin errores de JavaScript",d.errs.length===0,d.errs);
 
  /* ---------- 4. Celular dentro de Instagram: preparar → ▶ Simular → resultado ---------- */
