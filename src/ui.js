@@ -191,7 +191,9 @@ function caseHTML(ids,groups){return `<div class="case"><div class="case-grid">$
 let SHF="todos";
 function renderLib(){$("libfilters").innerHTML=[["todos",{es:"Todos",en:"All"}]].concat(SHELVES).map(s=>`<button class="fchip" type="button" data-f="${s[0]}" aria-pressed="${SHF===s[0]}">${L(s[1])}</button>`).join("");
  qsa("#libfilters .fchip").forEach(b=>b.addEventListener("click",()=>{SHF=b.dataset.f;renderLib()}));
- const ids=[],groups={};SHELVES.filter(s=>SHF==="todos"||SHF===s[0]).forEach(s=>{const g=SOURCES.filter(x=>x.shelf===s[0]).map(x=>x.id);if(g.length){groups[g[0]]=L(s[1]);ids.push(...g)}});$("shelves").innerHTML=caseHTML(ids,groups);
+ /* each section opens with its brass bookend; inside, books go alphabetically by author */
+ const byAu=(a,b)=>SRC[a].sp.localeCompare(SRC[b].sp,"es",{sensitivity:"base"});
+ const ids=[],groups={};SHELVES.filter(s=>SHF==="todos"||SHF===s[0]).forEach(s=>{const g=SOURCES.filter(x=>x.shelf===s[0]).map(x=>x.id).sort(byAu);if(g.length){groups[g[0]]=L(s[1]);ids.push(...g)}});$("shelves").innerHTML=caseHTML(ids,groups);
  bindBooks($("v-biblioteca"))}
 function bindBooks(root){qsa("[data-book]",root).forEach(b=>{if(b._bb)return;b._bb=1;b.addEventListener("click",()=>openBook(b.dataset.book))})}
 let BOOKLIST=[],BOOKI=0;
