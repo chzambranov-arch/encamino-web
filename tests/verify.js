@@ -42,7 +42,7 @@ const es1=x=>x.toLocaleString("es-CL",{minimumFractionDigits:1,maximumFractionDi
  await shot(d,"escritorio_inicio",true);
  ok("Inicio · 6 portadas con miniatura 3D, las 6 con número de reel, sin estrellas",(await d.$$("#cards .card img")).length===6&&(await d.$$("#cards .reeln")).length===6&&!(await d.textContent("#cards")).includes("★"));
  await d.evaluate(()=>location.hash="biblioteca");await d.waitForSelector("#shelves .book");
- ok("Biblioteca · 20 libros en un solo librero, con 4 etiquetas de sección",(await d.$$("#shelves .book")).length===20&&(await d.$$("#shelves .bookend")).length===4);
+ ok("Biblioteca · 20 libros en un solo librero, con 4 separadores de sección",(await d.$$("#shelves .book[data-book]")).length===20&&(await d.$$("#shelves .bookend")).length===4);
  await shot(d,"escritorio_biblioteca",true);
  await d.click('#shelves [data-book="erlang1917"]');await d.waitForTimeout(1500);
  ok("Libro abierto · gancho, historia, ecuación con símbolos, frase y «Con tus números» (21,1 min)",(await d.textContent(".pstory")).includes("Erlang")&&(await d.$$(".phook")).length===1&&(await d.$$(".syms dt")).length>=4&&(await d.$$(".pfrase")).length===1&&(await d.$$(".bk-page .beq")).length===1&&(await d.textContent(".blive")).includes("21,1 min"));
