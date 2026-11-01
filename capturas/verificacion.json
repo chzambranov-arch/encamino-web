@@ -1,5 +1,5 @@
 {
- "fecha": "2026-11-01T19:37:10.022Z",
+ "fecha": "2026-11-01T19:48:31.400Z",
  "total": 94,
  "fallas": 0,
  "checks": [
@@ -427,13 +427,13 @@
   {
    "name": "IKEA · distingue esta partida del promedio",
    "pass": true,
-   "got": "Esta partida: 4 de 100 entregas · el grande es el promedio"
+   "got": "Esta partida: 1 de 100 entregas · el grande es el promedio"
   },
   {
    "name": "IKEA · armado → cajas: explica el trade-off (5 viajes en vez de 34) y no celebra",
    "pass": true,
    "got": {
-    "ouch": "En cajas llegan más incompletos que armado, pero el furgón hace 5 viajes en vez de 34: ese es el trade-off.",
+    "ouch": "En cajas llegan más incompletos que armado, pero el furgón hace 5 viajes en vez de 34: menos riesgo en la casa se paga con más viajes.",
     "aha": false
    }
   },
