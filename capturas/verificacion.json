@@ -1,5 +1,5 @@
 {
- "fecha": "2026-11-01T00:14:09.850Z",
+ "fecha": "2026-11-01T00:23:16.511Z",
  "total": 94,
  "fallas": 0,
  "checks": [
@@ -249,12 +249,11 @@
    "pass": true
   },
   {
-   "name": "Compartir: frase para WhatsApp con la mejora y link con la configuración",
-   "pass": true,
-   "got": "https://wa.me/?text=Con 3 puertas y 10 camiones por hora, la espera baja de 75,0 min con 3 filas separadas a 21,1 min con 1 fila única (−72 %), sin abrir una puerta más. Pruébalo: http://127.0.0.1:8790/index.html?caso=fila&regla=unica"
+   "name": "Compartir: un solo botón «Copiar mi resultado», sin WhatsApp ni Instagram",
+   "pass": true
   },
   {
-   "name": "Copiar link y frase",
+   "name": "Copiar mi resultado: frase con la mejora (75,0 → 21,1 min, −72 %) y link con la configuración",
    "pass": true,
    "got": "Con 3 puertas y 10 camiones por hora, la espera baja de 75,0 min con 3 filas separadas a 21,1 min con 1 fila única (−72 %), sin abrir una puerta más. Pruébalo: http://127.0.0.1:8790/index.html?caso=fila&regla=unica"
   },
@@ -428,7 +427,7 @@
   {
    "name": "IKEA · distingue esta partida del promedio",
    "pass": true,
-   "got": "Esta partida: 2 de 100 entregas · el grande es el promedio"
+   "got": "Esta partida: 3 de 100 entregas · el grande es el promedio"
   },
   {
    "name": "IKEA · armado → cajas: explica el trade-off (5 viajes en vez de 34) y no celebra",
