@@ -98,9 +98,8 @@ const es1=x=>x.toLocaleString("es-CL",{minimumFractionDigits:1,maximumFractionDi
  await shot(p,"celular_ig_fila_comparacion");
  await p.tap('#panel [data-sheet="ciencia"]');await p.waitForTimeout(800);ok("«Por qué pasa»: los 7 libros de este laboratorio, de colores",(await p.$$("#sheet .book")).length===7);
  await p.tap('#sheet [data-book="erlang1917"]');await p.waitForTimeout(1600);ok("Libro de Erlang con la ecuación y tus números (21,1 min)",(await p.textContent(".blive")).includes("21,1"));await shot(p,"celular_ig_libro");await p.tap(".bk-x");await p.waitForTimeout(500);
- await p.tap('#panel [data-sheet="share"]');await p.waitForTimeout(700);const wa=decodeURIComponent(await p.getAttribute("#wa","href"));
- ok("Compartir: frase para WhatsApp con la mejora y link con la configuración",wa.includes("75,0 min")&&wa.includes("21,1 min")&&wa.includes("−72 %")&&wa.includes("caso=fila")&&wa.includes("regla=unica"),wa);
- await p.tap("#copy");await p.waitForTimeout(300);const clip=await p.evaluate(()=>navigator.clipboard.readText().catch(()=>window.__lastShare));ok("Copiar link y frase",clip.includes("Pruébalo:")&&clip.includes("caso=fila"),clip);await p.tap(".sh-x");await p.waitForTimeout(400);
+ await p.tap('#panel [data-sheet="share"]');await p.waitForTimeout(700);ok("Compartir: un solo botón «Copiar mi resultado», sin WhatsApp ni Instagram",(await p.$$("#sheet-body .cta")).length===1&&!(await p.$("#wa"))&&!(await p.$("#igc")));
+ await p.tap("#copy");await p.waitForTimeout(300);const clip=await p.evaluate(()=>navigator.clipboard.readText().catch(()=>window.__lastShare));ok("Copiar mi resultado: frase con la mejora (75,0 → 21,1 min, −72 %) y link con la configuración",clip.includes("75,0 min")&&clip.includes("21,1 min")&&clip.includes("−72 %")&&clip.includes("Pruébalo:")&&clip.includes("caso=fila")&&clip.includes("regla=unica"),clip);await p.tap(".sh-x");await p.waitForTimeout(400);
  await p.tap("#edit");await p.waitForTimeout(700);
  ok("«Cambiar los números»: sliders, escenarios, vista e idioma, sin teclado",(await p.$$("#sheet input[type=range]")).length>=2&&(await p.$$("#chips .chip")).length===3&&(await p.$$("#sheet [data-view]")).length===2&&(await p.$$("#sheet input[type=number]")).length===0);
  await shot(p,"celular_ig_cambiar_numeros");

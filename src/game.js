@@ -4,8 +4,6 @@
    ===================================================================== */
 /* Reel numbers we know. Add the rest here when they are defined. */
 const REELNUM={ups:1,ikea:2,amazon:3,bailey:4,nivel:5,fila:6};
-/* link to each reel on Instagram; fill in as they are published. Without a link the "comment on the reel" button does not appear. */
-const REELURL={ups:"https://www.instagram.com/reel/Defz-sxszGb/",ikea:"https://www.instagram.com/reel/DezEKQptA4Y/",nivel:"https://www.instagram.com/reel/DfFMTiWBypl/",fila:"https://www.instagram.com/reel/De-Jj9yhzV8/",amazon:"https://www.instagram.com/reel/DetzxzthV-D/",bailey:""};/* bailey: its reel is not published yet */
 const REEL2LAB={};for(const k in REELNUM)REEL2LAB[REELNUM[k]]=k;
 const fmin=x=>!isFinite(x)?"∞":x>=100?nf(x):nf(x,1);
 const tone=(v,good,bad)=>!isFinite(v)?"bad":v<=good?"good":v>=bad?"bad":"mid";
