@@ -131,6 +131,7 @@ body.in-app .top,body.in-app footer{display:none}
 .lib-h h1{font:800 clamp(42px,7vw,76px)/.95 var(--f-d)}
 .lib-h h1 em{font:600 italic 1em var(--f-s);color:var(--yellow)}
 .lib-h p{color:var(--muted);font-size:18px;max-width:58ch}
+.libnote{margin:22px 0 0;font:400 13px/1.55 var(--f-b);color:var(--muted);max-width:72ch;opacity:.85}
 /* book modal */
 .bookm{position:fixed;inset:0;z-index:85;display:grid;place-items:center;padding:16px}
 .bk-back{position:absolute;inset:0;background:#070B16cc;backdrop-filter:blur(8px);animation:fade .3s both}
@@ -410,6 +411,7 @@ footer .wrap{padding-block:28px 60px;display:flex;flex-wrap:wrap;gap:10px 22px;a
   <div class="lib-h"><div class="eyebrow"><span class="es">Biblioteca</span><span class="en">Library</span></div><h1><span class="es">Saca un libro. <em>Ábrelo.</em></span><span class="en">Pull a book. <em>Open it.</em></span></h1><p><span class="es">Veinte fuentes en cuatro estantes. Cada libro cuenta su idea, trae su ecuación y la calcula con los números que dejaste en el laboratorio.</span><span class="en">Twenty sources on four shelves. Each book tells its idea, brings its equation and computes it with the numbers you left in the lab.</span></p></div>
   <div class="filters" id="libfilters" role="group" aria-label="Estantes" style="margin-bottom:26px"></div>
   <div id="shelves"></div>
+  <p class="libnote"><span class="es">Las fuentes pertenecen a sus autores y editores. Cada ficha es un resumen propio, no una reproducción; los enlaces llevan a los sitios de los editores, a buscadores académicos o a las páginas oficiales. Las marcas mencionadas (IKEA, UPS, Amazon) se citan con fines educativos y no respaldan este sitio.</span><span class="en">Sources belong to their authors and publishers. Each card is our own summary, not a reproduction; links go to publishers' sites, academic search engines or official pages. Brands mentioned (IKEA, UPS, Amazon) are cited for educational purposes and do not endorse this site.</span></p>
  </div></section>
 </main>
 <div class="sheet" id="sheet" hidden><div class="sh-back"></div><div class="sh-panel" role="dialog" aria-modal="true"><div class="sh-grab"><i></i><button class="sh-x" type="button" aria-label="Cerrar">×</button></div><div class="sh-body" id="sheet-body"></div></div></div>
