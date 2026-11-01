@@ -1,0 +1,624 @@
+{
+ "fecha": "2026-11-01T00:14:09.850Z",
+ "total": 94,
+ "fallas": 0,
+ "checks": [
+  {
+   "name": "three.js r149 cargado",
+   "pass": true
+  },
+  {
+   "name": "Bailey · todos juntos: el último espera 80 y el promedio 40",
+   "pass": true
+  },
+  {
+   "name": "Bailey · regla de Bailey 16 min; un turno 0; todas terminan 8:40",
+   "pass": true
+  },
+  {
+   "name": "Fila · fórmula: separadas 75 min, fila única 21,1 min, ocupación 83 %",
+   "pass": true,
+   "got": [
+    75.00000000000001,
+    21.067415730337082
+   ]
+  },
+  {
+   "name": "Fila · jefe de patio ≈ 25 min (estimador rápido)",
+   "pass": true,
+   "got": 24.542426801939083
+  },
+  {
+   "name": "Fila · simulación larga coincide con la fórmula (±3 %)",
+   "pass": true,
+   "got": {
+    "asig": 74.62290455187802,
+    "jsq": 24.694569241163798,
+    "pool": 21.349747512409056
+   }
+  },
+  {
+   "name": "Nivel · 24,2 %, máximo 2 fallas, 5,8 días, US$ 348",
+   "pass": true
+  },
+  {
+   "name": "Amazon · 50 → 10 m",
+   "pass": true
+  },
+  {
+   "name": "IKEA · 11,4 de cada 100",
+   "pass": true
+  },
+  {
+   "name": "UPS · 38,4 s por maniobra y 61 h al año",
+   "pass": true
+  },
+  {
+   "name": "Nivel · semanal: fórmula = Monte Carlo (±0,5 pp)",
+   "pass": true,
+   "got": [
+    0.229025,
+    0.2259682966186617
+   ]
+  },
+  {
+   "name": "Inicio · 6 portadas con miniatura 3D, las 6 con número de reel, sin estrellas",
+   "pass": true
+  },
+  {
+   "name": "Biblioteca · 20 libros en un solo librero, con 4 separadores de sección",
+   "pass": true
+  },
+  {
+   "name": "Libro abierto · gancho, historia, ecuación con símbolos, frase y «Con tus números» (21,1 min)",
+   "pass": true
+  },
+  {
+   "name": "Los 20 libros traen su ecuación o dato y un cálculo con tus números",
+   "pass": true,
+   "got": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  {
+   "name": "Cada fuente: autor, año, título, revista, tipo, laboratorio, idea ES/EN y link",
+   "pass": true
+  },
+  {
+   "name": "Escritorio · escena a pantalla completa y panel a la derecha",
+   "pass": true,
+   "got": {
+    "full": true,
+    "panelRight": true
+   }
+  },
+  {
+   "name": "Escritorio · sin errores de JavaScript",
+   "pass": true,
+   "got": []
+  },
+  {
+   "name": "Link ?reel=6 abre directo el laboratorio, sin pasar por el inicio",
+   "pass": true
+  },
+  {
+   "name": "Escena 3D a pantalla completa, sin scroll ni desborde",
+   "pass": true,
+   "got": {
+    "canvas": true,
+    "scroll": 0,
+    "ta": "none",
+    "os": "none",
+    "sw": 390,
+    "inputs": 0,
+    "buttons": 6,
+    "mode": "ready"
+   }
+  },
+  {
+   "name": "Lienzo con touch-action:none y sin «tirar para recargar»",
+   "pass": true,
+   "got": {
+    "canvas": true,
+    "scroll": 0,
+    "ta": "none",
+    "os": "none",
+    "sw": 390,
+    "inputs": 0,
+    "buttons": 6,
+    "mode": "ready"
+   }
+  },
+  {
+   "name": "Pantalla tranquila al llegar: título, situación, 2 reglas, ▶ Simular y 2 enlaces",
+   "pass": true,
+   "got": {
+    "canvas": true,
+    "scroll": 0,
+    "ta": "none",
+    "os": "none",
+    "sw": 390,
+    "inputs": 0,
+    "buttons": 6,
+    "mode": "ready"
+   }
+  },
+  {
+   "name": "La situación en una línea: «3 puertas · 10 camiones por hora · 15 min de descarga»",
+   "pass": true
+  },
+  {
+   "name": "Elegir la regla: «Filas separadas» o «1 fila única»",
+   "pass": true
+  },
+  {
+   "name": "Un solo botón protagonista: «▶ Simular la hora punta»",
+   "pass": true
+  },
+  {
+   "name": "Una manito muestra dónde tocar, sin texto",
+   "pass": true
+  },
+  {
+   "name": "Nada avanza si no se pide simular (la maqueta está quieta)",
+   "pass": true,
+   "got": {
+    "r0": 7,
+    "r1": 7
+   }
+  },
+  {
+   "name": "Tocar un camión (sin simular) cuenta su historia",
+   "pass": true,
+   "got": {
+    "txy": [
+     124.7126255356698,
+     290.018057542822
+    ],
+    "bub": "En fila hace 27 min"
+   }
+  },
+  {
+   "name": "Cámara fija: arrastrar el dedo no gira el mundo",
+   "pass": true
+  },
+  {
+   "name": "Cambiar la regla no simula: solo prepara",
+   "pass": true
+  },
+  {
+   "name": "▶ Simular corre la hora punta con reloj, barra de avance y «Saltar al final»",
+   "pass": true,
+   "got": {
+    "mode": "run",
+    "prog": 51.7,
+    "clock": "11:04",
+    "skip": true
+   }
+  },
+  {
+   "name": "Al terminar aparece el resultado: 75,0 min de espera con 3 filas separadas",
+   "pass": true
+  },
+  {
+   "name": "El resultado propone probar la solución del reel",
+   "pass": true
+  },
+  {
+   "name": "«Probar 1 fila única» vuelve a simular",
+   "pass": true
+  },
+  {
+   "name": "Comparación con la corrida anterior: 75,0 → 21,1 min (−72 %) y el ajá",
+   "pass": true,
+   "got": {
+    "v": "21,1",
+    "cmp": "Antes · Filas separadas75,0 min−72 %",
+    "aha": "¡Ajá! Mismas puertas, mismos camiones: ninguna puerta queda vacía si alguien espera."
+   }
+  },
+  {
+   "name": "Vibración al terminar",
+   "pass": true
+  },
+  {
+   "name": "«Por qué pasa»: los 7 libros de este laboratorio, de colores",
+   "pass": true
+  },
+  {
+   "name": "Libro de Erlang con la ecuación y tus números (21,1 min)",
+   "pass": true
+  },
+  {
+   "name": "Compartir: frase para WhatsApp con la mejora y link con la configuración",
+   "pass": true,
+   "got": "https://wa.me/?text=Con 3 puertas y 10 camiones por hora, la espera baja de 75,0 min con 3 filas separadas a 21,1 min con 1 fila única (−72 %), sin abrir una puerta más. Pruébalo: http://127.0.0.1:8790/index.html?caso=fila&regla=unica"
+  },
+  {
+   "name": "Copiar link y frase",
+   "pass": true,
+   "got": "Con 3 puertas y 10 camiones por hora, la espera baja de 75,0 min con 3 filas separadas a 21,1 min con 1 fila única (−72 %), sin abrir una puerta más. Pruébalo: http://127.0.0.1:8790/index.html?caso=fila&regla=unica"
+  },
+  {
+   "name": "«Cambiar los números»: sliders, escenarios, vista e idioma, sin teclado",
+   "pass": true
+  },
+  {
+   "name": "Zona roja desde 85 % de ocupación",
+   "pass": true,
+   "got": {
+    "cls": true,
+    "c": "#FF4040"
+   }
+  },
+  {
+   "name": "Cambiar un número vuelve a «preparar» (no simula solo)",
+   "pass": true
+  },
+  {
+   "name": "Vista desde arriba",
+   "pass": true
+  },
+  {
+   "name": "Inglés desde el mismo panel",
+   "pass": true
+  },
+  {
+   "name": "Celular IG · sin errores de JavaScript",
+   "pass": true,
+   "got": []
+  },
+  {
+   "name": "Link compartido abre la misma configuración (2 puertas, 7/h)",
+   "pass": true
+  },
+  {
+   "name": "…y su resultado es 105 min",
+   "pass": true
+  },
+  {
+   "name": "bailey · el problema del reel da 40,0",
+   "pass": true,
+   "got": "40,0"
+  },
+  {
+   "name": "bailey · la solución del reel da 16,0 y se compara con 40,0",
+   "pass": true,
+   "got": {
+    "v1": "16,0",
+    "c1": "Antes · Todos a las 7:0040,0 min−60 %"
+   }
+  },
+  {
+   "name": "bailey · sin desborde ni scroll",
+   "pass": true,
+   "got": [
+    390,
+    0
+   ]
+  },
+  {
+   "name": "nivel · el problema del reel da 24,2",
+   "pass": true,
+   "got": "24,2"
+  },
+  {
+   "name": "nivel · la solución del reel da 4,9 y se compara con 24,2",
+   "pass": true,
+   "got": {
+    "v1": "4,9",
+    "c1": "Antes · Cada día24,2 %−80 %"
+   }
+  },
+  {
+   "name": "nivel · sin desborde ni scroll",
+   "pass": true,
+   "got": [
+    390,
+    0
+   ]
+  },
+  {
+   "name": "amazon · el problema del reel da 50,0",
+   "pass": true,
+   "got": "50,0"
+  },
+  {
+   "name": "amazon · la solución del reel da 10,0 y se compara con 50,0",
+   "pass": true,
+   "got": {
+    "v1": "10,0",
+    "c1": "Antes · Ordenada · 1 lugar50,0 m−80 %"
+   }
+  },
+  {
+   "name": "amazon · sin desborde ni scroll",
+   "pass": true,
+   "got": [
+    390,
+    0
+   ]
+  },
+  {
+   "name": "ikea · el problema del reel da 11,4",
+   "pass": true,
+   "got": "11,4"
+  },
+  {
+   "name": "ikea · la solución del reel da 1,0 y se compara con 11,4",
+   "pass": true,
+   "got": {
+    "v1": "1,0",
+    "c1": "Antes · En cajas11,4 de 100−91 %"
+   }
+  },
+  {
+   "name": "ikea · sin desborde ni scroll",
+   "pass": true,
+   "got": [
+    390,
+    0
+   ]
+  },
+  {
+   "name": "ups · el problema del reel da 20,0",
+   "pass": true,
+   "got": "20,0"
+  },
+  {
+   "name": "ups · la solución del reel da 7,2 y se compara con 20,0",
+   "pass": true,
+   "got": {
+    "v1": "7,2",
+    "c1": "Antes · Siempre doblar20,0 min−64 %"
+   }
+  },
+  {
+   "name": "ups · sin desborde ni scroll",
+   "pass": true,
+   "got": [
+    390,
+    0
+   ]
+  },
+  {
+   "name": "IKEA · la situación habla de entregas (20 cajas por viaje)",
+   "pass": true
+  },
+  {
+   "name": "IKEA · en cajas: 11,4 de 100 y 5 viajes del furgón",
+   "pass": true,
+   "got": {
+    "ikR2": "11,4",
+    "ikV": "5 viajes del furgón para 100 entregas"
+   }
+  },
+  {
+   "name": "IKEA · armado: 1,0 de 100 pero 34 viajes del furgón",
+   "pass": true,
+   "got": {
+    "ikA": "1,0",
+    "ikAV": "34 viajes del furgón para 100 entregas"
+   }
+  },
+  {
+   "name": "IKEA · después de armado propone «En cajas» (el caso del reel), no el escaneo",
+   "pass": true,
+   "got": "▶ Probar «En cajas»"
+  },
+  {
+   "name": "IKEA · distingue esta partida del promedio",
+   "pass": true,
+   "got": "Esta partida: 2 de 100 entregas · el grande es el promedio"
+  },
+  {
+   "name": "IKEA · armado → cajas: explica el trade-off (5 viajes en vez de 34) y no celebra",
+   "pass": true,
+   "got": {
+    "ouch": "En cajas llegan más incompletos que armado, pero el furgón hace 5 viajes en vez de 34: ese es el trade-off.",
+    "aha": false
+   }
+  },
+  {
+   "name": "UPS · con 10 s de espera evitar el giro sale peor (7,2 min) y la página lo dice en vez de celebrar",
+   "pass": true,
+   "got": {
+    "v": "7,2",
+    "ouch": "Aquí no conviene: dar la vuelta (150 m) tarda 21,6 s y esperar solo 10 s. Con poco tráfico, se dobla.",
+    "aha": false
+   }
+  },
+  {
+   "name": "Nivel · el redondeo del contrato se ve junto al resultado (97,6 % cuenta como 98 %)",
+   "pass": true,
+   "got": "Puedes fallar hasta 2 de las 85 paradas del día (97,6 % cuenta como 98 %: el contrato redondea)."
+  },
+  {
+   "name": "Libro de Odoni · la fórmula divide λ entre las c puertas",
+   "pass": true,
+   "got": "Wq=ρμ−λ/c"
+  },
+  {
+   "name": "Fila · volver a filas separadas explica la puerta vacía (no el texto de la fila única)",
+   "pass": true,
+   "got": {
+    "ouch": "Al separar las filas, una puerta puede quedar vacía mientras en la de al lado esperan camiones.",
+    "aha": false
+   }
+  },
+  {
+   "name": "Fila · si cambian los números junto con la regla, no dice «mismas puertas»",
+   "pass": true,
+   "got": {
+    "cmp": "Antes · Filas separadas (otros números)75,0 min−96 %",
+    "aha": false,
+    "ouch": false
+   }
+  },
+  {
+   "name": "Link compartido · abre con 3 puertas aunque el teléfono tenía 5 guardadas",
+   "pass": true,
+   "got": "3 puertas · 10 camiones por hora · 15 min de descarga en promedio"
+  },
+  {
+   "name": "Nivel · medido por mes, la nota habla del mes (2.040 paradas, 24 días), no del día",
+   "pass": true,
+   "got": "Puedes fallar hasta 51 de las 2.040 paradas del mes (97,5 % cuenta como 98 %: el contrato redondea). Si el período falla, se penalizan sus 24 días."
+  },
+  {
+   "name": "Amazon · el ¡Ajá! usa tus copias (4 lugares, 20,0 m), no «9 lugares» fijo",
+   "pass": true,
+   "got": "¡Ajá! El mismo producto en 4 lugares: casi siempre hay uno cerca, y en promedio se camina 20,0 m en vez de 50,0."
+  },
+  {
+   "name": "Fila · con 4 puertas y 17/h el patio se ve lleno al final (≥ 15 camiones) y el ∞ viene explicado",
+   "pass": true,
+   "got": {
+    "vis": 20,
+    "rv": "∞",
+    "note": "Llegan 17 camiones por hora y 4 puertas atienden 16,0: la fila crece sin fin y ninguna regla la salva. Abre una puerta o baja los camiones por hora."
+   }
+  },
+  {
+   "name": "Cambiar de página a mitad de corrida no deja la simulación corriendo",
+   "pass": true,
+   "got": {
+    "running": false,
+    "mode": "ready"
+   }
+  },
+  {
+   "name": "En inglés (105.0 → 49.0) la comparación y la lección siguen siendo correctas",
+   "pass": true,
+   "got": {
+    "v0": "105",
+    "en": {
+     "v": "49.0",
+     "cmp": "Before · Separate lines105 min−53 %",
+     "aha": true,
+     "ouch": false
+    }
+   }
+  },
+  {
+   "name": "Link con valores inválidos (0 puertas, texto, regla inexistente) se acota al rango y no rompe nada",
+   "pass": true,
+   "got": {
+    "st": {
+     "c": 1,
+     "lam": 10,
+     "S": 15,
+     "pol": "asig",
+     "jq": false,
+     "cv": 10
+    },
+    "rv": "1 puertas · 10 camiones por hora · 15 min de descarga en promedio"
+   }
+  },
+  {
+   "name": "Nivel · link con período inexistente y 0 días: cae en «cada día», 10 días, y da 24,2",
+   "pass": true,
+   "got": {
+    "nvI": "24,2",
+    "nvD": [
+     "dia",
+     10
+    ]
+   }
+  },
+  {
+   "name": "Bailey · «Volver al ejemplo del reel» tras mover la perilla extra deja la regla del reel, no «propia»",
+   "pass": true,
+   "got": "juntos"
+  },
+  {
+   "name": "Portada · Bailey compara promedio con promedio (40 → 16 min)",
+   "pass": true
+  },
+  {
+   "name": "Sin preserveDrawingBuffer (ahorra GPU en el WebView) y con recuperación del contexto WebGL",
+   "pass": true
+  },
+  {
+   "name": "Sin control flotante sobre la maqueta (una cosa a la vez)",
+   "pass": true
+  },
+  {
+   "name": "Amazon · el pasillo crece con los metros (40 m → 300 m)",
+   "pass": true,
+   "got": {
+    "a40": 16,
+    "a300": 68
+   }
+  },
+  {
+   "name": "Bailey · al subir a 10 andenes aparecen 10 andenes",
+   "pass": true,
+   "got": {
+    "b4": 29,
+    "b10": 42,
+    "doors": 10
+   }
+  },
+  {
+   "name": "Otros reels · sin errores de JavaScript",
+   "pass": true,
+   "got": []
+  },
+  {
+   "name": "Celular chico 360×640 · ▶ Simular a la vista, panel bajo la mitad de la pantalla, sin scroll",
+   "pass": true,
+   "got": {
+    "play": true,
+    "panelH": 49,
+    "scroll": 0,
+    "sw": 360
+   }
+  },
+  {
+   "name": "Celular chico · botones de 38 px o más",
+   "pass": true,
+   "got": []
+  },
+  {
+   "name": "Celular horizontal · panel a la derecha y a la vista, sin desborde",
+   "pass": true,
+   "got": {
+    "right": true,
+    "inView": true,
+    "sw": 844
+   }
+  },
+  {
+   "name": "Pantallas chicas · sin errores de JavaScript",
+   "pass": true,
+   "got": [
+    [],
+    []
+   ]
+  },
+  {
+   "name": "Sin menciones a Christian ni Ruck",
+   "pass": true
+  }
+ ]
+}
