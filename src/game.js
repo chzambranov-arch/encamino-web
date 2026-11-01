@@ -4,6 +4,9 @@
    ===================================================================== */
 /* Reel numbers we know. Add the rest here when they are defined. */
 const REELNUM={ups:1,ikea:2,amazon:3,bailey:4,nivel:5,fila:6};
+/* reels published so far: labs with a higher number stay reachable by direct link but are not listed */
+const PUBLISHED=5;
+const listedLabs=()=>LABS.filter(l=>(REELNUM[l.id]||0)<=PUBLISHED).sort((a,b)=>(REELNUM[b.id]||0)-(REELNUM[a.id]||0));
 const REEL2LAB={};for(const k in REELNUM)REEL2LAB[REELNUM[k]]=k;
 const fmin=x=>!isFinite(x)?"∞":x>=100?nf(x):nf(x,1);
 const tone=(v,good,bad)=>!isFinite(v)?"bad":v<=good?"good":v>=bad?"bad":"mid";
