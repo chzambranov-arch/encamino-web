@@ -10,6 +10,6 @@ window.__story={mount(kind,opts){const host=document.getElementById('stage');con
   if(opts.assemble&&window.__phase>=1){t+=dt;const per=opts.assemble/parts.length,span=per*4;parts.forEach((o,i)=>{const u=Math.max(0,Math.min(1,(t-i*per)/span));const k=0.0001+ease(u)*(1-0.0001);o.scale.set(fin[i].x*k,fin[i].y*k,fin[i].z*k)})}
   if(S.tick&&(!opts.assemble||window.__phase>=1))S.tick(dt*(opts.speed||1),1);
   if(S.fleet&&opts.settle&&t<1.2){t+=dt;S.fleet.step(dt,9)}
-  if(opts.drift&&S.fleet){window.__t=(window.__t||0)+dt;const F=S.fleet;for(let i=0;i<F.n;i++)if(F.on[i])F.bob[i]=Math.abs(Math.sin(window.__t*(Math.PI/1.1)+i*0.7))*0.04*opts.drift;F.commit()}
+  if(opts.drift&&S.fleet){window.__t=window.__tFixed!=null?window.__tFixed:(window.__t||0)+dt;/* recorder may pin the phase to the frame index */const F=S.fleet;for(let i=0;i<F.n;i++)if(F.on[i])F.bob[i]=Math.abs(Math.sin(window.__t*(Math.PI/1.1)+i*0.7))*0.04*opts.drift;F.commit()}
   R.render(S.scene,S.cam)}
  requestAnimationFrame(frame);window.__storyReady=true;return S}};
