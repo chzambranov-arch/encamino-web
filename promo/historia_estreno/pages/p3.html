@@ -11,7 +11,7 @@
 .pill{display:inline-block;font:800 40px var(--f-d);color:var(--bg);background:var(--yellow);border-radius:999px;padding:16px 44px}
 .card{position:absolute;left:60px;right:60px;border-radius:44px;background:rgba(15,23,41,.82);border:1px solid #ffffff22;backdrop-filter:blur(18px);padding:48px 56px}
 .o{opacity:0}.center{text-align:center}
-.hole{position:absolute;border:4px dashed #ffffff33;border-radius:28px}
+.hole{position:absolute;border:4px dashed #ffffff33;border-radius:28px;display:none}body.guides .hole{display:block}/* guías de huecos: solo con ?guides=1 */
 .hole span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:500 24px var(--f-m);color:#ffffff55;letter-spacing:.12em;text-transform:uppercase}
 .logo{width:420px;height:420px;border-radius:96px;box-shadow:0 60px 120px -40px #000}
 .brand{font:800 92px/1 var(--f-d);letter-spacing:-.01em}.brand small{display:block;font:600 34px var(--f-m);letter-spacing:.32em;color:var(--yellow);margin-top:10px}
@@ -21,7 +21,7 @@
 #q{position:absolute;left:60px;right:60px;top:640px;text-align:center}
 #hole{left:90px;top:860px;width:900px;height:520px}
 #foot{position:absolute;left:60px;right:60px;top:1410px;text-align:center}
-</style></head><body><div class="bg"></div>
+</style></head><body onload="if(location.search.indexOf('guides')>0)document.body.classList.add('guides')"><div class="bg"></div>
 <div id="stage"></div>
 <div id="q"><div class="eyebrow">Reel #4 · El Andén</div><div class="p" style="margin-top:18px"><b>30 camiones · 6 andenes · todos a las 7:00</b></div><div class="h2" style="margin-top:26px">¿Cuánto espera <em>el último</em>?</div></div>
 <div id="hole" class="hole"><span>sticker quiz</span></div>

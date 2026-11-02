@@ -11,7 +11,7 @@
 .pill{display:inline-block;font:800 40px var(--f-d);color:var(--bg);background:var(--yellow);border-radius:999px;padding:16px 44px}
 .card{position:absolute;left:60px;right:60px;border-radius:44px;background:rgba(15,23,41,.82);border:1px solid #ffffff22;backdrop-filter:blur(18px);padding:48px 56px}
 .o{opacity:0}.center{text-align:center}
-.hole{position:absolute;border:4px dashed #ffffff33;border-radius:28px}
+.hole{position:absolute;border:4px dashed #ffffff33;border-radius:28px;display:none}body.guides .hole{display:block}/* guías de huecos: solo con ?guides=1 */
 .hole span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:500 24px var(--f-m);color:#ffffff55;letter-spacing:.12em;text-transform:uppercase}
 .logo{width:420px;height:420px;border-radius:96px;box-shadow:0 60px 120px -40px #000}
 .brand{font:800 92px/1 var(--f-d);letter-spacing:-.01em}.brand small{display:block;font:600 34px var(--f-m);letter-spacing:.32em;color:var(--yellow);margin-top:10px}
@@ -23,7 +23,7 @@
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(26px)}}#arrow{animation:bob 1.1s ease-in-out infinite}
 #h1{left:190px;top:1150px;width:700px;height:200px}
 #h2{left:190px;top:1340px;width:700px;height:220px}
-</style></head><body><div class="bg"></div>
+</style></head><body onload="if(location.search.indexOf('guides')>0)document.body.classList.add('guides')"><div class="bg"></div>
 <div id="top"><div class="eyebrow">Laboratorio de logística</div><div class="h1" style="margin-top:22px">Simúlalo <em>tú</em></div></div>
 <div id="mid"><div class="p"><b>Copia tu resultado</b></div><div class="h2" style="margin-top:14px">¿Le ganas <em>al reel</em>?</div></div>
 <div id="arrow">↓</div>
