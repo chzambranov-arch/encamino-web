@@ -5,7 +5,7 @@ const SCH=q=>"https://scholar.google.com/scholar?q="+encodeURIComponent(q);
 const DOI=d=>"https://doi.org/"+d;
 const TYPES={paper:{es:"Paper",en:"Paper"},libro:{es:"Libro",en:"Book"},informe:{es:"Informe",en:"Report"},curso:{es:"Curso",en:"Course"},ficha:{es:"Ficha técnica",en:"Product sheet"},encuesta:{es:"Encuesta",en:"Survey"}};
 const BOOKC={paper:["#2F4A8A","#FFC726"],libro:["#1F6B4A","#F4EBD9"],informe:["#8A3B2F","#FFD9B8"],curso:["#5A3F8A","#F4EBD9"],ficha:["#B8662E","#FFF3D6"],encuesta:["#7A2F55","#FFD6E4"]};
-const SHELVES=[["anden",{es:"El Andén",en:"The Dock"}],["bodega",{es:"Bodega",en:"Warehouse"}],["ultima",{es:"Última milla",en:"Last mile"}],["rutas",{es:"Rutas",en:"Routes"}]];
+const SHELVES=[["anden",{es:"Andenes",en:"Docks"}],["bodega",{es:"Bodega",en:"Warehouse"}],["ultima",{es:"Última milla",en:"Last mile"}],["rutas",{es:"Rutas",en:"Routes"}]];
 const SOURCES=[
  {id:"bailey1952",shelf:"anden",sp:"Bailey · Colas y citas",spEn:"Bailey · Queues and appointments",au:"N. T. J. Bailey",yr:"1952",ti:{es:"Un estudio de colas y sistemas de citas en consultorios externos de hospitales, con especial referencia a los tiempos de espera",en:"A study of queues and appointment systems in hospital out-patient departments, with special reference to waiting-times",orig:"A study of queues and appointment systems in hospital out-patient departments, with special reference to waiting-times"},ve:"Journal of the Royal Statistical Society, Series B 14(2), 185–199",ty:"paper",labs:["bailey"],url:SCH("Bailey 1952 A study of queues and appointment systems in hospital out-patient departments"),search:true,
   idea:{es:"Bailey simuló a mano las esperas en las consultas de un hospital. Su receta: citar a dos pacientes al abrir y después a uno cada tanto, al ritmo de atención. Así el médico casi nunca queda sin nadie y los pacientes esperan mucho menos que si llegan todos juntos.",en:"Bailey simulated hospital clinic waits by hand. His recipe: book two patients at opening, then one at a time at the service pace. The doctor is almost never idle, and patients wait far less than if they all arrive together."}},
@@ -64,10 +64,10 @@ const SV=(w,h,body)=>`<svg viewBox="0 0 ${w} ${h}" class="ill" role="img">${body
 const INK="#1B2238",INK2="#6B6E80";
 
 /* ---------------- LABS ---------------- */
-const CATS=[["todos","Todos","All"],["anden","El Andén","The Dock"],["bodega","Bodega","Warehouse"],["ultima","Última milla","Last mile"],["rutas","Rutas","Routes"]];
+const CATS=[["todos","Todos","All"],["anden","Andenes","Docks"],["bodega","Bodega","Warehouse"],["ultima","Última milla","Last mile"],["rutas","Rutas","Routes"]];
 const LABS=[
 /* ======================= BAILEY ======================= */
-{id:"bailey",cat:"anden",kicker:{es:"El Andén · 1",en:"The Dock · 1"},chip:"40 → 16 min",
+{id:"bailey",cat:"anden",kicker:{es:"Andenes · Bailey",en:"Docks · Bailey"},chip:"40 → 16 min",
  q:{es:"¿A qué hora citas los camiones?",en:"When do you book the trucks?"},
  short:{es:"Citas de camiones",en:"Truck appointments"},
  lede:{es:"Mismos camiones, mismos andenes. Si los citas a todos a las 7:00, el último espera 80 minutos. Con la regla de Bailey, el promedio baja a 16. Elige cómo citar y mira el día completo.",en:"Same trucks, same docks. Book them all at 7:00 and the last one waits 80 minutes. With Bailey's rule the average drops to 16. Choose how to book and watch the whole day."},
@@ -107,7 +107,7 @@ const LABS=[
  notApply:{es:"Bailey diseñó su regla para un consultorio en 1952. Aquí la escalamos a varios andenes iguales y cargas que duran siempre lo mismo. Si las cargas son muy distintas o hay prioridades, la mejor agenda depende de cuánto pesan la espera, el tiempo ocioso y el atraso del cierre.",en:"Bailey designed his rule for a clinic in 1952. Here it is scaled to several identical docks and loads that always take the same time. If loads vary a lot or there are priorities, the best schedule depends on how much you weigh waiting, idle time and late closing."},
  sources:["bailey1952","welch1952","kaandorp2007","lindley1952"],scene:sceneBailey},
 /* ======================= FILA ======================= */
-{id:"fila",cat:"anden",kicker:{es:"El Andén · 2",en:"The Dock · 2"},chip:"75 → 21 min",
+{id:"fila",cat:"anden",kicker:{es:"Andenes · Fila única",en:"Docks · Single queue"},chip:"75 → 21 min",
  q:{es:"¿A qué puerta mandas cada camión?",en:"Which door does each truck go to?"},
  short:{es:"Fila única en el patio",en:"Single queue in the yard"},
  lede:{es:"Tres patios iguales reciben los mismos camiones a la misma hora. Solo cambia cómo se elige la puerta: asignada antes de llegar, el jefe de patio que manda a la fila más corta, o una sola fila para todas las puertas.",en:"Three identical yards get the same trucks at the same time. Only the door choice changes: assigned before arrival, a yard boss sending trucks to the shortest line, or one single queue for all doors."},

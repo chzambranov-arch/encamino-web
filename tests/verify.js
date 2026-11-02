@@ -210,5 +210,15 @@ ok("Sin preserveDrawingBuffer (ahorra GPU en el WebView) y con recuperación del
  ok("Pantallas chicas · sin errores de JavaScript",s.errs.length===0&&l.errs.length===0,[s.errs,l.errs]);
  ok("Sin menciones a Christian ni Ruck",!/\bchristian\b|\bruck\b/i.test(await d.content()));
 
+ /* ---------- 7. GoatCounter: anónimo y prescindible ---------- */
+ const g0=await mk({width:390,height:760},true,IG);await g0.route(/gc\.zgo\.at|goatcounter\.com/,r=>r.abort());
+ await g0.goto(BASE+"?reel=4");await g0.waitForSelector("#play");await g0.click("#play");await g0.waitForSelector("#copyres",{timeout:90000});
+ ok("GoatCounter bloqueado · la página simula y muestra el resultado igual, sin errores",g0.errs.length===0,g0.errs);
+ const g1=await mk({width:390,height:760},true,IG);await g1.route(/gc\.zgo\.at|goatcounter\.com/,r=>r.abort());
+ await g1.addInitScript(()=>{window.__gc=[];window.goatcounter={count:o=>window.__gc.push(o.path+(o.event?"!":""))}});
+ await g1.goto(BASE+"?reel=4");await g1.waitForSelector("#play");await g1.click("#play");await g1.waitForSelector("#copyres",{timeout:90000});await g1.click("#copyres");await g1.waitForTimeout(400);
+ const gl=await g1.evaluate(()=>window.__gc);
+ ok("GoatCounter · cuenta la vista y los eventos simular/resultado/copiar",gl.some(x=>/#bailey$/.test(x))&&["simular-bailey!","resultado-bailey!","copiar-bailey!"].every(e=>gl.includes(e)),gl);
+ ok("Andenes · sin 'El Andén' en la página",!/El Andén|The Dock\b/.test(await d.content()));
  const fail=checks.filter(c=>!c.pass);fs.writeFileSync(`${OUT}/verificacion.json`,JSON.stringify({fecha:new Date().toISOString(),total:checks.length,fallas:fail.length,checks},null,1));
  console.log(`\n${checks.length-fail.length}/${checks.length} verificaciones OK`);await b.close();srv.close();process.exit(fail.length?1:0)})().catch(e=>{console.error(e);process.exit(2)});

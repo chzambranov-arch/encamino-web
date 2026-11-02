@@ -875,7 +875,7 @@ const SCH=q=>"https://scholar.google.com/scholar?q="+encodeURIComponent(q);
 const DOI=d=>"https://doi.org/"+d;
 const TYPES={paper:{es:"Paper",en:"Paper"},libro:{es:"Libro",en:"Book"},informe:{es:"Informe",en:"Report"},curso:{es:"Curso",en:"Course"},ficha:{es:"Ficha técnica",en:"Product sheet"},encuesta:{es:"Encuesta",en:"Survey"}};
 const BOOKC={paper:["#2F4A8A","#FFC726"],libro:["#1F6B4A","#F4EBD9"],informe:["#8A3B2F","#FFD9B8"],curso:["#5A3F8A","#F4EBD9"],ficha:["#B8662E","#FFF3D6"],encuesta:["#7A2F55","#FFD6E4"]};
-const SHELVES=[["anden",{es:"El Andén",en:"The Dock"}],["bodega",{es:"Bodega",en:"Warehouse"}],["ultima",{es:"Última milla",en:"Last mile"}],["rutas",{es:"Rutas",en:"Routes"}]];
+const SHELVES=[["anden",{es:"Andenes",en:"Docks"}],["bodega",{es:"Bodega",en:"Warehouse"}],["ultima",{es:"Última milla",en:"Last mile"}],["rutas",{es:"Rutas",en:"Routes"}]];
 const SOURCES=[
  {id:"bailey1952",shelf:"anden",sp:"Bailey · Colas y citas",spEn:"Bailey · Queues and appointments",au:"N. T. J. Bailey",yr:"1952",ti:{es:"Un estudio de colas y sistemas de citas en consultorios externos de hospitales, con especial referencia a los tiempos de espera",en:"A study of queues and appointment systems in hospital out-patient departments, with special reference to waiting-times",orig:"A study of queues and appointment systems in hospital out-patient departments, with special reference to waiting-times"},ve:"Journal of the Royal Statistical Society, Series B 14(2), 185–199",ty:"paper",labs:["bailey"],url:SCH("Bailey 1952 A study of queues and appointment systems in hospital out-patient departments"),search:true,
   idea:{es:"Bailey simuló a mano las esperas en las consultas de un hospital. Su receta: citar a dos pacientes al abrir y después a uno cada tanto, al ritmo de atención. Así el médico casi nunca queda sin nadie y los pacientes esperan mucho menos que si llegan todos juntos.",en:"Bailey simulated hospital clinic waits by hand. His recipe: book two patients at opening, then one at a time at the service pace. The doctor is almost never idle, and patients wait far less than if they all arrive together."}},
@@ -934,10 +934,10 @@ const SV=(w,h,body)=>`<svg viewBox="0 0 ${w} ${h}" class="ill" role="img">${body
 const INK="#1B2238",INK2="#6B6E80";
 
 /* ---------------- LABS ---------------- */
-const CATS=[["todos","Todos","All"],["anden","El Andén","The Dock"],["bodega","Bodega","Warehouse"],["ultima","Última milla","Last mile"],["rutas","Rutas","Routes"]];
+const CATS=[["todos","Todos","All"],["anden","Andenes","Docks"],["bodega","Bodega","Warehouse"],["ultima","Última milla","Last mile"],["rutas","Rutas","Routes"]];
 const LABS=[
 /* ======================= BAILEY ======================= */
-{id:"bailey",cat:"anden",kicker:{es:"El Andén · 1",en:"The Dock · 1"},chip:"40 → 16 min",
+{id:"bailey",cat:"anden",kicker:{es:"Andenes · Bailey",en:"Docks · Bailey"},chip:"40 → 16 min",
  q:{es:"¿A qué hora citas los camiones?",en:"When do you book the trucks?"},
  short:{es:"Citas de camiones",en:"Truck appointments"},
  lede:{es:"Mismos camiones, mismos andenes. Si los citas a todos a las 7:00, el último espera 80 minutos. Con la regla de Bailey, el promedio baja a 16. Elige cómo citar y mira el día completo.",en:"Same trucks, same docks. Book them all at 7:00 and the last one waits 80 minutes. With Bailey's rule the average drops to 16. Choose how to book and watch the whole day."},
@@ -977,7 +977,7 @@ const LABS=[
  notApply:{es:"Bailey diseñó su regla para un consultorio en 1952. Aquí la escalamos a varios andenes iguales y cargas que duran siempre lo mismo. Si las cargas son muy distintas o hay prioridades, la mejor agenda depende de cuánto pesan la espera, el tiempo ocioso y el atraso del cierre.",en:"Bailey designed his rule for a clinic in 1952. Here it is scaled to several identical docks and loads that always take the same time. If loads vary a lot or there are priorities, the best schedule depends on how much you weigh waiting, idle time and late closing."},
  sources:["bailey1952","welch1952","kaandorp2007","lindley1952"],scene:sceneBailey},
 /* ======================= FILA ======================= */
-{id:"fila",cat:"anden",kicker:{es:"El Andén · 2",en:"The Dock · 2"},chip:"75 → 21 min",
+{id:"fila",cat:"anden",kicker:{es:"Andenes · Fila única",en:"Docks · Single queue"},chip:"75 → 21 min",
  q:{es:"¿A qué puerta mandas cada camión?",en:"Which door does each truck go to?"},
  short:{es:"Fila única en el patio",en:"Single queue in the yard"},
  lede:{es:"Tres patios iguales reciben los mismos camiones a la misma hora. Solo cambia cómo se elige la puerta: asignada antes de llegar, el jefe de patio que manda a la fila más corta, o una sola fila para todas las puertas.",en:"Three identical yards get the same trucks at the same time. Only the door choice changes: assigned before arrival, a yard boss sending trucks to the shortest line, or one single queue for all doors."},
@@ -1296,6 +1296,7 @@ const EQ={
 const BPAL=["#E8505B","#F9A03F","#2EC4B6","#5B5FC7","#8E44AD","#1F8A70","#F2C14E","#D1495B","#00798C","#EDAE49","#3E8E7E","#6C63FF","#C44536","#2A9D8F","#E76F51","#264653","#B5838D","#457B9D","#F4A261","#7B2CBF"];
 const SHELFC={anden:"#1E5F74",bodega:"#6D2E46",ultima:"#2D6A4F",rutas:"#9C4221"};
 
+function gc(p,e,n){try{const g=window.goatcounter;if(g&&g.count){g.count({path:p,title:p,event:!!e});return}}catch(x){return}if((n||0)<10)setTimeout(()=>gc(p,e,(n||0)+1),600)}/* GoatCounter: anonymous counts; page works the same if blocked */
 /* =====================================================================
    UI · full-bleed 3D game: choose a rule → ▶ Simulate → result card
    ===================================================================== */
@@ -1417,8 +1418,8 @@ function renderPanel(id){requestAnimationFrame(()=>{sizeStage();V.dirty=3});setT
  pan.innerHTML=`<p class="sit">${SIT[id](eff(id))}</p><div class="seg big" id="rulepick" role="group" aria-label="${tx({es:G.rule.es,en:G.rule.en})}">${G.rule.opts.filter(o=>o[4]!=="adv"||st[G.rule.k]===o[0]).map(o=>`<button type="button" data-v="${o[0]}" aria-pressed="${String(st[G.rule.k]===o[0])}">${L(o[1],o[2])}</button>`).join("")}</div>${(()=>{const o=G.rule.opts.find(x=>x[0]===st[G.rule.k]);return o&&o[3]?`<p class="seghint" id="rulehint">${tx(o[3])}</p>`:""})()}<button class="play" id="play" type="button">▶ ${T("Simular","Simulate")} ${tx(RUNWORD[id])}</button><div class="links"><button type="button" data-sheet="ajustar">${T("Cambiar los números","Change the numbers")}</button><button type="button" data-sheet="ciencia">${T("Por qué pasa","Why it happens")}</button></div>`;
  qsa("#rulepick button",pan).forEach(b=>b.addEventListener("click",()=>onCtl(id,{[G.rule.k]:b.dataset.v})));
  $("play").addEventListener("click",()=>play(id));qsa("[data-sheet]",pan).forEach(b=>b.addEventListener("click",()=>openSheet(id,b.dataset.sheet)))}
-function play(id){if(V.running)return;hideCoach();if(SHEET.kind)closeSheet();clearTimeout(sceneT);mountLabScene(id);if(!V.S||!V.S.startRun){V.mode="done";finishRun(true);return}V.S.startRun();V.running=true;V.skip=reduce;V.runSp=RUNSP[id]||1;V.mode="run";renderPanel(id);buzz(8)}
-function finishRun(noScene){V.running=false;const id=V.id;if(!id)return;const r=resultNow(id);V.prev=RUNS[id]||null;V.res=r;RUNS[id]=r;V.mode="done";if(V.S)V.S.cap="";V.cap=null;/* null ≠ "" so hud() clears the old subtitle from the DOM */V.dirty=2;V.settle=1.0;/* let the trucks finish their last move after a skip */renderPanel(id);buzz([10,40,10])}
+function play(id){if(V.running)return;hideCoach();if(SHEET.kind)closeSheet();clearTimeout(sceneT);mountLabScene(id);if(!V.S||!V.S.startRun){V.mode="done";finishRun(true);return}gc("simular-"+id,1);V.S.startRun();V.running=true;V.skip=reduce;V.runSp=RUNSP[id]||1;V.mode="run";renderPanel(id);buzz(8)}
+function finishRun(noScene){V.running=false;const id=V.id;if(!id)return;gc("resultado-"+id,1);const r=resultNow(id);V.prev=RUNS[id]||null;V.res=r;RUNS[id]=r;V.mode="done";if(V.S)V.S.cap="";V.cap=null;/* null ≠ "" so hud() clears the old subtitle from the DOM */V.dirty=2;V.settle=1.0;/* let the trucks finish their last move after a skip */renderPanel(id);buzz([10,40,10])}
 function toast(h,t,ms){const el=$("toast");el.innerHTML=`<b>${h}</b>${t?`<span>${t}</span>`:""}`;el.hidden=false;el.classList.remove("in");void el.offsetWidth;el.classList.add("in");clearTimeout(el._t);el._t=setTimeout(()=>el.hidden=true,ms||2600)}
 
 /* ---------- lab (full-bleed game) ---------- */
@@ -1479,7 +1480,7 @@ function readURL(){const qp=new URLSearchParams(location.search);let id=qp.get("
   if(c){if(c.type==="seg"){if(!c.opts.some(o=>o[0]===v)&&!(k==="rule"&&(v==="custom"||v==="seis")))return}else if(c.type==="check")v=!!v;else{if(typeof v!=="number")return;const lo=c.range?c.range(st)[0]:c.min,hi=c.range?c.range(st)[1]:c.max;v=Math.max(lo,Math.min(hi,v));if(!c.step||Number.isInteger(c.step))v=Math.round(v)}}
   else if(typeof v==="number"&&!(v>=0&&v<=1e6))return;/* unknown keys: numbers in a sane range only */
   st[k]=v;any=true});/* apply onSet after all keys so a link with regla=propia keeps its rule */if(any){const ks=G.url.map(u=>u[1]);const hasRule=qp.has("regla");ks.forEach(k=>{if(qp.has(G.url.find(u=>u[1]===k)[0])&&LAB[id].onSet)LAB[id].onSet(st,k,hasRule?{[k]:st[k],rule:st.rule}:{[k]:st[k]})});INTRO[id]=false}return id}
-function copyText(txt){window.__lastShare=txt;const ok=()=>toast(T("¡Copiado!","Copied!"),T("Pégalo donde quieras.","Paste it anywhere."));
+function copyText(txt){gc("copiar-"+(V.id||"inicio"),1);window.__lastShare=txt;const ok=()=>toast(T("¡Copiado!","Copied!"),T("Pégalo donde quieras.","Paste it anywhere."));
  const fb=()=>{const ta=document.createElement("textarea");ta.value=txt;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();let d=false;try{d=document.execCommand("copy")}catch(e){}ta.remove();if(d)ok();else toast(T("Copia este texto:","Copy this text:"),txt,8000)};
  try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(e){fb()}}
 
@@ -1531,12 +1532,12 @@ function thumbs(done){if(!HAS3||!renderer()){done&&done();return}const todo=LABS
 function mountHero(){const host=$("hero-stage");if(!host||!HAS3||!renderer()||V.id)return;const S=sceneHero();attach(host,S);S.prewarm()}
 
 /* ---------- router & language ---------- */
-function route(){V.running=false;V.skip=false;V.settle=0;clearTimeout(sceneT);/* a run never survives a change of page */const h=(location.hash||"#inicio").slice(1);const id=LAB[h]?h:null;const view=id?"lab":(h==="biblioteca"?"biblioteca":"inicio");
+function route(){V.running=false;V.skip=false;V.settle=0;clearTimeout(sceneT);/* a run never survives a change of page */const h=(location.hash||"#inicio").slice(1);const id=LAB[h]?h:null;const view=id?"lab":(h==="biblioteca"?"biblioteca":"inicio");gc(location.pathname+"#"+(id||view));
  closeBook();if(SHEET.kind)closeSheet();$("v-inicio").hidden=view!=="inicio";$("v-lab").hidden=view!=="lab";$("v-biblioteca").hidden=view!=="biblioteca";body.classList.toggle("in-app",view==="lab");
  qsa(".top [data-nav]").forEach(a=>a.setAttribute("aria-current",(a.dataset.nav===view)?"page":"false"));
  if(id){V.id=id;detach();renderLab(id);mountLabScene(id);document.title=tx(LAB[id].q)+" · En Camino Logística";setTimeout(()=>{sizeStage()},60)}
  else{V.id=null;detach();$("v-lab").innerHTML="";if(view==="inicio"){document.title="En Camino Logística · "+T("Laboratorio","Lab");renderHome();mountHero();setTimeout(thumbs,250)}else{document.title=T("Biblioteca","Library")+" · En Camino Logística";renderLib()}window.scrollTo(0,0)}}
-function setLang(l){lang=l;body.dataset.lang=l;document.documentElement.lang=l;qsa("[data-al-es]").forEach(e=>e.setAttribute("aria-label",e.dataset["al"+(l==="en"?"En":"Es")]));$("lang-es").setAttribute("aria-pressed",l==="es");$("lang-en").setAttribute("aria-pressed",l==="en");try{localStorage.setItem("ec-lang",l)}catch(e){}
+function setLang(l){if(l==="en")gc("idioma-en",1);lang=l;body.dataset.lang=l;document.documentElement.lang=l;qsa("[data-al-es]").forEach(e=>e.setAttribute("aria-label",e.dataset["al"+(l==="en"?"En":"Es")]));$("lang-es").setAttribute("aria-pressed",l==="es");$("lang-en").setAttribute("aria-pressed",l==="en");try{localStorage.setItem("ec-lang",l)}catch(e){}
  if(V.id){const id=V.id;const t=$("reels");if(t)t.innerHTML=titleHTML(id);if(V.mode==="done"&&V.res){const o=V.res.obs;V.res=Object.assign(resultNow(id),{obs:o});if(V.prev&&V.prev.stJ)V.prev=Object.assign(resultNow(id,JSON.parse(V.prev.stJ)),{obs:V.prev.obs})}renderPanel(id);if(SHEET.kind)refreshSheet();
   /* labels and subtitle were built in the old language: rebuild them (ready) or drop them (done) */
   if(V.S){if(V.mode==="ready"&&V.S.tick&&!V.S.done)V.S.tick(0,0);else V.S.labels=[];const lb=V.host&&V.host.querySelector(".labels");if(lb)lb.innerHTML="";V.lbl="";V.cap=null;V.dirty=2}}else if(!$("v-biblioteca").hidden)renderLib();else renderHome()}
@@ -1550,5 +1551,6 @@ window.ECAPP={get mode(){return V.mode},get running(){return V.running},play:()=
 const st=document.getElementById("sitetop");const onS=()=>st.classList.toggle("solid",window.scrollY>40||!$("v-biblioteca").hidden);window.addEventListener("scroll",onS,{passive:true});window.addEventListener("hashchange",()=>setTimeout(onS,30));onS();
 })();
 </script>
+<script data-goatcounter="https://encamino.goatcounter.com/count" data-goatcounter-settings='{"no_onload":true}' async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

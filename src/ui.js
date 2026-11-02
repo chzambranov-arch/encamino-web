@@ -1,3 +1,4 @@
+function gc(p,e,n){try{const g=window.goatcounter;if(g&&g.count){g.count({path:p,title:p,event:!!e});return}}catch(x){return}if((n||0)<10)setTimeout(()=>gc(p,e,(n||0)+1),600)}/* GoatCounter: anonymous counts; page works the same if blocked */
 /* =====================================================================
    UI · full-bleed 3D game: choose a rule → ▶ Simulate → result card
    ===================================================================== */
@@ -119,8 +120,8 @@ function renderPanel(id){requestAnimationFrame(()=>{sizeStage();V.dirty=3});setT
  pan.innerHTML=`<p class="sit">${SIT[id](eff(id))}</p><div class="seg big" id="rulepick" role="group" aria-label="${tx({es:G.rule.es,en:G.rule.en})}">${G.rule.opts.filter(o=>o[4]!=="adv"||st[G.rule.k]===o[0]).map(o=>`<button type="button" data-v="${o[0]}" aria-pressed="${String(st[G.rule.k]===o[0])}">${L(o[1],o[2])}</button>`).join("")}</div>${(()=>{const o=G.rule.opts.find(x=>x[0]===st[G.rule.k]);return o&&o[3]?`<p class="seghint" id="rulehint">${tx(o[3])}</p>`:""})()}<button class="play" id="play" type="button">▶ ${T("Simular","Simulate")} ${tx(RUNWORD[id])}</button><div class="links"><button type="button" data-sheet="ajustar">${T("Cambiar los números","Change the numbers")}</button><button type="button" data-sheet="ciencia">${T("Por qué pasa","Why it happens")}</button></div>`;
  qsa("#rulepick button",pan).forEach(b=>b.addEventListener("click",()=>onCtl(id,{[G.rule.k]:b.dataset.v})));
  $("play").addEventListener("click",()=>play(id));qsa("[data-sheet]",pan).forEach(b=>b.addEventListener("click",()=>openSheet(id,b.dataset.sheet)))}
-function play(id){if(V.running)return;hideCoach();if(SHEET.kind)closeSheet();clearTimeout(sceneT);mountLabScene(id);if(!V.S||!V.S.startRun){V.mode="done";finishRun(true);return}V.S.startRun();V.running=true;V.skip=reduce;V.runSp=RUNSP[id]||1;V.mode="run";renderPanel(id);buzz(8)}
-function finishRun(noScene){V.running=false;const id=V.id;if(!id)return;const r=resultNow(id);V.prev=RUNS[id]||null;V.res=r;RUNS[id]=r;V.mode="done";if(V.S)V.S.cap="";V.cap=null;/* null ≠ "" so hud() clears the old subtitle from the DOM */V.dirty=2;V.settle=1.0;/* let the trucks finish their last move after a skip */renderPanel(id);buzz([10,40,10])}
+function play(id){if(V.running)return;hideCoach();if(SHEET.kind)closeSheet();clearTimeout(sceneT);mountLabScene(id);if(!V.S||!V.S.startRun){V.mode="done";finishRun(true);return}gc("simular-"+id,1);V.S.startRun();V.running=true;V.skip=reduce;V.runSp=RUNSP[id]||1;V.mode="run";renderPanel(id);buzz(8)}
+function finishRun(noScene){V.running=false;const id=V.id;if(!id)return;gc("resultado-"+id,1);const r=resultNow(id);V.prev=RUNS[id]||null;V.res=r;RUNS[id]=r;V.mode="done";if(V.S)V.S.cap="";V.cap=null;/* null ≠ "" so hud() clears the old subtitle from the DOM */V.dirty=2;V.settle=1.0;/* let the trucks finish their last move after a skip */renderPanel(id);buzz([10,40,10])}
 function toast(h,t,ms){const el=$("toast");el.innerHTML=`<b>${h}</b>${t?`<span>${t}</span>`:""}`;el.hidden=false;el.classList.remove("in");void el.offsetWidth;el.classList.add("in");clearTimeout(el._t);el._t=setTimeout(()=>el.hidden=true,ms||2600)}
 
 /* ---------- lab (full-bleed game) ---------- */
@@ -181,7 +182,7 @@ function readURL(){const qp=new URLSearchParams(location.search);let id=qp.get("
   if(c){if(c.type==="seg"){if(!c.opts.some(o=>o[0]===v)&&!(k==="rule"&&(v==="custom"||v==="seis")))return}else if(c.type==="check")v=!!v;else{if(typeof v!=="number")return;const lo=c.range?c.range(st)[0]:c.min,hi=c.range?c.range(st)[1]:c.max;v=Math.max(lo,Math.min(hi,v));if(!c.step||Number.isInteger(c.step))v=Math.round(v)}}
   else if(typeof v==="number"&&!(v>=0&&v<=1e6))return;/* unknown keys: numbers in a sane range only */
   st[k]=v;any=true});/* apply onSet after all keys so a link with regla=propia keeps its rule */if(any){const ks=G.url.map(u=>u[1]);const hasRule=qp.has("regla");ks.forEach(k=>{if(qp.has(G.url.find(u=>u[1]===k)[0])&&LAB[id].onSet)LAB[id].onSet(st,k,hasRule?{[k]:st[k],rule:st.rule}:{[k]:st[k]})});INTRO[id]=false}return id}
-function copyText(txt){window.__lastShare=txt;const ok=()=>toast(T("¡Copiado!","Copied!"),T("Pégalo donde quieras.","Paste it anywhere."));
+function copyText(txt){gc("copiar-"+(V.id||"inicio"),1);window.__lastShare=txt;const ok=()=>toast(T("¡Copiado!","Copied!"),T("Pégalo donde quieras.","Paste it anywhere."));
  const fb=()=>{const ta=document.createElement("textarea");ta.value=txt;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();let d=false;try{d=document.execCommand("copy")}catch(e){}ta.remove();if(d)ok();else toast(T("Copia este texto:","Copy this text:"),txt,8000)};
  try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(e){fb()}}
 
@@ -233,12 +234,12 @@ function thumbs(done){if(!HAS3||!renderer()){done&&done();return}const todo=LABS
 function mountHero(){const host=$("hero-stage");if(!host||!HAS3||!renderer()||V.id)return;const S=sceneHero();attach(host,S);S.prewarm()}
 
 /* ---------- router & language ---------- */
-function route(){V.running=false;V.skip=false;V.settle=0;clearTimeout(sceneT);/* a run never survives a change of page */const h=(location.hash||"#inicio").slice(1);const id=LAB[h]?h:null;const view=id?"lab":(h==="biblioteca"?"biblioteca":"inicio");
+function route(){V.running=false;V.skip=false;V.settle=0;clearTimeout(sceneT);/* a run never survives a change of page */const h=(location.hash||"#inicio").slice(1);const id=LAB[h]?h:null;const view=id?"lab":(h==="biblioteca"?"biblioteca":"inicio");gc(location.pathname+"#"+(id||view));
  closeBook();if(SHEET.kind)closeSheet();$("v-inicio").hidden=view!=="inicio";$("v-lab").hidden=view!=="lab";$("v-biblioteca").hidden=view!=="biblioteca";body.classList.toggle("in-app",view==="lab");
  qsa(".top [data-nav]").forEach(a=>a.setAttribute("aria-current",(a.dataset.nav===view)?"page":"false"));
  if(id){V.id=id;detach();renderLab(id);mountLabScene(id);document.title=tx(LAB[id].q)+" · En Camino Logística";setTimeout(()=>{sizeStage()},60)}
  else{V.id=null;detach();$("v-lab").innerHTML="";if(view==="inicio"){document.title="En Camino Logística · "+T("Laboratorio","Lab");renderHome();mountHero();setTimeout(thumbs,250)}else{document.title=T("Biblioteca","Library")+" · En Camino Logística";renderLib()}window.scrollTo(0,0)}}
-function setLang(l){lang=l;body.dataset.lang=l;document.documentElement.lang=l;qsa("[data-al-es]").forEach(e=>e.setAttribute("aria-label",e.dataset["al"+(l==="en"?"En":"Es")]));$("lang-es").setAttribute("aria-pressed",l==="es");$("lang-en").setAttribute("aria-pressed",l==="en");try{localStorage.setItem("ec-lang",l)}catch(e){}
+function setLang(l){if(l==="en")gc("idioma-en",1);lang=l;body.dataset.lang=l;document.documentElement.lang=l;qsa("[data-al-es]").forEach(e=>e.setAttribute("aria-label",e.dataset["al"+(l==="en"?"En":"Es")]));$("lang-es").setAttribute("aria-pressed",l==="es");$("lang-en").setAttribute("aria-pressed",l==="en");try{localStorage.setItem("ec-lang",l)}catch(e){}
  if(V.id){const id=V.id;const t=$("reels");if(t)t.innerHTML=titleHTML(id);if(V.mode==="done"&&V.res){const o=V.res.obs;V.res=Object.assign(resultNow(id),{obs:o});if(V.prev&&V.prev.stJ)V.prev=Object.assign(resultNow(id,JSON.parse(V.prev.stJ)),{obs:V.prev.obs})}renderPanel(id);if(SHEET.kind)refreshSheet();
   /* labels and subtitle were built in the old language: rebuild them (ready) or drop them (done) */
   if(V.S){if(V.mode==="ready"&&V.S.tick&&!V.S.done)V.S.tick(0,0);else V.S.labels=[];const lb=V.host&&V.host.querySelector(".labels");if(lb)lb.innerHTML="";V.lbl="";V.cap=null;V.dirty=2}}else if(!$("v-biblioteca").hidden)renderLib();else renderHome()}
