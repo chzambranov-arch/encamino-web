@@ -390,7 +390,7 @@ footer .wrap{padding-block:28px 60px;display:flex;flex-wrap:wrap;gap:10px 22px;a
 <body data-lang="es">
 <header class="top" id="sitetop"><div class="wrap">
   <a class="brand" href="#inicio" aria-label="En Camino Logística"><img src="data:image/jpeg;base64,@@LOGO@@" alt=""><span><b>En Camino</b><small>Logística</small></span></a>
-  <nav class="nav" aria-label="Secciones"><a href="#inicio" data-nav="inicio"><span class="es">Laboratorios</span><span class="en">Labs</span></a><a href="#biblioteca" data-nav="biblioteca"><span class="es">Biblioteca</span><span class="en">Library</span></a></nav>
+  <nav class="nav" aria-label="Secciones" data-al-es="Secciones" data-al-en="Sections"><a href="#inicio" data-nav="inicio"><span class="es">Laboratorios</span><span class="en">Labs</span></a><a href="#biblioteca" data-nav="biblioteca"><span class="es">Biblioteca</span><span class="en">Library</span></a></nav>
   <div class="lang" role="group" aria-label="Idioma / Language"><button id="lang-es" aria-pressed="true">ES</button><button id="lang-en" aria-pressed="false">EN</button></div>
 </div></header>
 <main>
@@ -401,7 +401,7 @@ footer .wrap{padding-block:28px 60px;display:flex;flex-wrap:wrap;gap:10px 22px;a
     <p><span class="es">Seis maquetas vivas, una por reel: andenes, filas, entregas, bodegas y rutas. Elige una regla, simula y mira cuánto cambia.</span><span class="en">Six living models, one per reel: docks, queues, deliveries, warehouses and routes. Pick a rule, simulate and see how much changes.</span></p>
     <div class="cta-row"><button class="btn y" type="button" id="cta-play"><span class="es">Entrar al laboratorio</span><span class="en">Enter the lab</span></button><a class="btn o" href="#biblioteca"><span class="es">La biblioteca</span><span class="en">The library</span></a></div></div></div>
   <div class="wrap">
-   <section class="sec" id="labs"><div class="sec-h"><h2><span class="es">Elige un <em>reel</em></span><span class="en">Pick a <em>reel</em></span></h2><div class="filters" id="filters" role="group" aria-label="Filtrar"></div></div><div class="cards" id="cards"></div></section>
+   <section class="sec" id="labs"><div class="sec-h"><h2><span class="es">Elige un <em>reel</em></span><span class="en">Pick a <em>reel</em></span></h2><div class="filters" id="filters" role="group" aria-label="Filtrar" data-al-es="Filtrar" data-al-en="Filter"></div></div><div class="cards" id="cards"></div></section>
    <div class="steps3"><div><i>1</i><b><span class="es">Toca</span><span class="en">Tap</span></b><span><span class="es">Elige una regla y aprieta ▶ Simular.</span><span class="en">Pick a rule and press ▶ Simulate.</span></span></div><div><i>2</i><b><span class="es">Compara</span><span class="en">Compare</span></b><span><span class="es">Prueba la regla del reel y mira cuánto cambia.</span><span class="en">Try the reel's rule and see how much changes.</span></span></div><div><i>3</i><b><span class="es">Compártelo</span><span class="en">Share it</span></b><span><span class="es">Manda el caso por WhatsApp con tus propios números.</span><span class="en">Send the case on WhatsApp with your own numbers.</span></span></div></div>
    <a class="libteaser" href="#biblioteca"><div class="txt"><div class="eyebrow" style="color:#FFE9A8"><span class="es">Biblioteca</span><span class="en">Library</span></div><h2><span class="es">Cada libro trae <em>su ecuación</em></span><span class="en">Every book brings <em>its equation</em></span></h2><p><span class="es">Ábrelo y la calcula con tus números de ahora. De Bernoulli en 1713 al software de UPS.</span><span class="en">Open it and it computes with your current numbers. From Bernoulli in 1713 to UPS's software.</span></p></div><div><div class="shelfrow" id="homeshelf"></div><div class="plank"></div></div></a>
   </div>
@@ -409,12 +409,12 @@ footer .wrap{padding-block:28px 60px;display:flex;flex-wrap:wrap;gap:10px 22px;a
  <section id="v-lab" class="view" hidden></section>
  <section id="v-biblioteca" class="view" hidden><div class="wrap">
   <div class="lib-h"><div class="eyebrow"><span class="es">Biblioteca</span><span class="en">Library</span></div><h1><span class="es">Saca un libro. <em>Ábrelo.</em></span><span class="en">Pull a book. <em>Open it.</em></span></h1><p><span class="es">Veinte fuentes en cuatro estantes. Cada libro cuenta su idea, trae su ecuación y la calcula con los números que dejaste en el laboratorio.</span><span class="en">Twenty sources on four shelves. Each book tells its idea, brings its equation and computes it with the numbers you left in the lab.</span></p></div>
-  <div class="filters" id="libfilters" role="group" aria-label="Estantes" style="margin-bottom:26px"></div>
+  <div class="filters" id="libfilters" role="group" aria-label="Estantes" data-al-es="Estantes" data-al-en="Shelves" style="margin-bottom:26px"></div>
   <div id="shelves"></div>
   <p class="libnote"><span class="es">Las fuentes pertenecen a sus autores y editores. Cada ficha es un resumen propio, no una reproducción; los enlaces llevan a los sitios de los editores, a buscadores académicos o a las páginas oficiales. Las marcas mencionadas (IKEA, UPS, Amazon) se citan con fines educativos y no respaldan este sitio.</span><span class="en">Sources belong to their authors and publishers. Each card is our own summary, not a reproduction; links go to publishers' sites, academic search engines or official pages. Brands mentioned (IKEA, UPS, Amazon) are cited for educational purposes and do not endorse this site.</span></p>
  </div></section>
 </main>
-<div class="sheet" id="sheet" hidden><div class="sh-back"></div><div class="sh-panel" role="dialog" aria-modal="true"><div class="sh-grab"><i></i><button class="sh-x" type="button" aria-label="Cerrar">×</button></div><div class="sh-body" id="sheet-body"></div></div></div>
+<div class="sheet" id="sheet" hidden><div class="sh-back"></div><div class="sh-panel" role="dialog" aria-modal="true"><div class="sh-grab"><i></i><button class="sh-x" type="button" aria-label="Cerrar" data-al-es="Cerrar" data-al-en="Close">×</button></div><div class="sh-body" id="sheet-body"></div></div></div>
 <div class="bookm" id="bookm" hidden></div>
 <div class="toast" id="toast" role="status" hidden></div>
 <footer><div class="wrap">
