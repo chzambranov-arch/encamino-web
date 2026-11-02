@@ -3,7 +3,7 @@ Cuatro pantallas 1080×1920 · 30 fps · H.264 · música propia (sintetizada, s
 Zonas seguras respetadas: nada importante sobre y=270 ni bajo y=1540.
 
 P1 · p1.mp4 (6 s)  «Algo nuevo»  — sin stickers.
-P2 · p2.mp4 (15 s) «El colapso»  — sin stickers. Cifras tomadas del motor del laboratorio (Bailey): todos a las 7:00 → promedio 40,0 min, el que más espera 80 min; Regla de Bailey → 16,0 min (−60 %).
+P2 · p2.mp4 (17,8 s) «El colapso»  — sin stickers. Grabado del laboratorio real (Bailey); cifras del motor: todos a las 7:00 → el último espera 80 min, promedio 40,0 min; Regla de Bailey → 16,0 min (−60 %). Supera los 15 s del encargo porque corre dos jornadas completas; recortable desde IG si se prefiere.
 P3 · p3.png + p3.mp4 (5,5 s = 5 vueltas de un vaivén de 1,1 s; cierra sin costura) «El desafío»
    Sticker QUIZ (hueco libre 900×520 centrado en y≈1100; esquinas 90,840 → 990,1360):
      Pregunta: ¿Cuánto espera el último camión?
