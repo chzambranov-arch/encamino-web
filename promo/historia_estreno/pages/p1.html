@@ -1,0 +1,32 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><style>
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500..800&family=DM+Sans:wght@400..700&family=Fraunces:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@500;600&display=block');
+:root{--bg:#0F1729;--ink:#F7F3EA;--muted:#B9C0D4;--yellow:#FFC52E;--mint:#4BE38A;--coral:#FF7A59;--f-d:"Bricolage Grotesque",sans-serif;--f-b:"DM Sans",sans-serif;--f-s:"Fraunces",serif;--f-m:"IBM Plex Mono",monospace}
+*{box-sizing:border-box;margin:0}html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg);color:var(--ink);font-family:var(--f-b)}
+.bg{position:absolute;inset:0;background:radial-gradient(120% 70% at 50% 28%,#30468A 0%,#18244A 48%,#0F1729 100%)}
+.safe-top{position:absolute;left:0;right:0;top:0;height:270px}.safe-bot{position:absolute;left:0;right:0;bottom:0;height:380px}
+.eyebrow{font:600 30px var(--f-m);letter-spacing:.18em;text-transform:uppercase;color:var(--yellow)}
+.h1{font:800 112px/1 var(--f-d);letter-spacing:-.02em}.h1 em{font:600 italic 1em var(--f-s);color:var(--yellow)}
+.h2{font:800 76px/1.05 var(--f-d)}.h2 em{font:600 italic 1em var(--f-s);color:var(--yellow)}
+.p{font:400 40px/1.35 var(--f-b);color:var(--muted)}.p b{color:var(--ink);font-weight:700}
+.pill{display:inline-block;font:800 40px var(--f-d);color:var(--bg);background:var(--yellow);border-radius:999px;padding:16px 44px}
+.card{position:absolute;left:60px;right:60px;border-radius:44px;background:rgba(15,23,41,.82);border:1px solid #ffffff22;backdrop-filter:blur(18px);padding:48px 56px}
+.o{opacity:0}.center{text-align:center}
+.hole{position:absolute;border:4px dashed #ffffff33;border-radius:28px}
+.hole span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:500 24px var(--f-m);color:#ffffff55;letter-spacing:.12em;text-transform:uppercase}
+.logo{width:420px;height:420px;border-radius:96px;box-shadow:0 60px 120px -40px #000}
+.brand{font:800 92px/1 var(--f-d);letter-spacing:-.01em}.brand small{display:block;font:600 34px var(--f-m);letter-spacing:.32em;color:var(--yellow);margin-top:10px}
+
+</style><style>
+#stage{position:absolute;left:0;right:0;top:290px;height:820px}
+#intro{position:absolute;left:0;right:0;top:300px;height:1180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:48px}
+#t1{position:absolute;left:60px;right:60px;top:1150px;text-align:center}
+#t2{position:absolute;left:60px;right:60px;top:1360px;text-align:center}
+</style></head><body><div class="bg"></div>
+<div id="intro"><img class="logo" src="logo.png"><div class="brand center">En Camino<small>LOGÍSTICA</small></div></div>
+<div id="stage"></div>
+<div id="t1" class="o"><div class="h2">Los reels ahora <em>se simulan</em></div></div>
+<div id="t2" class="o"><span class="pill">🧪 LABORATORIO</span></div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
+<script src="lab_engine.js"></script><script src="story_scene.js"></script>
+<script>window.__phase=0;window.addEventListener("load",()=>{__story.mount("hero",{assemble:2.4,speed:1,pad:1.0});document.getElementById("intro").style.transition="opacity .5s";const w=setInterval(()=>{if(window.__phase>=1){document.getElementById("intro").style.opacity=0;clearInterval(w)}},50)})</script>
+</body></html>

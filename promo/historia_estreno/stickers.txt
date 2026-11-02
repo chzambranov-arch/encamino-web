@@ -1,0 +1,18 @@
+HISTORIA DE ESTRENO · LABORATORIO EN CAMINO · lunes 02-11-2026
+Cuatro pantallas 1080×1920 · 30 fps · H.264 · música propia (sintetizada, sin derechos de terceros) · sin voz.
+Zonas seguras respetadas: nada importante sobre y=270 ni bajo y=1540.
+
+P1 · p1.mp4 (6 s)  «Algo nuevo»  — sin stickers.
+P2 · p2.mp4 (15 s) «El colapso»  — sin stickers. Cifras tomadas del motor del laboratorio (Bailey): todos a las 7:00 → promedio 40,0 min, el que más espera 80 min; Regla de Bailey → 16,0 min (−60 %).
+P3 · p3.png + p3.mp4 (5,5 s = 5 vueltas de un vaivén de 1,1 s; cierra sin costura) «El desafío»
+   Sticker QUIZ (hueco libre 900×520 centrado en y≈1100; esquinas 90,840 → 990,1360):
+     Pregunta: ¿Cuánto espera el último camión?
+     Opciones: 20 min / 45 min / 80 min
+     Correcta: 80 min
+P4 · p4.mp4 (8 s) «La puerta»
+   Sticker ENLACE (hueco 700×200 en y≈1250; esquinas 190,1150 → 890,1350):
+     Texto: Simúlalo tú
+     URL: https://encamino-logistica.github.io/encamino-web/?reel=4
+   Sticker CUENTA REGRESIVA (hueco 700×220 en y≈1450; esquinas 190,1340 → 890,1560):
+     Título: Reel 6 · El Andén
+     Fecha: martes 03-11-2026 · hora a confirmar

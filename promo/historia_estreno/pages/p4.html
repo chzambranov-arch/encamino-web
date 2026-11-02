@@ -1,0 +1,32 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><style>
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500..800&family=DM+Sans:wght@400..700&family=Fraunces:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@500;600&display=block');
+:root{--bg:#0F1729;--ink:#F7F3EA;--muted:#B9C0D4;--yellow:#FFC52E;--mint:#4BE38A;--coral:#FF7A59;--f-d:"Bricolage Grotesque",sans-serif;--f-b:"DM Sans",sans-serif;--f-s:"Fraunces",serif;--f-m:"IBM Plex Mono",monospace}
+*{box-sizing:border-box;margin:0}html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg);color:var(--ink);font-family:var(--f-b)}
+.bg{position:absolute;inset:0;background:radial-gradient(120% 70% at 50% 28%,#30468A 0%,#18244A 48%,#0F1729 100%)}
+.safe-top{position:absolute;left:0;right:0;top:0;height:270px}.safe-bot{position:absolute;left:0;right:0;bottom:0;height:380px}
+.eyebrow{font:600 30px var(--f-m);letter-spacing:.18em;text-transform:uppercase;color:var(--yellow)}
+.h1{font:800 112px/1 var(--f-d);letter-spacing:-.02em}.h1 em{font:600 italic 1em var(--f-s);color:var(--yellow)}
+.h2{font:800 76px/1.05 var(--f-d)}.h2 em{font:600 italic 1em var(--f-s);color:var(--yellow)}
+.p{font:400 40px/1.35 var(--f-b);color:var(--muted)}.p b{color:var(--ink);font-weight:700}
+.pill{display:inline-block;font:800 40px var(--f-d);color:var(--bg);background:var(--yellow);border-radius:999px;padding:16px 44px}
+.card{position:absolute;left:60px;right:60px;border-radius:44px;background:rgba(15,23,41,.82);border:1px solid #ffffff22;backdrop-filter:blur(18px);padding:48px 56px}
+.o{opacity:0}.center{text-align:center}
+.hole{position:absolute;border:4px dashed #ffffff33;border-radius:28px}
+.hole span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:500 24px var(--f-m);color:#ffffff55;letter-spacing:.12em;text-transform:uppercase}
+.logo{width:420px;height:420px;border-radius:96px;box-shadow:0 60px 120px -40px #000}
+.brand{font:800 92px/1 var(--f-d);letter-spacing:-.01em}.brand small{display:block;font:600 34px var(--f-m);letter-spacing:.32em;color:var(--yellow);margin-top:10px}
+
+</style><style>
+#top{position:absolute;left:60px;right:60px;top:330px;text-align:center}
+#mid{position:absolute;left:60px;right:60px;top:760px;text-align:center}
+#arrow{position:absolute;left:0;right:0;top:1040px;text-align:center;font:800 150px var(--f-d);color:var(--yellow);line-height:1}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(26px)}}#arrow{animation:bob 1.1s ease-in-out infinite}
+#h1{left:190px;top:1150px;width:700px;height:200px}
+#h2{left:190px;top:1340px;width:700px;height:220px}
+</style></head><body><div class="bg"></div>
+<div id="top"><div class="eyebrow">Laboratorio de logística</div><div class="h1" style="margin-top:22px">Simúlalo <em>tú</em></div></div>
+<div id="mid"><div class="p"><b>Copia tu resultado</b></div><div class="h2" style="margin-top:14px">¿Le ganas <em>al reel</em>?</div></div>
+<div id="arrow">↓</div>
+<div id="h1" class="hole"><span>sticker enlace</span></div>
+<div id="h2" class="hole"><span>sticker cuenta regresiva</span></div>
+</body></html>
