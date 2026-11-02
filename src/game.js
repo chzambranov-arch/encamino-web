@@ -3,10 +3,10 @@
    2 giant metrics, an "aha" call to action, share phrase, URL params
    ===================================================================== */
 /* Reel numbers we know. Add the rest here when they are defined. */
-const REELNUM={ups:1,ikea:2,amazon:3,bailey:4,nivel:5,fila:6};
+const REELNUM={ups:1,amazon:2,ikea:3,bailey:4,nivel:5,fila:6};
 /* reels published so far: labs with a higher number stay reachable by direct link but are not listed */
-const PUBLISHED=5;
-const listedLabs=()=>LABS.filter(l=>(REELNUM[l.id]||0)<=PUBLISHED).sort((a,b)=>(REELNUM[b.id]||0)-(REELNUM[a.id]||0));
+const PUBLICADO={ups:true,amazon:true,ikea:true,bailey:true,nivel:true,fila:false};/* fila: reel 6 not published yet; ?caso=fila still works */
+const listedLabs=()=>LABS.filter(l=>PUBLICADO[l.id]!==false).sort((a,b)=>(REELNUM[b.id]||0)-(REELNUM[a.id]||0));
 const REEL2LAB={};for(const k in REELNUM)REEL2LAB[REELNUM[k]]=k;
 const fmin=x=>!isFinite(x)?"∞":x>=100?nf(x):nf(x,1);
 const tone=(v,good,bad)=>!isFinite(v)?"bad":v<=good?"good":v>=bad?"bad":"mid";
@@ -19,7 +19,7 @@ const filaRho=st=>st.lam/(st.c*60/st.S);
 const GAME={
  bailey:{
   def:{c:6,N:30,s:20,d:0,rule:"juntos",g:12,I:20},
-  rule:SEGF("rule","Cómo citas","How you book",[["juntos","Todos a las 7:00","All at 7:00",{es:"Todos citados a la apertura: el patio se llena de golpe.",en:"Everyone booked at opening: the yard floods at once."}],["libre","Sin cita","No booking",{es:"Cada camión llega cuando quiere, sin hora (supuesto: llegadas al azar repartidas en la jornada).",en:"Each truck arrives whenever, no slot (assumption: random arrivals spread over the shift)."}],["bailey","Regla de Bailey","Bailey's rule",{es:"2 × andenes a la apertura y luego una tanda por franja: el colchón cubre a los atrasados.",en:"2 × docks at opening, then one batch per slot: the cushion covers latecomers."}]]),
+  rule:SEGF("rule","Cómo citas","How you book",[["juntos","Todos a las 7:00","All at 7:00",{es:"Todos citados a la apertura: el patio se llena de golpe.",en:"Everyone booked at opening: the yard floods at once."}],["seis","De 6 en 6 cada 20 min","6 at a time every 20 min",{es:"Una tanda por andén cada franja: la del reel 4. Con todos puntuales nadie espera, pero cualquier atraso deja un andén vacío.",en:"One batch per dock each slot: the reel 4 option. With everyone on time nobody waits, but any delay leaves a dock empty."}],["bailey","Regla de Bailey","Bailey's rule",{es:"2 × andenes a la apertura y luego una tanda por franja: el colchón cubre a los atrasados.",en:"2 × docks at opening, then one batch per slot: the cushion covers latecomers."}],["libre","Sin cita","No booking",{es:"Cada camión llega cuando quiere, sin hora (supuesto: llegadas al azar repartidas en la jornada).",en:"Each truck arrives whenever, no slot (assumption: random arrivals spread over the shift)."},"adv"]]),
   sliders:[RANGE("c","c","Andenes de carga","Loading docks",2,12,1,v=>v),RANGE("d","d","Desorden en las llegadas","Arrival disorder",0,30,1,v=>v===0?T("puntuales","on time"):"± "+v+" min")],
   ajustes:[STEP("N","N","Camiones del día","Trucks in the day",2,80),RANGE("s","s","Minutos de carga","Loading minutes",5,60,1,v=>v+" min")],
   chips:[["g","Todos puntuales","All on time",{d:0}],["y","Atrasos normales ±10","Normal delays ±10",{d:10}],["r","Día caótico ±30","Chaotic day ±30",{d:30}]],

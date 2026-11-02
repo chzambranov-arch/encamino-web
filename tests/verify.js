@@ -99,7 +99,7 @@ const es1=x=>x.toLocaleString("es-CL",{minimumFractionDigits:1,maximumFractionDi
  await p.tap('#panel [data-sheet="ciencia"]');await p.waitForTimeout(800);ok("«Por qué pasa»: los 7 libros de este laboratorio, de colores",(await p.$$("#sheet .book")).length===7);
  await p.tap('#sheet [data-book="erlang1917"]');await p.waitForTimeout(1600);ok("Libro de Erlang con la ecuación y tus números (21,1 min)",(await p.textContent(".blive")).includes("21,1"));await shot(p,"celular_ig_libro");await p.tap(".bk-x");await p.waitForTimeout(500);
  await p.tap('#panel [data-sheet="share"]');await p.waitForTimeout(700);ok("Compartir: un solo botón «Copiar mi resultado», sin WhatsApp ni Instagram",(await p.$$("#sheet-body .cta")).length===1&&!(await p.$("#wa"))&&!(await p.$("#igc")));
- await p.tap("#copy");await p.waitForTimeout(300);const clip=await p.evaluate(()=>navigator.clipboard.readText().catch(()=>window.__lastShare));ok("Copiar mi resultado: frase con la mejora (75,0 → 21,1 min, −72 %) y link con la configuración",clip.includes("75,0 min")&&clip.includes("21,1 min")&&clip.includes("−72 %")&&clip.includes("Pruébalo:")&&clip.includes("caso=fila")&&clip.includes("regla=unica"),clip);await p.tap(".sh-x");await p.waitForTimeout(400);
+ await p.tap("#copy");await p.waitForTimeout(300);const clip=await p.evaluate(()=>navigator.clipboard.readText().catch(()=>window.__lastShare));ok("Copiar mi resultado: frase con la mejora (75,0 → 21,1 min, −72 %) y link con la configuración",clip.includes("75,0 min")&&clip.includes("21,1 min")&&clip.includes("−72 %")&&/Frente al reel: \d+ %/.test(clip)&&clip.includes("¿Le ganas?")&&clip.includes("caso=fila")&&clip.includes("regla=unica"),clip);await p.tap(".sh-x");await p.waitForTimeout(400);
  await p.tap("#edit");await p.waitForTimeout(700);
  ok("«Cambiar los números»: sliders, escenarios, vista e idioma, sin teclado",(await p.$$("#sheet input[type=range]")).length>=2&&(await p.$$("#chips .chip")).length===3&&(await p.$$("#sheet [data-view]")).length===2&&(await p.$$("#sheet input[type=number]")).length===0);
  await shot(p,"celular_ig_cambiar_numeros");
@@ -115,7 +115,7 @@ const es1=x=>x.toLocaleString("es-CL",{minimumFractionDigits:1,maximumFractionDi
  const runOnce=async()=>{await q.tap("#play");await q.waitForTimeout(500);await q.tap("#skip").catch(()=>{});await q.waitForFunction(()=>ECAPP.mode==="done",null,{timeout:40000});await q.waitForTimeout(900);return q.textContent("#rv")};
  await q.goto(BASE+"?caso=fila&puertas=2&camiones=7&regla=separadas");await q.waitForSelector("#play");await q.waitForTimeout(1200);
  ok("Link compartido abre la misma configuración (2 puertas, 7/h)",(await q.textContent(".sit")).includes("2 puertas · 7 camiones"));ok("…y su resultado es 105 min",(await runOnce())==="105");
- const cases=[["?reel=4","bailey","40,0","16,0"],["?reel=5","nivel","24,2","4,9"],["?reel=3","amazon","50,0","10,0"],["?reel=2","ikea","11,4","1,0"],["?reel=1","ups","20,0","7,2"]];
+ const cases=[["?reel=4","bailey","40,0","16,0"],["?reel=5","nivel","24,2","4,9"],["?reel=2","amazon","50,0","10,0"],["?reel=3","ikea","11,4","1,0"],["?reel=1","ups","20,0","7,2"]];
  for(const [u,id,a0,a1] of cases){await q.goto(BASE+u);await q.waitForSelector("#play");await q.waitForTimeout(1500);await shot(q,`celular_ig_${id}_preparar`);
   const v0=await runOnce();ok(`${id} · el problema del reel da ${a0}`,v0===a0,v0);await shot(q,`celular_ig_${id}_resultado`);
   await q.tap("#trysol");await q.waitForTimeout(500);await q.tap("#skip").catch(()=>{});await q.waitForFunction(()=>ECAPP.mode==="done",null,{timeout:40000});await q.waitForTimeout(1000);
@@ -151,7 +151,7 @@ const es1=x=>x.toLocaleString("es-CL",{minimumFractionDigits:1,maximumFractionDi
  const lk=await q.textContent(".sit");ok("Link compartido · abre con 3 puertas aunque el teléfono tenía 5 guardadas",/^3 puertas/.test(lk),lk);
  await q.goto(BASE+"?caso=nivel&eval=mes");await q.waitForSelector("#play");await q.waitForTimeout(1200);await runOnce();
  const nvM=await q.evaluate(()=>(document.querySelector(".rnote")||{}).textContent||"");ok("Nivel · medido por mes, la nota habla del mes (2.040 paradas, 24 días), no del día",/2\.040 paradas del mes/.test(nvM)&&/24 días/.test(nvM),nvM);
- await q.goto(BASE+"?reel=3&copias=4");await q.waitForSelector("#play");await q.waitForTimeout(1200);await runOnce();
+ await q.goto(BASE+"?reel=2&copias=4");await q.waitForSelector("#play");await q.waitForTimeout(1200);await runOnce();
  await q.tap("#trysol");await q.waitForTimeout(500);await q.tap("#skip").catch(()=>{});await q.waitForFunction(()=>ECAPP.mode==="done",null,{timeout:40000});await q.waitForTimeout(900);
  const amA=await q.evaluate(()=>(document.querySelector(".raha")||{}).textContent||"");ok("Amazon · el ¡Ajá! usa tus copias (4 lugares, 20,0 m), no «9 lugares» fijo",/4 lugares/.test(amA)&&/20,0 m/.test(amA),amA);
  /* the yard must stay full of trucks for the whole run (slots are given back when a truck leaves) */
@@ -172,6 +172,22 @@ const es1=x=>x.toLocaleString("es-CL",{minimumFractionDigits:1,maximumFractionDi
  await q.goto(BASE+"?caso=nivel&eval=foo&dias=0");await q.waitForSelector("#play");await q.waitForTimeout(900);const nvI=await runOnce(),nvD=await q.evaluate(()=>[ECAPP.STATE.nivel.period,ECAPP.STATE.nivel.days]);ok("Nivel · link con período inexistente y 0 días: cae en «cada día», 10 días, y da 24,2",nvI==="24,2"&&nvD[0]==="dia"&&nvD[1]===10,{nvI,nvD});
  await q.goto(BASE+"?reel=4&g=15");await q.waitForSelector("#play");await q.waitForTimeout(900);await q.evaluate(()=>ECAPP.set("bailey",Object.assign({},ECAPP.LAB.bailey.def),{force:true}));await q.waitForTimeout(400);
  const rst=await q.evaluate(()=>ECAPP.STATE.bailey.rule);ok("Bailey · «Volver al ejemplo del reel» tras mover la perilla extra deja la regla del reel, no «propia»",rst==="juntos",rst);
+ /* final audit: reel numbers, shared text, primary copy button, Bailey quick rule */
+ await q.goto(BASE);await q.waitForTimeout(1200);const ord=await q.evaluate(()=>[...document.querySelectorAll("#cards .card")].map(a=>a.getAttribute("href")).join(","));
+ ok("Reels · portada en orden 5→1 sin la fila (no publicada): nivel, bailey, ikea, amazon, ups",ord==="#nivel,#bailey,#ikea,#amazon,#ups",ord);
+ for(const [n,id] of [[1,"ups"],[2,"amazon"],[3,"ikea"],[4,"bailey"],[5,"nivel"],[6,"fila"]]){await q.goto(BASE+"?reel="+n);await q.waitForSelector("#play");const h=await q.evaluate(()=>location.hash);ok(`Reels · ?reel=${n} abre #${id}`,h==="#"+id,h)}
+ await q.goto(BASE+"?caso=fila");await q.waitForSelector("#play");ok("Reels · ?caso=fila sigue funcionando aunque no esté en portada",(await q.evaluate(()=>location.hash))==="#fila");
+ await q.goto(BASE+"?reel=6");await q.waitForSelector("#play");await q.waitForTimeout(1000);await runOnce();
+ const cb=await q.evaluate(()=>{const b=document.getElementById("copyres");return b?{cls:b.className,h:Math.round(b.getBoundingClientRect().height),vis:!!b.offsetParent}:null});
+ ok("Resultado · «Copiar resultado» es un botón primario grande y visible",!!cb&&/play/.test(cb.cls)&&cb.h>=44&&cb.vis,cb);
+ await q.tap("#copyres");await q.waitForTimeout(300);const stES=await q.evaluate(()=>window.__lastShare);
+ ok("Compartir ES · frase + «Frente al reel: X % · veredicto» + «¿Le ganas?» + link",/Frente al reel: \d+ % · .+\. ¿Le ganas\? http/.test(stES)&&/caso=fila/.test(stES),stES);
+ await q.evaluate(()=>document.getElementById("lang-en").click());await q.waitForTimeout(300);await q.tap("#copyres");await q.waitForTimeout(300);const stEN=await q.evaluate(()=>window.__lastShare);
+ ok("Compartir EN · phrase + «Against the reel: X % · verdict» + «Can you beat it?» + link",/Against the reel: \d+ % · .+\. Can you beat it\? http/.test(stEN)&&!/Frente al reel/.test(stEN),stEN);await q.evaluate(()=>document.getElementById("lang-es").click());
+ await q.goto(BASE+"?reel=4");await q.waitForSelector("#play");await q.waitForTimeout(1000);const opts=await q.evaluate(()=>[...document.querySelectorAll("#rulepick button")].map(b=>b.dataset.v).join(","));
+ ok("Bailey · pantalla rápida: Todos a las 7:00 / De 6 en 6 cada 20 min / Regla de Bailey (sin «Sin cita»)",opts==="juntos,seis,bailey",opts);
+ await q.evaluate(()=>ECAPP.set("bailey",{rule:"seis"}));await q.waitForTimeout(400);const v6=await runOnce();ok("Bailey · «De 6 en 6 cada 20 min» con todos puntuales: 0,0 min de espera",v6==="0,0",v6);
+ await q.evaluate(()=>ECAPP.openSheet("bailey","ajustar"));await q.waitForTimeout(500);ok("Bailey · «Sin cita» sigue disponible en las palancas avanzadas",await q.evaluate(()=>/Sin cita/.test(document.getElementById("sheet-body").innerText)));await q.evaluate(()=>ECAPP.closeSheet());await q.waitForTimeout(300);
  ok("Portada · Bailey compara promedio con promedio (40 → 16 min)",/40 → 16 min/.test(html)&&!/80 → 16 min/.test(html));
 ok("Sin preserveDrawingBuffer (ahorra GPU en el WebView) y con recuperación del contexto WebGL",!/preserveDrawingBuffer:true/.test(html)&&/webglcontextrestored/.test(html));
  ok("Sin control flotante sobre la maqueta (una cosa a la vez)",!/id="anchor"/.test(html)&&!/renderAnchor/.test(html));
