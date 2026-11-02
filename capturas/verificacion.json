@@ -1,6 +1,6 @@
 {
- "fecha": "2026-11-02T01:12:03.478Z",
- "total": 108,
+ "fecha": "2026-11-02T02:44:19.930Z",
+ "total": 111,
  "fallas": 0,
  "checks": [
   {
@@ -191,8 +191,8 @@
    "pass": true,
    "got": {
     "txy": [
-     124.7126255356698,
-     290.018057542822
+     124.63154841844523,
+     289.8876958111084
     ],
     "bub": "En fila hace 27 min"
    }
@@ -210,8 +210,8 @@
    "pass": true,
    "got": {
     "mode": "run",
-    "prog": 51.7,
-    "clock": "11:04",
+    "prog": 52.3,
+    "clock": "11:06",
     "skip": true
    }
   },
@@ -427,7 +427,7 @@
   {
    "name": "IKEA · distingue esta partida del promedio",
    "pass": true,
-   "got": "Esta partida: 3 de 100 entregas · el grande es el promedio"
+   "got": "Esta partida: 2 de 100 entregas · el grande es el promedio"
   },
   {
    "name": "IKEA · armado → cajas: explica el trade-off (5 viajes en vez de 34) y no celebra",
@@ -689,6 +689,25 @@
   },
   {
    "name": "Sin menciones a Christian ni Ruck",
+   "pass": true
+  },
+  {
+   "name": "GoatCounter bloqueado · la página simula y muestra el resultado igual, sin errores",
+   "pass": true,
+   "got": []
+  },
+  {
+   "name": "GoatCounter · cuenta la vista y los eventos simular/resultado/copiar",
+   "pass": true,
+   "got": [
+    "/index.html#bailey",
+    "simular-bailey!",
+    "resultado-bailey!",
+    "copiar-bailey!"
+   ]
+  },
+  {
+   "name": "Andenes · sin 'El Andén' en la página",
    "pass": true
   }
  ]
