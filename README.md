@@ -1,6 +1,6 @@
 # En Camino Logística · Laboratorio
 
-Página de una sola pieza (`index.html`) con seis laboratorios de logística en 3D,
+Página de una sola pieza (`index.html`) con laboratorios de logística en 3D, uno por reel,
 bilingüe (ES/EN), pensada para abrirse desde reels de Instagram en el celular.
 
 - `index.html` — la página completa, lista para GitHub Pages.
